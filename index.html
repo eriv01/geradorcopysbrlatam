@@ -89,26 +89,21 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:1
 .pills{display:flex;gap:6px;flex-wrap:wrap}
 .pill{
   padding:7px 14px;border-radius:20px;
-  background:var(--s2);border:1px solid rgba(255,255,255,.08);
-  color:rgba(255,255,255,.32);font-family:var(--font);font-size:12px;font-weight:600;
+  background:var(--s2);border:1px solid rgba(255,255,255,.07);
+  color:rgba(255,255,255,.28);font-family:var(--font);font-size:12px;font-weight:600;
   cursor:pointer;white-space:nowrap;
-  transition:background .15s,border-color .15s,color .15s,box-shadow .15s,opacity .15s;
+  transition:all .15s ease;
 }
-.pill:hover:not(.pill-on){border-color:rgba(255,255,255,.2);color:rgba(255,255,255,.55)}
-
-/* Active state — controlled by .pill-on + .sel-* */
-.pill.pill-on{ font-weight:700; }
-.pill.pill-on.sel-r{background:rgba(255,45,85,.18);border-color:rgba(255,45,85,.8);color:var(--r);box-shadow:0 0 0 3px rgba(255,45,85,.12)}
-.pill.pill-on.sel-b{background:rgba(79,172,254,.18);border-color:rgba(79,172,254,.8);color:var(--b);box-shadow:0 0 0 3px rgba(79,172,254,.12)}
-.pill.pill-on.sel-g{background:rgba(0,229,160,.18);border-color:rgba(0,229,160,.8);color:var(--g);box-shadow:0 0 0 3px rgba(0,229,160,.12)}
-.pill.pill-on.sel-y{background:rgba(255,209,102,.18);border-color:rgba(255,209,102,.8);color:var(--y);box-shadow:0 0 0 3px rgba(255,209,102,.12)}
-.pill.pill-on.sel-p{background:rgba(199,125,255,.18);border-color:rgba(199,125,255,.8);color:var(--p);box-shadow:0 0 0 3px rgba(199,125,255,.12)}
-
-/* Pop animation on activate */
-.pill.pill-popping{animation:ppop .2s cubic-bezier(.34,1.56,.64,1)}
-@keyframes ppop{0%{transform:scale(.92)}70%{transform:scale(1.1)}100%{transform:scale(1)}}
-
-.cta-hint-box{margin-top:8px;padding:8px 11px;background:var(--s3);border-radius:7px;font-size:11px;color:var(--muted2);line-height:1.6;min-height:32px}
+.pill:hover{ color:rgba(255,255,255,.55); border-color:rgba(255,255,255,.18); }
+.pill.on{
+  font-weight:700;
+  animation:ppop .2s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes ppop{0%{transform:scale(.9)}65%{transform:scale(1.08)}100%{transform:scale(1)}}
+.cta-hint-box{
+  margin-top:8px;padding:8px 11px;background:var(--s3);
+  border-radius:7px;font-size:11px;color:var(--muted2);line-height:1.6;min-height:32px;
+}
 
 .gen-btn{width:100%;padding:13px;background:linear-gradient(135deg,var(--r),var(--r2));border:none;border-radius:9px;color:#fff;font-family:var(--display);font-size:19px;letter-spacing:2px;cursor:pointer;transition:all .2s;position:relative}
 .gen-btn:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 8px 24px rgba(255,45,85,.3)}
@@ -757,118 +752,74 @@ const CTA_BANK={
   mixed:{br:['Curte, salva e clica no link da bio — os três juntos hoje.','Comenta QUERO, salva o vídeo, e vai na bio — nessa ordem.'],es:['Dale like, guárdalo y haz clic en la bio — los tres hoy.','Comenta QUIERO, guarda el video y ve a la bio — en ese orden.']},
 };
 
-// ── UNIFIED PILL ENGINE ──────────────────────────────────────
-// Multi-select (lang, cta type)
-function pillToggleMulti(btn){
-  const v = btn.dataset.v;
-  const c = btn.dataset.c || 'r';
-  const group = btn.dataset.group;
-  // figure out sibling pills in same group
-  const siblings = [...document.querySelectorAll(`[data-group="${group}"]`)];
-  const activeSiblings = siblings.filter(b => b.classList.contains('pill-on'));
-  const isOn = btn.classList.contains('pill-on');
-  // don't deselect last one
-  if(isOn && activeSiblings.length <= 1) return;
-  if(isOn){
-    btn.classList.remove('pill-on','sel-r','sel-b','sel-g','sel-y','sel-p');
-  } else {
-    btn.classList.add('pill-on','sel-'+c);
-    triggerPop(btn);
-  }
-  // sync state
-  if(group === 'lang-multi'){
-    S.langs = new Set(siblings.filter(b=>b.classList.contains('pill-on')).map(b=>b.dataset.v));
-  }
-  if(group === 'type-multi'){
-    S.types = new Set(siblings.filter(b=>b.classList.contains('pill-on')).map(b=>b.dataset.v));
-    updateCtaHint();
-  }
-}
+// ── PILL COLOR MAP (rgba bg, border, text, shadow)
+const PCOL = {
+  r: ['rgba(255,45,85,.18)','rgba(255,45,85,.8)','#ff2d55','rgba(255,45,85,.15)'],
+  b: ['rgba(79,172,254,.18)','rgba(79,172,254,.8)','#4facfe','rgba(79,172,254,.15)'],
+  g: ['rgba(0,229,160,.18)','rgba(0,229,160,.8)','#00e5a0','rgba(0,229,160,.15)'],
+  y: ['rgba(255,209,102,.18)','rgba(255,209,102,.8)','#ffd166','rgba(255,209,102,.15)'],
+  p: ['rgba(199,125,255,.18)','rgba(199,125,255,.8)','#c77dff','rgba(199,125,255,.15)'],
+};
 
-// Single-select (tone, meta, cross)
-function pillToggleSingle(btn){
-  const c = btn.dataset.c || 'r';
-  const group = btn.dataset.group;
-  document.querySelectorAll(`[data-group="${group}"]`).forEach(b=>{
-    b.classList.remove('pill-on','sel-r','sel-b','sel-g','sel-y','sel-p');
-  });
-  btn.classList.add('pill-on','sel-'+c);
-  triggerPop(btn);
-  const v = btn.dataset.v;
-  if(group==='tone-single') S.tone = v;
-  if(group==='meta-single') S.meta = v;
-  if(group==='cross-single') S.cross = v;
-}
-
-function triggerPop(btn){
-  btn.classList.remove('pill-popping');
+function pillOn(btn){
+  const c = PCOL[btn.dataset.c] || PCOL.r;
+  btn.style.background    = c[0];
+  btn.style.borderColor   = c[1];
+  btn.style.color         = c[2];
+  btn.style.boxShadow     = `0 0 0 3px ${c[3]}`;
+  btn.classList.add('on');
+  // re-trigger animation
+  btn.style.animation = 'none';
   void btn.offsetWidth;
-  btn.classList.add('pill-popping');
-  btn.addEventListener('animationend', ()=> btn.classList.remove('pill-popping'), {once:true});
+  btn.style.animation = '';
+}
+
+function pillOff(btn){
+  btn.style.background  = '';
+  btn.style.borderColor = '';
+  btn.style.color       = '';
+  btn.style.boxShadow   = '';
+  btn.classList.remove('on');
+}
+
+// Multi-select toggle (lang, cta type)
+function pillToggleMulti(btn){
+  const group = btn.dataset.group;
+  const siblings = [...document.querySelectorAll(`[data-group="${group}"]`)];
+  const isOn = btn.classList.contains('on');
+  const activeCount = siblings.filter(b => b.classList.contains('on')).length;
+  // don't let the last one deselect
+  if(isOn && activeCount <= 1) return;
+  isOn ? pillOff(btn) : pillOn(btn);
+  // sync state
+  const active = siblings.filter(b => b.classList.contains('on')).map(b => b.dataset.v);
+  if(group === 'lang-multi') S.langs = new Set(active);
+  if(group === 'type-multi'){ S.types = new Set(active); updateCtaHint(); }
+}
+
+// Single-select toggle (tone, meta, cross)
+function pillToggleSingle(btn){
+  const group = btn.dataset.group;
+  document.querySelectorAll(`[data-group="${group}"]`).forEach(b => pillOff(b));
+  pillOn(btn);
+  const v = btn.dataset.v;
+  if(group === 'tone-single')  S.tone  = v;
+  if(group === 'meta-single')  S.meta  = v;
+  if(group === 'cross-single') S.cross = v;
 }
 
 function updateCtaHint(){
-  const selected = [...S.types];
-  const hints = selected.map(t=>CTA_HINTS[t]||'').filter(Boolean);
+  const hints = [...S.types].map(t => CTA_HINTS[t]||'').filter(Boolean);
   const el = document.getElementById('cta-hint');
   if(el) el.innerHTML = hints.length ? hints.join('<br>') : 'Selecione um ou mais modos de CTA acima.';
 }
 
-// Legacy stubs (keep generate() working)
+// Legacy stubs
 function toggleLang(){}
 function toggleType(){}
 function singlePill(){}
 
-// Full CTA bank — used by prompt builder
-const CTA_BANK={
-  bio:{
-    br:['Clica no link da bio agora antes de sumir.','O vídeo completo tá na minha bio — vai lá hoje ainda.','Acessa minha bio e pega o protocolo gratuito.','Link na bio. Não deixa pra amanhã.'],
-    es:['Haz clic en el enlace de mi perfil ahora.','El protocolo completo está en mi bio — ve antes de que desaparezca.','Accede a mi perfil y haz la evaluación gratuita.','El link está en la bio. No lo dejes para mañana.']
-  },
-  comment:{
-    br:['Comenta QUERO aqui que te mando o método.','Digita SIM nos comentários se quer receber.','Comenta sua idade aqui que eu te explico o que fazer.','Responde aqui: você já sabia disso? Sim ou não.','Comenta "JÁ" se você vai tentar hoje.'],
-    es:['Comenta QUIERO aquí y te mando el protocolo.','Escribe SÍ en los comentarios si quieres recibirlo.','Comenta tu edad y te digo exactamente qué hacer.','¿Ya sabías esto? Comenta SÍ o NO aquí abajo.','Escribe "YA" si lo vas a intentar hoy.']
-  },
-  share:{
-    br:['Compartilha com um amigo que precisa ver isso agora.','Marca aqui embaixo aquele amigo que tá precisando.','Manda esse vídeo pra alguém que você quer bem.','Tag aquele amigo que vai agradecer depois.'],
-    es:['Comparte con un amigo que necesita ver esto ahora.','Menciona aquí abajo a ese amigo que lo necesita.','Manda este video a alguien que quieres.','Taguea al amigo que te va a agradecer después.']
-  },
-  follow:{
-    br:['Segue aqui que toda semana solto um método novo.','Ativa o sininho pra não perder os próximos.','Me segue — o próximo vídeo vai ser ainda mais forte.','Segue e salva pra ter sempre por perto.'],
-    es:['Sígueme que cada semana suelto un método nuevo.','Activa la campanita para no perderte el siguiente.','Sígueme — el próximo video va a ser aún más fuerte.','Sígueme y guarda para tenerlo siempre cerca.']
-  },
-  save:{
-    br:['Salva esse vídeo antes de sumir — já avisei.','Guarda aqui porque o TikTok pode tirar do ar.','Salva e volta aqui depois de 30 dias pra me contar.','Bate aquele coraçãozinho e salva pra não perder.'],
-    es:['Guarda este video antes de que desaparezca — ya te avisé.','Guárdalo porque TikTok puede sacarlo.','Guarda y vuelve en 30 días a contarme.','Dale al corazón y guárdalo para no perderlo.']
-  },
-  like:{
-    br:['Curte se você se reconheceu nessa situação.','Dá um like pra eu saber que isso te ajudou.','Curte pra eu continuar postando esses métodos.','Manda um coração se você quer saber mais.'],
-    es:['Dale like si te reconociste en esta situación.','Dale me gusta para que yo sepa que esto te ayudó.','Dale like para que yo siga publicando estos métodos.','Manda un corazón si quieres saber más.']
-  },
-  duet:{
-    br:['Faz dueto comigo daqui a 30 dias mostrando seu resultado.','Faz stitch antes e depois — quero ver a transformação.','Dueta aqui e mostra pras amigas o que aconteceu.'],
-    es:['Haz dueto conmigo en 30 días mostrando tu resultado.','Haz stitch de antes y después — quiero ver la transformación.','Duetea aquí y muéstrale a todos lo que pasó.']
-  },
-  dm:{
-    br:['Me manda mensagem aqui que te passo o protocolo completo.','Me segue e manda um "OI" no direct — respondo todos.','Me chama no privado que te mando tudo de graça.'],
-    es:['Mándame un mensaje aquí y te paso el protocolo completo.','Sígueme y manda un "HOLA" al direct — respondo a todos.','Escríbeme en privado que te mando todo gratis.']
-  },
-  mixed:{
-    br:['Curte, salva e clica no link da bio — os três juntos hoje.','Compartilha com um amigo e os dois acessam a bio.','Comenta QUERO, salva o vídeo, e vai na bio — nessa ordem.','Segue, ativa o sininho e clica na bio agora.'],
-    es:['Dale like, guárdalo y haz clic en la bio — los tres hoy.','Compártelo con un amigo y los dos acceden a la bio.','Comenta QUIERO, guarda el video y ve a la bio — en ese orden.','Sígueme, activa la campanita y haz clic en la bio ahora.']
-  }
-};
-function singlePill(groupId, btn){
-  const grp=document.getElementById(groupId);
-  grp.querySelectorAll('.pill').forEach(p=>p.className='pill');
-  const colorMap={'pl-tone':'on-r','pl-meta':'on-r','pl-cross':'on-p'};
-  btn.className='pill '+(colorMap[groupId]||'on-r');
-  repop(btn);
-  const v=btn.dataset.v;
-  if(groupId==='pl-tone') S.tone=v;
-  if(groupId==='pl-meta') S.meta=v;
-  if(groupId==='pl-cross') S.cross=v;
-}
+function singlePill(){}  // legacy stub only
 
 // ════════════════════════════════════════════════════════════
 // MAIN GENERATE
@@ -1235,19 +1186,16 @@ function renderVault(){
 // ════════════════════════════════════════════════════════════
 // INIT
 // ════════════════════════════════════════════════════════════
-// Mark initially-active pills (those that have sel-* class already set in HTML)
+// Activate pills that have sel-* class in HTML
 document.querySelectorAll('.pill[class*="sel-"]').forEach(btn => {
-  btn.classList.add('pill-on');
-  // sync initial state into S
-  const g = btn.dataset.group;
-  const v = btn.dataset.v;
-  if(g==='lang-multi')  S.langs.add(v);
-  if(g==='type-multi')  S.types.add(v);
-  if(g==='tone-single') S.tone = v;
-  if(g==='meta-single') S.meta = v;
+  pillOn(btn);
+  const g = btn.dataset.group, v = btn.dataset.v;
+  if(g==='lang-multi')   S.langs.add(v);
+  if(g==='type-multi')   S.types.add(v);
+  if(g==='tone-single')  S.tone  = v;
+  if(g==='meta-single')  S.meta  = v;
   if(g==='cross-single') S.cross = v;
 });
-
 updateCtaHint();
 updateUI();
 </script>
