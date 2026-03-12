@@ -3,109 +3,103 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Copy Lab · TikTok Generator v3</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
+<title>Copy Lab · v4</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#07070f;--s1:#0e0e1c;--s2:#141428;--s3:#1b1b35;--s4:#222242;
-  --border:rgba(255,255,255,0.06);--border2:rgba(255,255,255,0.13);
+  --bd:rgba(255,255,255,.06);--bd2:rgba(255,255,255,.13);
   --r:#ff2d55;--r2:#ff6b35;--g:#00e5a0;--b:#4facfe;--y:#ffd166;--p:#c77dff;
-  --text:#eeeef8;--muted:#5a5a8a;--muted2:#8888bb;
-  --font:'Syne',sans-serif;--mono:'JetBrains Mono',monospace;--display:'Bebas Neue',sans-serif;
+  --tx:#eeeef8;--mu:#5a5a8a;--mu2:#8888bb;
+  --fn:'Syne',sans-serif;--mo:'JetBrains Mono',monospace;--di:'Bebas Neue',sans-serif;
 }
 *{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:100vh;overflow-x:hidden}
-::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--s3);border-radius:2px}
+body{background:var(--bg);color:var(--tx);font-family:var(--fn);min-height:100vh;overflow-x:hidden}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-thumb{background:var(--s3);border-radius:2px}
 
-/* ── LAYOUT ── */
-.shell{display:grid;grid-template-columns:270px 1fr;min-height:100vh;max-width:1600px;margin:0 auto}
+/* layout */
+.shell{display:grid;grid-template-columns:270px 1fr;min-height:100vh}
 @media(max-width:860px){.shell{grid-template-columns:1fr}}
-
-/* ── SIDEBAR ── */
-.sidebar{background:var(--s1);border-right:1px solid var(--border);display:flex;flex-direction:column;gap:0;position:sticky;top:0;height:100vh;overflow-y:auto}
+.sidebar{background:var(--s1);border-right:1px solid var(--bd);display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow-y:auto}
 @media(max-width:860px){.sidebar{display:none}}
-.sb-top{padding:22px 18px 16px;border-bottom:1px solid var(--border)}
-.logo-mark{font-family:var(--display);font-size:30px;letter-spacing:3px;background:linear-gradient(90deg,var(--r),var(--r2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1}
-.logo-sub{font-size:10px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;margin-top:2px}
+.sb-top{padding:22px 18px 16px;border-bottom:1px solid var(--bd)}
+.logo{font-family:var(--di);font-size:30px;letter-spacing:3px;background:linear-gradient(90deg,var(--r),var(--r2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.logo-s{font-size:10px;letter-spacing:3px;color:var(--mu);text-transform:uppercase;margin-top:2px}
 .sb-nav{padding:12px 10px;display:flex;flex-direction:column;gap:2px}
-.nb{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:8px;background:none;border:none;color:var(--muted2);font-family:var(--font);font-size:13px;font-weight:600;cursor:pointer;width:100%;text-align:left;transition:all .18s}
-.nb:hover{background:var(--s2);color:var(--text)}
-.nb.on{background:var(--s2);color:var(--text);box-shadow:inset 2px 0 0 var(--r)}
-.nb-ico{font-size:15px;width:22px;text-align:center}
-.sb-divider{height:1px;background:var(--border);margin:8px 10px}
-.sb-section{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);font-weight:700;padding:8px 18px 4px}
+.nb{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:8px;background:none;border:none;color:var(--mu2);font-family:var(--fn);font-size:13px;font-weight:600;cursor:pointer;width:100%;text-align:left;transition:all .15s}
+.nb:hover{background:var(--s2);color:var(--tx)}
+.nb.on{background:var(--s2);color:var(--tx);box-shadow:inset 2px 0 0 var(--r)}
+.nb-ic{font-size:15px;width:22px;text-align:center}
+.sb-div{height:1px;background:var(--bd);margin:8px 10px}
+.sb-sec{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--mu);font-weight:700;padding:8px 18px 4px}
 
-/* ── THERMO in sidebar ── */
-.thermo-wrap{padding:14px 14px 16px;margin-top:auto;border-top:1px solid var(--border)}
-.thermo-head{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:12px}
-.th-row{margin-bottom:10px}
-.th-top{display:flex;justify-content:space-between;margin-bottom:4px}
-.th-name{font-size:12px;font-weight:700}
-.th-stat{font-family:var(--mono);font-size:10px;color:var(--muted2)}
-.th-bg{height:7px;background:var(--s3);border-radius:4px;overflow:hidden;position:relative}
-.th-fill{height:100%;border-radius:4px;transition:width .6s cubic-bezier(.4,0,.2,1)}
-.th-br .th-fill{background:linear-gradient(90deg,#00e5a0,#00c88a)}
-.th-latam .th-fill{background:linear-gradient(90deg,var(--b),var(--p))}
-.th-alert{font-size:10px;margin-top:4px;padding:3px 7px;border-radius:4px;display:none}
-.th-alert.show{display:block}
-.alert-ok{background:rgba(0,229,160,.08);color:var(--g);border:1px solid rgba(0,229,160,.2)}
-.alert-warn{background:rgba(255,209,102,.08);color:var(--y);border:1px solid rgba(255,209,102,.2)}
-.alert-crit{background:rgba(255,45,85,.08);color:var(--r);border:1px solid rgba(255,45,85,.2)}
-.th-totals{display:flex;gap:12px;margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}
-.th-tot-item{flex:1;text-align:center}
-.th-tot-num{font-family:var(--mono);font-size:18px;font-weight:600;line-height:1}
-.th-tot-lbl{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-top:2px}
-
-/* ── MAIN ── */
-.main{display:flex;flex-direction:column;min-height:100vh}
-.topbar{background:var(--s1);border-bottom:1px solid var(--border);padding:14px 24px;display:flex;align-items:center;gap:14px;position:sticky;top:0;z-index:50}
-.page-title{font-family:var(--display);font-size:20px;letter-spacing:2px}
-
-/* ── PANELS ── */
-.panel{display:none;padding:22px 24px;flex:1}
-.panel.on{display:block;animation:fadeUp .25s ease}
-@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-
-/* ── GENERATOR LAYOUT ── */
-.gen-grid{display:grid;grid-template-columns:320px 1fr;gap:18px;align-items:start}
-@media(max-width:1100px){.gen-grid{grid-template-columns:1fr}}
-
-/* ── CARDS ── */
-.card{background:var(--s1);border:1px solid var(--border);border-radius:13px;overflow:hidden}
-.ch{padding:13px 17px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:10px}
-.ch-title{font-size:12px;font-weight:700;letter-spacing:.4px}
-.cb{padding:17px}
-
-/* ── FORM ── */
-.fg{margin-bottom:14px}
-.lbl{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:7px;display:block}
-.sel,.inp,.ta{width:100%;background:var(--s2);border:1px solid var(--border);border-radius:7px;color:var(--text);font-family:var(--font);font-size:13px;padding:9px 12px;outline:none;transition:border-color .2s}
-.sel:focus,.inp:focus,.ta:focus{border-color:rgba(255,45,85,.5)}
+/* vault add block in sidebar */
+.vault-add{padding:12px 14px;border-top:1px solid var(--bd)}
+.vault-add-head{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--mu);font-weight:700;margin-bottom:8px}
+.inp,.ta,.sel{width:100%;background:var(--s2);border:1px solid var(--bd);border-radius:7px;color:var(--tx);font-family:var(--fn);font-size:12px;padding:8px 10px;outline:none;transition:border-color .2s;margin-bottom:6px}
+.inp:focus,.ta:focus,.sel:focus{border-color:rgba(255,45,85,.4)}
+.ta{resize:vertical;min-height:60px;line-height:1.5}
 .sel option{background:var(--s2)}
-.ta{resize:vertical;min-height:64px;line-height:1.6}
+.add-btn{width:100%;padding:8px;background:linear-gradient(135deg,var(--r),var(--r2));border:none;border-radius:7px;color:#fff;font-family:var(--fn);font-size:12px;font-weight:700;cursor:pointer;transition:opacity .15s}
+.add-btn:hover{opacity:.85}
+.add-ok{font-size:11px;color:var(--g);text-align:center;margin-top:5px;display:none}
 
-.pills{display:flex;gap:6px;flex-wrap:wrap}
+/* thermo */
+.thermo{padding:14px;margin-top:auto;border-top:1px solid var(--bd)}
+.th-head{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--mu);font-weight:700;margin-bottom:10px}
+.th-row{margin-bottom:8px}
+.th-top{display:flex;justify-content:space-between;margin-bottom:3px;font-size:11px;font-weight:700}
+.th-stat{font-family:var(--mo);font-size:10px;color:var(--mu2)}
+.th-bg{height:6px;background:var(--s3);border-radius:3px;overflow:hidden}
+.th-fill{height:100%;border-radius:3px;transition:width .5s}
+.th-br .th-fill{background:linear-gradient(90deg,var(--g),#00c88a)}
+.th-la .th-fill{background:linear-gradient(90deg,var(--b),var(--p))}
+.th-alert{font-size:10px;margin-top:3px;padding:2px 6px;border-radius:3px;display:none}
+.th-alert.show{display:block}
+.a-ok{background:rgba(0,229,160,.08);color:var(--g);border:1px solid rgba(0,229,160,.2)}
+.a-wn{background:rgba(255,209,102,.08);color:var(--y);border:1px solid rgba(255,209,102,.2)}
+.a-cr{background:rgba(255,45,85,.08);color:var(--r);border:1px solid rgba(255,45,85,.2)}
+.th-tots{display:flex;gap:10px;margin-top:8px;padding-top:8px;border-top:1px solid var(--bd)}
+.th-tot{flex:1;text-align:center}
+.th-tot-n{font-family:var(--mo);font-size:17px;font-weight:600;line-height:1}
+.th-tot-l{font-size:9px;color:var(--mu);text-transform:uppercase;letter-spacing:1px;margin-top:2px}
+
+/* main */
+.main{display:flex;flex-direction:column;min-height:100vh}
+.topbar{background:var(--s1);border-bottom:1px solid var(--bd);padding:14px 24px;display:flex;align-items:center;gap:14px;position:sticky;top:0;z-index:50}
+.page-title{font-family:var(--di);font-size:20px;letter-spacing:2px}
+.panel{display:none;padding:22px 24px;flex:1}
+.panel.on{display:block;animation:fu .25s ease}
+@keyframes fu{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+/* cards */
+.card{background:var(--s1);border:1px solid var(--bd);border-radius:13px;overflow:hidden}
+.ch{padding:12px 16px;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between}
+.ch-t{font-size:12px;font-weight:700;letter-spacing:.4px}
+.cb{padding:16px}
+.fg{margin-bottom:13px}
+.lbl{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--mu);font-weight:700;margin-bottom:6px;display:block}
+
+/* ════ PILLS — single source of truth ════ */
+.pills{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:2px}
 .pill{
   padding:7px 14px;border-radius:20px;
-  background:var(--s2);border:1px solid rgba(255,255,255,.07);
-  color:rgba(255,255,255,.28);font-family:var(--font);font-size:12px;font-weight:600;
+  background:var(--s2);border:1px solid rgba(255,255,255,.08);
+  color:rgba(255,255,255,.3);
+  font-family:var(--fn);font-size:12px;font-weight:600;
   cursor:pointer;white-space:nowrap;
-  transition:all .15s ease;
+  transition:background .12s,border-color .12s,color .12s,box-shadow .12s;
+  user-select:none;
 }
-.pill:hover{ color:rgba(255,255,255,.55); border-color:rgba(255,255,255,.18); }
-.pill.on{
-  font-weight:700;
-  animation:ppop .2s cubic-bezier(.34,1.56,.64,1);
-}
-@keyframes ppop{0%{transform:scale(.9)}65%{transform:scale(1.08)}100%{transform:scale(1)}}
-.cta-hint-box{
-  margin-top:8px;padding:8px 11px;background:var(--s3);
-  border-radius:7px;font-size:11px;color:var(--muted2);line-height:1.6;min-height:32px;
-}
+.pill:hover{color:rgba(255,255,255,.6);border-color:rgba(255,255,255,.2)}
+.pill.on{font-weight:700;animation:ppop .18s cubic-bezier(.34,1.56,.64,1)}
+@keyframes ppop{0%{transform:scale(.88)}65%{transform:scale(1.09)}100%{transform:scale(1)}}
+.hint-box{margin-top:7px;padding:8px 10px;background:var(--s3);border-radius:7px;font-size:11px;color:var(--mu2);line-height:1.6;min-height:28px}
 
-.gen-btn{width:100%;padding:13px;background:linear-gradient(135deg,var(--r),var(--r2));border:none;border-radius:9px;color:#fff;font-family:var(--display);font-size:19px;letter-spacing:2px;cursor:pointer;transition:all .2s;position:relative}
+/* gen layout */
+.gen-grid{display:grid;grid-template-columns:320px 1fr;gap:18px;align-items:start}
+@media(max-width:1100px){.gen-grid{grid-template-columns:1fr}}
+.gen-btn{width:100%;padding:13px;background:linear-gradient(135deg,var(--r),var(--r2));border:none;border-radius:9px;color:#fff;font-family:var(--di);font-size:19px;letter-spacing:2px;cursor:pointer;transition:all .2s;position:relative;margin-top:4px}
 .gen-btn:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 8px 24px rgba(255,45,85,.3)}
 .gen-btn:disabled{opacity:.45;cursor:not-allowed}
 .gen-btn .spin{display:none;width:18px;height:18px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:sp .7s linear infinite;margin:0 auto}
@@ -113,265 +107,199 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:1
 .gen-btn.loading .btn-txt{display:none}
 .gen-btn.loading .spin{display:block}
 
-/* ── OUTPUT ── */
+/* output */
 .out-area{display:flex;flex-direction:column;gap:12px}
-.out-empty{text-align:center;padding:40px 20px;color:var(--muted)}
-.out-empty .ico{font-size:36px;margin-bottom:10px}
-.out-empty p{font-size:13px;line-height:1.6}
+.out-empty{text-align:center;padding:40px 20px;color:var(--mu)}
+.out-empty .ic{font-size:36px;margin-bottom:10px}
 
-.res-card{background:var(--s2);border:1px solid var(--border);border-radius:12px;overflow:hidden;animation:fadeUp .3s ease}
-.res-top{padding:11px 15px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
-.res-meta{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
-.bs{font-size:10px;padding:2px 7px;border-radius:4px;font-weight:700;letter-spacing:.4px;white-space:nowrap}
+/* result cards */
+.res-card{background:var(--s2);border:1px solid var(--bd);border-radius:12px;overflow:hidden;animation:fu .3s ease}
+.res-top{padding:10px 14px;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px}
+.res-meta{display:flex;align-items:center;gap:5px;flex-wrap:wrap}
+.bs{font-size:10px;padding:2px 7px;border-radius:4px;font-weight:700;letter-spacing:.3px;white-space:nowrap}
 .bs-br{background:rgba(0,229,160,.1);color:var(--g);border:1px solid rgba(0,229,160,.25)}
-.bs-latam{background:rgba(79,172,254,.1);color:var(--b);border:1px solid rgba(79,172,254,.25)}
-.bs-conv{background:rgba(255,45,85,.1);color:var(--r);border:1px solid rgba(255,45,85,.25)}
+.bs-la{background:rgba(79,172,254,.1);color:var(--b);border:1px solid rgba(79,172,254,.25)}
 .bs-eng{background:rgba(255,209,102,.1);color:var(--y);border:1px solid rgba(255,209,102,.25)}
-.bs-cross{background:rgba(199,125,255,.1);color:var(--p);border:1px solid rgba(199,125,255,.25)}
-
-.trust-row{display:flex;align-items:center;gap:8px}
+.bs-x{background:rgba(199,125,255,.1);color:var(--p);border:1px solid rgba(199,125,255,.25)}
+.trust-row{display:flex;align-items:center;gap:7px}
 .trust-dots{display:flex;gap:2px}
 .td{width:8px;height:8px;border-radius:50%;background:var(--s4)}
 .td-g{background:var(--g)}.td-y{background:var(--y)}.td-r{background:var(--r)}
 .trust-lbl{font-size:10px;font-weight:700}
-.act-btn{padding:4px 9px;border-radius:5px;background:var(--s3);border:1px solid var(--border);color:var(--muted2);font-family:var(--font);font-size:11px;font-weight:600;cursor:pointer;transition:all .18s}
-.act-btn:hover{border-color:var(--border2);color:var(--text)}
+.act-btn{padding:4px 9px;border-radius:5px;background:var(--s3);border:1px solid var(--bd);color:var(--mu2);font-family:var(--fn);font-size:11px;font-weight:600;cursor:pointer;transition:all .15s}
+.act-btn:hover{border-color:var(--bd2);color:var(--tx)}
 .act-btn.ok{background:rgba(0,229,160,.1);border-color:rgba(0,229,160,.3);color:var(--g)}
-
 .res-body{padding:14px 16px}
-.type-lbl{display:inline-block;font-size:9px;letter-spacing:2px;text-transform:uppercase;font-weight:700;margin-bottom:9px;padding:2px 7px;border-radius:3px}
-.type-conv{background:rgba(255,45,85,.08);color:var(--r)}
+.type-lbl{display:inline-block;font-size:9px;letter-spacing:2px;text-transform:uppercase;font-weight:700;margin-bottom:8px;padding:2px 7px;border-radius:3px}
+.type-bio{background:rgba(255,45,85,.08);color:var(--r)}
 .type-eng{background:rgba(255,209,102,.08);color:var(--y)}
-.type-cross{background:rgba(199,125,255,.08);color:var(--p)}
-
-.blocks{display:flex;flex-direction:column;gap:6px}
-.blk{display:flex;gap:11px;align-items:flex-start}
-.blk-t{font-family:var(--mono);font-size:10px;color:var(--muted);padding-top:3px;min-width:28px;flex-shrink:0}
-.blk-tx{font-size:14px;line-height:1.65;color:var(--text)}
+.type-mix{background:rgba(199,125,255,.08);color:var(--p)}
+.blocks{display:flex;flex-direction:column;gap:5px}
+.blk{display:flex;gap:10px;align-items:flex-start}
+.blk-t{font-family:var(--mo);font-size:10px;color:var(--mu);padding-top:3px;min-width:26px;flex-shrink:0}
+.blk-tx{font-size:14px;line-height:1.65;color:var(--tx)}
 .blk-tx.hook{color:var(--r);font-weight:700}
-.blk-tx.cta{color:var(--y);font-weight:600}
-.blk-sep{height:1px;background:var(--border);margin:3px 0 3px 39px}
+.blk-tx.cta{color:var(--g);font-style:italic}
+.blk-sep{height:1px;background:var(--bd);margin:3px 0}
+.dna-tags{display:flex;gap:4px;flex-wrap:wrap;margin-top:10px}
+.dna-tag{font-size:9px;padding:1px 6px;border-radius:3px;background:var(--s3);color:var(--mu2);border:1px solid var(--bd)}
 
-.res-foot{padding:8px 15px;border-top:1px solid var(--border);display:flex;gap:5px;flex-wrap:wrap}
-.dt{font-size:10px;padding:2px 6px;border-radius:3px;font-weight:600}
-.dt-hook{background:rgba(255,45,85,.08);color:var(--r)}
-.dt-pain{background:rgba(199,125,255,.08);color:var(--p)}
-.dt-proof{background:rgba(255,209,102,.08);color:var(--y)}
-.dt-urg{background:rgba(255,107,53,.08);color:var(--r2)}
-.dt-tribal{background:rgba(0,229,160,.08);color:var(--g)}
-.dt-id{background:rgba(79,172,254,.08);color:var(--b)}
+/* DNA panel */
+.dna-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.dna-c{background:var(--s1);border:1px solid var(--bd);border-radius:11px;padding:16px}
+.dna-tag-lbl{font-size:9px;letter-spacing:2px;text-transform:uppercase;font-weight:700;margin-bottom:6px}
+.dna-c-title{font-size:15px;font-weight:700;margin-bottom:10px}
+.dna-list{display:flex;flex-direction:column;gap:5px}
+.dna-li{font-size:12px;color:var(--mu2);padding-left:10px;border-left:2px solid var(--bd2);line-height:1.5}
 
-/* ── DNA PANEL ── */
-.dna-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;margin-bottom:24px}
-.dna-c{background:var(--s1);border:1px solid var(--border);border-radius:11px;padding:16px;position:relative;overflow:hidden}
-.dna-c::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
-.dna-c:nth-child(1)::before{background:linear-gradient(90deg,var(--r),transparent)}
-.dna-c:nth-child(2)::before{background:linear-gradient(90deg,var(--p),transparent)}
-.dna-c:nth-child(3)::before{background:linear-gradient(90deg,var(--y),transparent)}
-.dna-c:nth-child(4)::before{background:linear-gradient(90deg,var(--r2),transparent)}
-.dna-c:nth-child(5)::before{background:linear-gradient(90deg,var(--g),transparent)}
-.dna-c:nth-child(6)::before{background:linear-gradient(90deg,var(--b),transparent)}
-.dna-c:nth-child(7)::before{background:linear-gradient(90deg,#ff6b9d,transparent)}
-.dna-c:nth-child(8)::before{background:linear-gradient(90deg,#ffa500,transparent)}
-.dna-tag-lbl{font-size:9px;letter-spacing:3px;text-transform:uppercase;font-weight:700;margin-bottom:7px}
-.dna-c-title{font-size:14px;font-weight:700;margin-bottom:9px;line-height:1.3}
-.dna-list{display:flex;flex-direction:column;gap:4px}
-.dna-li{font-size:12px;color:var(--muted2);padding-left:11px;position:relative;line-height:1.5}
-.dna-li::before{content:'›';position:absolute;left:0;color:var(--muted)}
-
-/* ── VAULT ── */
-.vault-grid{display:grid;grid-template-columns:1fr 340px;gap:18px;align-items:start}
-@media(max-width:1000px){.vault-grid{grid-template-columns:1fr}}
-.v-list{display:flex;flex-direction:column;gap:8px;max-height:640px;overflow-y:auto;padding-right:3px}
-.vi{background:var(--s2);border:1px solid var(--border);border-radius:9px;padding:12px 14px;transition:all .18s}
-.vi:hover{border-color:var(--border2)}
-.vi-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;gap:8px}
-.vi-name{font-size:13px;font-weight:700}
-.vi-prev{font-size:12px;color:var(--muted2);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.vi-del{background:none;border:none;color:var(--muted);cursor:pointer;font-size:14px;padding:2px;flex-shrink:0;transition:color .15s}
+/* vault panel */
+.vault-grid{display:grid;grid-template-columns:1fr 320px;gap:18px;align-items:start}
+@media(max-width:1100px){.vault-grid{grid-template-columns:1fr}}
+.vi{background:var(--s2);border:1px solid var(--bd);border-radius:9px;padding:12px 14px;margin-bottom:8px}
+.vi-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px}
+.vi-name{font-size:12px;font-weight:700}
+.vi-prev{font-size:12px;color:var(--mu2);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.vi-del{background:none;border:none;color:var(--mu);cursor:pointer;font-size:13px;padding:2px 5px}
 .vi-del:hover{color:var(--r)}
 
-/* ── VAULT INPUT — Always visible in sidebar ── */
-.vault-input-block{padding:14px;border-top:1px solid var(--border)}
-.vi-head{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:10px}
-.add-btn{width:100%;padding:9px;background:linear-gradient(135deg,var(--g),#00c88a);border:none;border-radius:7px;color:#000;font-family:var(--font);font-size:12px;font-weight:700;cursor:pointer;transition:all .18s;letter-spacing:.4px}
-.add-btn:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(0,229,160,.25)}
-.add-ok{font-size:11px;color:var(--g);text-align:center;display:none;margin-top:6px}
-
-/* ── CROSS BADGE ── */
-.cross-origin{font-size:10px;color:var(--p);font-family:var(--mono);margin-left:4px;opacity:.7}
-
-/* ── RESPONSIVE ── */
-@media(max-width:860px){.topbar{padding:12px 16px}.panel{padding:16px}}
+/* error */
+.err-box{background:rgba(255,45,85,.08);border:1px solid rgba(255,45,85,.3);border-radius:8px;padding:12px 14px;font-size:13px;color:var(--r);margin-bottom:12px}
 </style>
 </head>
 <body>
 <div class="shell">
 
-<!-- ═══════════════════════ SIDEBAR ═══════════════════════ -->
+<!-- SIDEBAR -->
 <aside class="sidebar">
   <div class="sb-top">
-    <div class="logo-mark">COPY LAB</div>
-    <div class="logo-sub">TikTok Generator · v3</div>
+    <div class="logo">COPY LAB</div>
+    <div class="logo-s">TikTok Generator · v4</div>
   </div>
-
-  <div class="sb-nav">
-    <div class="sb-section">Ferramentas</div>
-    <button class="nb on" onclick="nav('generator',this)"><span class="nb-ico">⚡</span>Gerador</button>
-    <button class="nb" onclick="nav('dna',this)"><span class="nb-ico">🧬</span>DNA Viral</button>
-    <button class="nb" onclick="nav('vault',this)"><span class="nb-ico">🗄️</span>Vault de Copies</button>
-  </div>
-
-  <div class="sb-divider"></div>
-
-  <!-- QUICK-ADD always visible -->
-  <div class="vault-input-block">
-    <div class="vi-head">➕ Adicionar Copy ao Vault</div>
-    <div class="fg" style="margin-bottom:8px">
-      <input type="text" class="inp" id="sb-name" placeholder="Nome (ex: CP10-NOVA-BR)" style="font-size:12px">
-    </div>
-    <div class="pills" style="margin-bottom:8px">
-      <button class="pill on-g" id="sbl-br" onclick="setSbLang('br')">🇧🇷 BR</button>
-      <button class="pill" id="sbl-latam" onclick="setSbLang('latam')">🌎 LATAM</button>
-    </div>
-    <div class="fg" style="margin-bottom:8px">
-      <textarea class="ta" id="sb-text" placeholder="Cole o texto da copy aqui…" style="min-height:72px;font-size:12px"></textarea>
-    </div>
+  <nav class="sb-nav">
+    <button class="nb on" onclick="nav('generator',this)"><span class="nb-ic">⚡</span>Gerador</button>
+    <button class="nb" onclick="nav('dna',this)"><span class="nb-ic">🧬</span>DNA Viral</button>
+    <button class="nb" onclick="nav('vault',this)"><span class="nb-ic">🗄️</span>Vault de Copies</button>
+  </nav>
+  <div class="sb-div"></div>
+  <div class="sb-sec">ADICIONAR AO VAULT</div>
+  <div class="vault-add">
+    <input class="inp" id="sb-name" placeholder="Nome (ex: CP10-NOVA-BR)">
+    <select class="sel" id="sb-lang">
+      <option value="br">🇧🇷 Português BR</option>
+      <option value="latam">🌎 Español LATAM</option>
+    </select>
+    <textarea class="ta" id="sb-text" placeholder="Cole o texto aqui…"></textarea>
     <button class="add-btn" onclick="addCopy()">➕ Salvar no Vault</button>
     <div class="add-ok" id="add-ok">✓ Salva!</div>
   </div>
-
-  <!-- THERMOMETER always visible -->
-  <div class="thermo-wrap">
-    <div class="thermo-head">📊 Termômetro do Swipe File</div>
+  <div class="thermo">
+    <div class="th-head">📊 Termômetro</div>
     <div class="th-row th-br">
-      <div class="th-top">
-        <span class="th-name">🇧🇷 BR</span>
-        <span class="th-stat" id="tstat-br">—</span>
-      </div>
+      <div class="th-top"><span>🇧🇷 BR</span><span class="th-stat" id="tstat-br">—</span></div>
       <div class="th-bg"><div class="th-fill" id="tfill-br" style="width:100%"></div></div>
-      <div class="th-alert show alert-ok" id="talert-br">✓ Base saudável</div>
+      <div class="th-alert a-ok show" id="talert-br">✓ Base saudável</div>
     </div>
-    <div class="th-row th-latam">
-      <div class="th-top">
-        <span class="th-name">🌎 LATAM</span>
-        <span class="th-stat" id="tstat-latam">—</span>
-      </div>
-      <div class="th-bg"><div class="th-fill" id="tfill-latam" style="width:100%"></div></div>
-      <div class="th-alert show alert-ok" id="talert-latam">✓ Base saudável</div>
+    <div class="th-row th-la">
+      <div class="th-top"><span>🌎 LATAM</span><span class="th-stat" id="tstat-la">—</span></div>
+      <div class="th-bg"><div class="th-fill" id="tfill-la" style="width:100%"></div></div>
+      <div class="th-alert a-ok show" id="talert-la">✓ Base saudável</div>
     </div>
-    <div class="th-totals">
-      <div class="th-tot-item">
-        <div class="th-tot-num" id="ttot-gen" style="color:var(--r)">0</div>
-        <div class="th-tot-lbl">geradas</div>
-      </div>
-      <div class="th-tot-item">
-        <div class="th-tot-num" id="ttot-unique" style="color:var(--g)">0</div>
-        <div class="th-tot-lbl">únicas</div>
-      </div>
-      <div class="th-tot-item">
-        <div class="th-tot-num" id="ttot-custom" style="color:var(--p)">0</div>
-        <div class="th-tot-lbl">no vault</div>
-      </div>
+    <div class="th-tots">
+      <div class="th-tot"><div class="th-tot-n" id="ttot-gen" style="color:var(--r)">0</div><div class="th-tot-l">geradas</div></div>
+      <div class="th-tot"><div class="th-tot-n" id="ttot-uniq" style="color:var(--g)">0</div><div class="th-tot-l">únicas</div></div>
+      <div class="th-tot"><div class="th-tot-n" id="ttot-vault" style="color:var(--p)">0</div><div class="th-tot-l">vault</div></div>
     </div>
   </div>
 </aside>
 
-<!-- ═══════════════════════ MAIN ═══════════════════════ -->
+<!-- MAIN -->
 <div class="main">
   <div class="topbar">
     <span class="page-title" id="ptitle">GERADOR</span>
     <div style="flex:1"></div>
-    <span style="font-size:11px;color:var(--muted);font-family:var(--mono)" id="topbar-info">17 copies no swipe file</span>
+    <span style="font-size:11px;color:var(--mu);font-family:var(--mo)">17 copies · swipe file</span>
   </div>
 
-  <!-- ─── GENERATOR ─── -->
+  <!-- GENERATOR -->
   <div class="panel on" id="panel-generator">
     <div class="gen-grid">
 
-      <!-- LEFT CONTROLS -->
       <div style="display:flex;flex-direction:column;gap:13px">
         <div class="card">
-          <div class="ch"><span class="ch-title">⚙️ Configurar Geração</span></div>
+          <div class="ch"><span class="ch-t">⚙️ Configurar</span></div>
           <div class="cb">
 
             <div class="fg">
-              <label class="lbl">Idioma de saída</label>
+              <label class="lbl">Idioma</label>
               <div class="pills" id="pl-lang">
-                <button class="pill sel-g" data-v="br" data-c="g" data-group="lang-multi" onclick="pillToggleMulti(this)">🇧🇷 Português BR</button>
-                <button class="pill sel-b" data-v="latam" data-c="b" data-group="lang-multi" onclick="pillToggleMulti(this)">🌎 Español LATAM</button>
+                <button class="pill" data-v="br"    data-c="g" data-group="lang">🇧🇷 Português BR</button>
+                <button class="pill" data-v="latam" data-c="b" data-group="lang">🌎 Español LATAM</button>
               </div>
             </div>
 
             <div class="fg">
-              <label class="lbl">Modo de CTA <span style="color:var(--muted);font-weight:400;font-size:10px;letter-spacing:0">— escolha um ou vários</span></label>
-              <div class="pills" id="pl-type">
-                <button class="pill sel-r" data-v="bio"     data-c="r" data-group="type-multi" onclick="pillToggleMulti(this)" title="Urgência para bio">🎯 Bio</button>
-                <button class="pill sel-y" data-v="comment" data-c="y" data-group="type-multi" onclick="pillToggleMulti(this)" title="Palavra nos comentários">💬 Comentário</button>
-                <button class="pill sel-g" data-v="share"   data-c="g" data-group="type-multi" onclick="pillToggleMulti(this)" title="Compartilha com amigo">🔁 Compartilhar</button>
-                <button class="pill sel-b" data-v="follow"  data-c="b" data-group="type-multi" onclick="pillToggleMulti(this)" title="Pede seguir">➕ Seguir</button>
-                <button class="pill sel-p" data-v="save"    data-c="p" data-group="type-multi" onclick="pillToggleMulti(this)" title="Salva o vídeo">🔖 Salvar</button>
-                <button class="pill"       data-v="like"    data-c="r" data-group="type-multi" onclick="pillToggleMulti(this)" title="Pede curtir">❤️ Curtir</button>
-                <button class="pill"       data-v="duet"    data-c="b" data-group="type-multi" onclick="pillToggleMulti(this)" title="Dueto/Stitch">🎬 Dueto</button>
-                <button class="pill"       data-v="dm"      data-c="p" data-group="type-multi" onclick="pillToggleMulti(this)" title="Mensagem privada">📩 DM</button>
-                <button class="pill"       data-v="mixed"   data-c="p" data-group="type-multi" onclick="pillToggleMulti(this)" title="Combina vários">🔀 Misto</button>
+              <label class="lbl">Modo CTA <span style="color:var(--mu);font-weight:400;font-size:10px;letter-spacing:0">— multi-select</span></label>
+              <div class="pills" id="pl-cta">
+                <button class="pill" data-v="bio"     data-c="r" data-group="cta">🎯 Bio</button>
+                <button class="pill" data-v="comment" data-c="y" data-group="cta">💬 Comentário</button>
+                <button class="pill" data-v="share"   data-c="g" data-group="cta">🔁 Compartilhar</button>
+                <button class="pill" data-v="follow"  data-c="b" data-group="cta">➕ Seguir</button>
+                <button class="pill" data-v="save"    data-c="p" data-group="cta">🔖 Salvar</button>
+                <button class="pill" data-v="like"    data-c="r" data-group="cta">❤️ Curtir</button>
+                <button class="pill" data-v="duet"    data-c="b" data-group="cta">🎬 Dueto</button>
+                <button class="pill" data-v="dm"      data-c="p" data-group="cta">📩 DM</button>
+                <button class="pill" data-v="mixed"   data-c="p" data-group="cta">🔀 Misto</button>
               </div>
-              <div class="cta-hint-box" id="cta-hint">Selecione um ou mais modos de CTA acima.</div>
+              <div class="hint-box" id="cta-hint">Selecione um ou mais modos acima.</div>
             </div>
 
             <div class="fg">
-              <label class="lbl">Hook Principal</label>
+              <label class="lbl">Hook</label>
               <select class="sel" id="hook-sel">
-                <option value="auto">🎲 Automático (melhor DNA)</option>
+                <option value="auto">🎲 Automático</option>
                 <option value="accusation">🔴 Acusação direta</option>
-                <option value="prohibition">🚫 Proibição curiosa ("Não faça...")</option>
-                <option value="comparison">👥 Comparação social (o amigo)</option>
-                <option value="question">❓ Pergunta-espelho criativa</option>
-                <option value="recipe">🧪 Receita com ingredientes</option>
-                <option value="challenge">🏆 Desafio (30/45 dias)</option>
-                <option value="humor">😂 Humor + analogia absurda</option>
-                <option value="status">👑 Status ("ela vai notar")</option>
-                <option value="sleep">😴 Sabotador do sono (cueca/calor)</option>
+                <option value="prohibition">🚫 Proibição curiosa</option>
+                <option value="comparison">👥 Comparação social</option>
+                <option value="question">❓ Pergunta-espelho</option>
+                <option value="recipe">🧪 Receita</option>
+                <option value="challenge">🏆 Desafio 30/45 dias</option>
+                <option value="humor">😂 Humor + analogia</option>
+                <option value="status">👑 Status</option>
+                <option value="sleep">😴 Sabotador do sono</option>
               </select>
             </div>
 
             <div class="fg">
               <label class="lbl">Tom</label>
               <div class="pills" id="pl-tone">
-                <button class="pill sel-r" data-v="visceral"   data-c="r" data-group="tone-single" onclick="pillToggleSingle(this)">🔥 Visceral</button>
-                <button class="pill"       data-v="cientifico" data-c="r" data-group="tone-single" onclick="pillToggleSingle(this)">🧬 Científico</button>
-                <button class="pill"       data-v="provocativo"data-c="r" data-group="tone-single" onclick="pillToggleSingle(this)">😏 Provocativo</button>
-                <button class="pill"       data-v="ancestral"  data-c="g" data-group="tone-single" onclick="pillToggleSingle(this)">🌿 Ancestral</button>
+                <button class="pill" data-v="visceral"    data-c="r" data-group="tone">🔥 Visceral</button>
+                <button class="pill" data-v="cientifico"  data-c="b" data-group="tone">🧬 Científico</button>
+                <button class="pill" data-v="provocativo" data-c="y" data-group="tone">😏 Provocativo</button>
+                <button class="pill" data-v="ancestral"   data-c="g" data-group="tone">🌿 Ancestral</button>
               </div>
             </div>
 
             <div class="fg">
-              <label class="lbl">Palavra Ambígua</label>
+              <label class="lbl">Metáfora</label>
               <div class="pills" id="pl-meta">
-                <button class="pill sel-r" data-v="auto"        data-c="r" data-group="meta-single" onclick="pillToggleSingle(this)">🎲 Auto</button>
-                <button class="pill"       data-v="amigão"      data-c="g" data-group="meta-single" onclick="pillToggleSingle(this)">amigão 🇧🇷</button>
-                <button class="pill"       data-v="ferramenta"  data-c="g" data-group="meta-single" onclick="pillToggleSingle(this)">ferramenta 🇧🇷</button>
-                <button class="pill"       data-v="jubileu"     data-c="g" data-group="meta-single" onclick="pillToggleSingle(this)">jubileu 🇧🇷</button>
-                <button class="pill"       data-v="espada"      data-c="g" data-group="meta-single" onclick="pillToggleSingle(this)">espada 🇧🇷</button>
-                <button class="pill"       data-v="pergaminho"  data-c="g" data-group="meta-single" onclick="pillToggleSingle(this)">pergaminho 🇧🇷</button>
-                <button class="pill"       data-v="lápiz"       data-c="b" data-group="meta-single" onclick="pillToggleSingle(this)">lápiz 🌎</button>
-                <button class="pill"       data-v="herramienta" data-c="b" data-group="meta-single" onclick="pillToggleSingle(this)">herramienta 🌎</button>
-                <button class="pill"       data-v="instrumento" data-c="b" data-group="meta-single" onclick="pillToggleSingle(this)">instrumento 🌎</button>
-                <button class="pill"       data-v="equipo"      data-c="b" data-group="meta-single" onclick="pillToggleSingle(this)">equipo 🌎</button>
-                <button class="pill"       data-v="bastón"      data-c="b" data-group="meta-single" onclick="pillToggleSingle(this)">bastón 🌎</button>
-                <button class="pill"       data-v="compañero"   data-c="b" data-group="meta-single" onclick="pillToggleSingle(this)">compañero 🌎</button>
-                <button class="pill"       data-v="tesoro"      data-c="b" data-group="meta-single" onclick="pillToggleSingle(this)">tesoro 🌎</button>
-                <button class="pill"       data-v="trofeo"      data-c="b" data-group="meta-single" onclick="pillToggleSingle(this)">trofeo 🌎</button>
-                <button class="pill"       data-v="el capitán"  data-c="b" data-group="meta-single" onclick="pillToggleSingle(this)">el capitán 🌎</button>
-                <button class="pill"       data-v="el socio"    data-c="b" data-group="meta-single" onclick="pillToggleSingle(this)">el socio 🌎</button>
+                <button class="pill" data-v="auto"        data-c="r" data-group="meta">🎲 Auto</button>
+                <button class="pill" data-v="amigão"      data-c="g" data-group="meta">amigão 🇧🇷</button>
+                <button class="pill" data-v="ferramenta"  data-c="g" data-group="meta">ferramenta 🇧🇷</button>
+                <button class="pill" data-v="jubileu"     data-c="g" data-group="meta">jubileu 🇧🇷</button>
+                <button class="pill" data-v="espada"      data-c="g" data-group="meta">espada 🇧🇷</button>
+                <button class="pill" data-v="lápiz"       data-c="b" data-group="meta">lápiz 🌎</button>
+                <button class="pill" data-v="herramienta" data-c="b" data-group="meta">herramienta 🌎</button>
+                <button class="pill" data-v="instrumento" data-c="b" data-group="meta">instrumento 🌎</button>
+                <button class="pill" data-v="equipo"      data-c="b" data-group="meta">equipo 🌎</button>
+                <button class="pill" data-v="el capitán"  data-c="b" data-group="meta">el capitán 🌎</button>
               </div>
             </div>
 
-            <div class="fg" style="margin-bottom:16px">
+            <div class="fg">
               <label class="lbl">Cross BR↔LATAM</label>
               <div class="pills" id="pl-cross">
-                <button class="pill"       data-v="off" data-c="r" data-group="cross-single" onclick="pillToggleSingle(this)">Desligado</button>
-                <button class="pill sel-p" data-v="on"  data-c="p" data-group="cross-single" onclick="pillToggleSingle(this)">✨ Ativado</button>
+                <button class="pill" data-v="off" data-c="r"  data-group="cross">Desligado</button>
+                <button class="pill" data-v="on"  data-c="p"  data-group="cross">✨ Ativado</button>
               </div>
             </div>
 
@@ -383,22 +311,18 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:1
         </div>
       </div>
 
-      <!-- RIGHT OUTPUT -->
       <div>
         <div class="card">
           <div class="ch">
-            <span class="ch-title">📱 Copies Geradas</span>
+            <span class="ch-t">📱 Copies Geradas</span>
             <div style="display:flex;gap:7px;align-items:center">
-              <span style="font-size:11px;color:var(--muted);font-family:var(--mono)" id="gen-ctr">0 geradas · 0 únicas</span>
+              <span style="font-size:11px;color:var(--mu);font-family:var(--mo)" id="gen-ctr">0 geradas</span>
               <button class="act-btn" id="clear-btn" onclick="clearAll()" style="display:none">🗑 Limpar</button>
             </div>
           </div>
           <div class="cb" style="padding:13px">
             <div class="out-area" id="out-area">
-              <div class="out-empty">
-                <div class="ico">⚡</div>
-                <p>Configure os filtros e clique em <strong>Gerar Copy</strong>.<br>Cada geração é única — o motor garante não repetição.</p>
-              </div>
+              <div class="out-empty"><div class="ic">⚡</div><p>Configure e clique em Gerar Copy.</p></div>
             </div>
           </div>
         </div>
@@ -407,156 +331,53 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:1
     </div>
   </div><!-- /generator -->
 
-  <!-- ─── DNA ─── -->
+  <!-- DNA -->
   <div class="panel" id="panel-dna">
     <div style="margin-bottom:18px">
-      <div style="font-family:var(--display);font-size:30px;letter-spacing:2px;margin-bottom:4px">DNA VIRAL — 17 COPIES</div>
-      <div style="font-size:13px;color:var(--muted)">Padrões extraídos do swipe file BR + LATAM que geraram +R$40k</div>
+      <div style="font-family:var(--di);font-size:28px;letter-spacing:2px;margin-bottom:4px">DNA VIRAL — 17 COPIES</div>
+      <div style="font-size:13px;color:var(--mu)">Padrões extraídos do swipe file BR + LATAM que geraram +R$40k</div>
     </div>
     <div class="dna-cards">
-      <div class="dna-c">
-        <div class="dna-tag-lbl" style="color:var(--r)">🔴 Hook (0–3s)</div>
-        <div class="dna-c-title">O que para o scroll</div>
-        <div class="dna-list">
-          <div class="dna-li">Acusação direta: "Por isso seu X ainda tá assim"</div>
-          <div class="dna-li">Proibição curiosa: "Não beba isso" / "Não faça"</div>
-          <div class="dna-li">Pergunta-espelho: "Seu X mais fino que fio de fone?"</div>
-          <div class="dna-li">Receita revelada: "O segredo do Kid Bengala"</div>
-          <div class="dna-li">LATAM: "¿Ya pasaste los 14 y tu lápiz sigue igual?"</div>
-        </div>
-      </div>
-      <div class="dna-c">
-        <div class="dna-tag-lbl" style="color:var(--p)">🔮 Dor / Problema</div>
-        <div class="dna-c-title">Insegurança que converte</div>
-        <div class="dna-list">
-          <div class="dna-li">Hormônios baixos = culpado científico</div>
-          <div class="dna-li">Cueca/calor como sabotador oculto do sono</div>
-          <div class="dna-li">Janela de idade fechando (20, 25, 35 anos)</div>
-          <div class="dna-li">Comparação social com amigo que avançou</div>
-          <div class="dna-li">"Ficar estagnado enquanto outros crescem"</div>
-        </div>
-      </div>
-      <div class="dna-c">
-        <div class="dna-tag-lbl" style="color:var(--y)">🏆 Prova Social</div>
-        <div class="dna-c-title">Credibilidade que fecha</div>
-        <div class="dna-list">
-          <div class="dna-li">Número concreto: 92 mil, 900, 20.000 homens</div>
-          <div class="dna-li">Prazo específico: 13, 15, 26, 45 dias</div>
-          <div class="dna-li">Cm concreto: +7cm, +4cm, +3cm, 13cm</div>
-          <div class="dna-li">Origem ancestral / tribos africanas</div>
-          <div class="dna-li">Segredo da indústria adulta revelado</div>
-        </div>
-      </div>
-      <div class="dna-c">
-        <div class="dna-tag-lbl" style="color:var(--r2)">⏰ Urgência</div>
-        <div class="dna-c-title">Pressão sem agressão</div>
-        <div class="dna-list">
-          <div class="dna-li">"Se já passou dos X anos, não tem mais volta"</div>
-          <div class="dna-li">"Cada dia sendo subestimado é humilhação"</div>
-          <div class="dna-li">"Não deixa pra segunda-feira"</div>
-          <div class="dna-li">"Pode ficar assim para sempre"</div>
-          <div class="dna-li">LATAM: "Este video puede desaparecer"</div>
-        </div>
-      </div>
-      <div class="dna-c">
-        <div class="dna-tag-lbl" style="color:var(--g)">🌿 Ingrediente / Método</div>
-        <div class="dna-c-title">Tangibilidade que convence</div>
-        <div class="dna-list">
-          <div class="dna-li">Açafrão + gengibre + bicarbonato + limão</div>
-          <div class="dna-li">"Protocolo de 2 minutos antes de dormir"</div>
-          <div class="dna-li">"Dois movimentos manuais + mistura"</div>
-          <div class="dna-li">Ingredientes simples = acessível pra todos</div>
-          <div class="dna-li">LATAM: "Solo 5 minutos al día"</div>
-        </div>
-      </div>
-      <div class="dna-c">
-        <div class="dna-tag-lbl" style="color:var(--b)">👑 Identidade Masculina</div>
-        <div class="dna-c-title">Gatilho que transforma</div>
-        <div class="dna-list">
-          <div class="dna-li">"Ela vai mandar print pras amigas"</div>
-          <div class="dna-li">"Minhoca vira jiboia" — contraste visceral</div>
-          <div class="dna-li">"Do pálido pro porrete"</div>
-          <div class="dna-li">LATAM: "Te llamarán caballo / el capitán"</div>
-          <div class="dna-li">"Ya no eres el mismo hombre"</div>
-        </div>
-      </div>
-      <div class="dna-c">
-        <div class="dna-tag-lbl" style="color:#ff6b9d">💬 9 Modos de CTA</div>
-        <div class="dna-c-title">Todo o espectro de engajamento</div>
-        <div class="dna-list">
-          <div class="dna-li">🎯 Bio — urgência para clicar no link</div>
-          <div class="dna-li">💬 Comentário — palavra/frase/idade nos comments</div>
-          <div class="dna-li">🔁 Compartilhar — marca amigo / manda pra alguém</div>
-          <div class="dna-li">➕ Seguir — "toda semana solto método novo"</div>
-          <div class="dna-li">🔖 Salvar — "vai sair do ar / guarda antes"</div>
-          <div class="dna-li">❤️ Curtir — "curte se você se reconheceu"</div>
-          <div class="dna-li">🎬 Dueto/Stitch — resultado em 30 dias</div>
-          <div class="dna-li">📩 DM/Direct — protocolo no privado</div>
-          <div class="dna-li">🔀 Misto — combina 2-3 ações num CTA fluido</div>
-        </div>
-      </div>
-      <div class="dna-c">
-        <div class="dna-tag-lbl" style="color:#ffa500">🌎 Metáforas LATAM expandidas</div>
-        <div class="dna-c-title">Ambiguidade pan-LATAM</div>
-        <div class="dna-list">
-          <div class="dna-li">lápiz, herramienta, instrumento, equipo</div>
-          <div class="dna-li">bastón, compañero, tesoro, trofeo</div>
-          <div class="dna-li">el capitán, el socio, el amigo de abajo</div>
-          <div class="dna-li">BR: amigão, ferramenta, jubileu, espada, pergaminho</div>
-          <div class="dna-li">Cross: "tu herramienta" com energia do "guerreiro BR"</div>
-        </div>
-      </div>
-    </div>
-    <div style="background:var(--s1);border:1px solid var(--border);border-radius:11px;padding:18px">
-      <div style="font-family:var(--display);font-size:18px;letter-spacing:2px;margin-bottom:14px">FLUXO DE CROSS-POLLINATION BR → LATAM</div>
-      <div style="font-size:13px;color:var(--muted2);line-height:1.8">
-        Quando ativado, o motor pega o DNA mais visceral das copies BR (humor absurdo, comparação do amigo, receitas concretas, urgência "não deixa pra segunda") e reescreve no sintaxe espanhol LATAM — mantendo a energia BR mas com a cadência e vocabulário do mercado hispânico. Resultado: copies com mais energia que as LATAM originais mas 100% compreensíveis de México ao Chile.
-      </div>
+      <div class="dna-c"><div class="dna-tag-lbl" style="color:var(--r)">🎯 Hook (0–3s)</div><div class="dna-c-title">Para o scroll instantâneo</div><div class="dna-list"><div class="dna-li">Acusação direta: "Por isso teu X ainda é Y"</div><div class="dna-li">Proibição curiosa: "Não faça X porque..."</div><div class="dna-li">Pergunta-espelho: "Teu X tá mais fino que..."</div><div class="dna-li">Revelação de receita com ingredientes reais</div></div></div>
+      <div class="dna-c"><div class="dna-tag-lbl" style="color:var(--b)">🧬 Dor + Culpado</div><div class="dna-c-title">Hormônios como vilão científico</div><div class="dna-list"><div class="dna-li">Testosterona + GH baixos = culpa concreta</div><div class="dna-li">Cueca/calor = sabotador oculto do sono</div><div class="dna-li">Janela de idade: "se já passou dos X anos..."</div><div class="dna-li">Comparação social visceral (o amigo)</div></div></div>
+      <div class="dna-c"><div class="dna-tag-lbl" style="color:var(--g)">📊 Prova Social</div><div class="dna-c-title">Números que convencem</div><div class="dna-list"><div class="dna-li">Volume: 92 mil, 900, 20.000 homens</div><div class="dna-li">Prazo: 13, 15, 26, 45 dias</div><div class="dna-li">Resultado: +3, +4, +7 centímetros</div><div class="dna-li">Origem: "tribos do sul da África"</div></div></div>
+      <div class="dna-c"><div class="dna-tag-lbl" style="color:var(--y)">⏰ Urgência</div><div class="dna-c-title">Janela fechando agora</div><div class="dna-list"><div class="dna-li">"Cada dia é uma humilhação acumulada"</div><div class="dna-li">"Não deixa pra segunda-feira"</div><div class="dna-li">"Pode ficar assim para sempre"</div><div class="dna-li">"Antes que seja tarde demais"</div></div></div>
+      <div class="dna-c"><div class="dna-tag-lbl" style="color:var(--p)">💬 9 Modos CTA</div><div class="dna-c-title">Todo o espectro de engajamento</div><div class="dna-list"><div class="dna-li">🎯 Bio — urgência para link</div><div class="dna-li">💬 Comentário — palavra/idade nos comments</div><div class="dna-li">🔁 Compartilhar — marca um amigo</div><div class="dna-li">➕ Seguir / 🔖 Salvar / ❤️ Curtir / 🎬 Dueto / 📩 DM / 🔀 Misto</div></div></div>
+      <div class="dna-c"><div class="dna-tag-lbl" style="color:var(--r2)">🎭 Metáforas BR</div><div class="dna-c-title">Ambiguidade criativa</div><div class="dna-list"><div class="dna-li">amigão · ferramenta · jubileu</div><div class="dna-li">espada · peru · milau · pinu</div><div class="dna-li">pergaminho · minhoca→jiboia</div><div class="dna-li">pálido→porrete</div></div></div>
+      <div class="dna-c"><div class="dna-tag-lbl" style="color:var(--b)">🌎 Metáforas LATAM</div><div class="dna-c-title">Vocabulário nativo</div><div class="dna-list"><div class="dna-li">lápiz · herramienta · instrumento</div><div class="dna-li">equipo · bastón · compañero</div><div class="dna-li">tesoro · trofeo · el capitán</div><div class="dna-li">el socio · caballo</div></div></div>
+      <div class="dna-c"><div class="dna-tag-lbl" style="color:var(--g)">✨ Cross BR→LATAM</div><div class="dna-c-title">Energia BR + sintaxe latina</div><div class="dna-list"><div class="dna-li">Humor visceral do BR em espanhol nativo</div><div class="dna-li">NÃO é tradução literal — é reescrita</div><div class="dna-li">Gírias BR adaptadas culturalmente</div><div class="dna-li">Resultado: copy de maior conversão</div></div></div>
     </div>
   </div><!-- /dna -->
 
-  <!-- ─── VAULT ─── -->
+  <!-- VAULT -->
   <div class="panel" id="panel-vault">
     <div style="margin-bottom:18px">
-      <div style="font-family:var(--display);font-size:30px;letter-spacing:2px;margin-bottom:4px">VAULT DE COPIES</div>
-      <div style="font-size:13px;color:var(--muted)">Swipe file completo — filtre, visualize e gerencie</div>
+      <div style="font-family:var(--di);font-size:28px;letter-spacing:2px;margin-bottom:4px">VAULT DE COPIES</div>
+      <div style="font-size:13px;color:var(--mu)">17 copies originais + suas adições</div>
     </div>
     <div class="vault-grid">
       <div>
-        <div class="card">
-          <div class="ch">
-            <span class="ch-title">📚 Swipe File</span>
-            <div style="display:flex;gap:6px;flex-wrap:wrap">
-              <button class="pill on-g" onclick="filterVault('all',this)">Todas</button>
-              <button class="pill" onclick="filterVault('br',this)">🇧🇷 BR</button>
-              <button class="pill" onclick="filterVault('latam',this)">🌎 LATAM</button>
-              <button class="pill" onclick="filterVault('custom',this)">➕ Adicionadas</button>
-            </div>
-          </div>
-          <div class="cb" style="padding:10px">
-            <div class="v-list" id="v-list"></div>
-          </div>
+        <div style="display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap">
+          <button class="pill" data-v="all"    data-c="g" data-group="vf" onclick="filterVault('all',this)">Todas</button>
+          <button class="pill" data-v="br"     data-c="g" data-group="vf" onclick="filterVault('br',this)">🇧🇷 BR</button>
+          <button class="pill" data-v="latam"  data-c="b" data-group="vf" onclick="filterVault('latam',this)">🌎 LATAM</button>
+          <button class="pill" data-v="custom" data-c="p" data-group="vf" onclick="filterVault('custom',this)">➕ Minhas</button>
         </div>
+        <div id="v-list"></div>
       </div>
-      <div>
-        <div class="card">
-          <div class="ch"><span class="ch-title">➕ Adicionar ao Vault</span></div>
-          <div class="cb">
-            <div class="fg"><label class="lbl">Nome / Referência</label>
-              <input type="text" class="inp" id="v-name" placeholder="Ex: CP10-NOVA-BR">
-            </div>
-            <div class="fg"><label class="lbl">Idioma</label>
-              <div class="pills">
-                <button class="pill on-g" id="vl-br" onclick="setVLang('br')">🇧🇷 BR</button>
-                <button class="pill" id="vl-latam" onclick="setVLang('latam')">🌎 LATAM</button>
-              </div>
-            </div>
-            <div class="fg"><label class="lbl">Texto</label>
-              <textarea class="ta" id="v-text" placeholder="Cole o texto completo da copy…" style="min-height:140px"></textarea>
-            </div>
-            <button class="add-btn" onclick="addCopyVault()">➕ Salvar</button>
-            <div class="add-ok" id="vault-ok" style="display:none;font-size:11px;color:var(--g);margin-top:6px;text-align:center">✓ Salva!</div>
+      <div class="card">
+        <div class="ch"><span class="ch-t">➕ Adicionar</span></div>
+        <div class="cb">
+          <div class="fg"><label class="lbl">Nome</label><input class="inp" id="v-name" placeholder="CP10-NOVA-BR"></div>
+          <div class="fg"><label class="lbl">Idioma</label>
+            <select class="sel" id="v-lang">
+              <option value="br">🇧🇷 BR</option>
+              <option value="latam">🌎 LATAM</option>
+            </select>
           </div>
+          <div class="fg"><label class="lbl">Texto</label><textarea class="ta" id="v-text" style="min-height:120px" placeholder="Cole o texto completo…"></textarea></div>
+          <button class="add-btn" onclick="addCopyVault()">➕ Salvar</button>
+          <div class="add-ok" id="vault-ok">✓ Salva!</div>
         </div>
       </div>
     </div>
@@ -566,145 +387,153 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:1
 </div><!-- /shell -->
 
 <script>
-// ════════════════════════════════════════════════════════════
-// SWIPE FILE — 9 BR + 8 LATAM
-// ════════════════════════════════════════════════════════════
-const SF = {
-br:[
-  {id:'br01',name:'CP01 · 45 Dias',lang:'br',cta:'bio',metaphor:'pinu',
-   hook:'Se tu usar isso por 45 dias, vai ter que parar de usar cueca',
-   pain:'Tu vai ganhar 7 centímetros a mais e vai ficar difícil de esconder',
-   proof:'Vídeo na bio explicando tudo. Vê lá hoje ainda!',
-   urgency:'Para de enrolar e resolve isso',
-   text:'Se tu usar isso por 45 dias, vai ter que parar de usar cueca, pois elas não irão mais caber em você. Tu vai ganhar 7 centímetros a mais e vai ficar difícil de esconder o pinu. Então para de enrolar e resolve isso, o vídeo te explicando tudo está na minha bio. Vê lá hoje ainda!'},
-  {id:'br02',name:'CP02 · Receita Kid',lang:'br',cta:'engagement',metaphor:'amigão',
-   hook:'A receita secreta do Kid Bengala para aumentar a mandioca foi revelada',
-   pain:'Açafrão fresco, gengibre em pó e bicarbonato destrava os tecidos do amigão',
-   proof:'É tomar e ver o milau crescer',
-   urgency:'Comenta se já conhecia',
-   text:'A receita secreta do Kid Bengala para aumentar a mandioca foi revelada, e eu vou te falar ela agora. Açafrão fresco, gengibre em pó e bicarbonato, toma todo dia antes de dormir. Essa mistura libera o fluxo sanguíneo e destrava os tecidos do amigão. É tomar e ver o milau crescer. Comenta aqui se já conhecia essa mistura e clica no link da bio para conhecer mais técnicas.'},
-  {id:'br03',name:'CP03 · Fone de Ouvido',lang:'br',cta:'bio',metaphor:'peru',
-   hook:'Teu peru tá mais fino que fio de fone de ouvido?',
-   pain:'Cada dia sendo subestimado é humilhação que acumula',
-   proof:'900 homens viraram o jogo. Minhoca vira jiboia em 3 semanas',
-   urgency:'Não deixa pra segunda-feira',
-   text:'Teu peru tá mais fino que fio de fone de ouvido? Calma, guerreiro. Tem salvação. Com dois movimentos manuais e uma mistura que detona a circulação, tua minhoca vira jiboia em três semanas. O que era motivo de piada vira lenda. E quando ela perceber que tu saiu do pálido pro porrete, vai mandar print pras amigas dizendo não é possível que cresceu. Já ajudei mais de 900 homens a virarem o jogo. Clica na foto do perfil agora, mas não deixa pra segunda-feira, porque cada dia sendo subestimado é humilhação que acumula.'},
-  {id:'br04',name:'CP04 · Receita Espada',lang:'br',cta:'engagement',metaphor:'espada',
-   hook:'Açafrão, gengibre, limão e bicarbonato — segredo da indústria adulta',
-   pain:'Os atores usam isso há anos para aumentar a espada',
-   proof:'45 dias e tu já vê a grande diferença',
-   urgency:'Compartilha pra um amigo',
-   text:'Açafrão, gengibre, limão e bicarbonato. Isso pode parecer ingrediente simples, mas é o maior segredo da indústria adulta. Os atores usam isso há anos para aumentar a espada e ficar em campo por horas. Basta fazer a receita 1 hora antes de dormir e em 45 dias tu já vê a grande diferença. Se tu quiser receber dicas todos os dias como essa, segue aqui e compartilha para um amigo esse vídeo.'},
-  {id:'br05',name:'CP05 · Cueca',lang:'br',cta:'bio',metaphor:'ferramenta',
-   hook:'Se tu dorme de cueca, provavelmente não tem mais do que 14 centímetros',
-   pain:'Esquentar a região de baixo reduz tudo',
-   proof:'Técnica do bicarbonato que ajudou mais de 92 mil homens',
-   urgency:'Se já passou dos 25 anos, só existe uma forma',
-   text:'Se tu dorme de cueca, tu provavelmente não tem mais do que 14 centímetros de ferramenta. E tu não sabia disso, tenho certeza. O que acontece é que esquentar a região de baixo é um problema enorme. E se tu já passou dos 25 anos, só existe uma forma de reverter os danos por ter dormido de cueca todo esse tempo. Acesse minha bio e veja o vídeo onde ensina a técnica do bicarbonato que já ajudou mais de 92 mil homens.'},
-  {id:'br06',name:'CP06 · 13 Centímetros',lang:'br',cta:'bio',metaphor:'ferramenta',
-   hook:'Quando o homem não passa de 13 centímetros na ferramenta',
-   pain:'Testosterona e GH baixos junto com alimentação errada podem encolher o amigão',
-   proof:'Até 35 anos esse método ainda pode te dar até 7 centímetros',
-   urgency:'Cada ano fica mais difícil mudar',
-   text:'Quando o homem não passa de 13 centímetros na ferramenta, são por esses dois motivos. A insuficiência de hormônios como testosterona e GH, junto com a falta de alimentação correta, pode encolher o seu amigão. E cada ano fica mais difícil mudar isso, então se tu tem até 35 anos, esse método ainda pode te dar até 7 centímetros. Vai na minha bio e veja o vídeo completo.'},
-  {id:'br07',name:'CP07 · Jubileu',lang:'br',cta:'bio',metaphor:'jubileu',
-   hook:'Por que seu jubileu nunca passou daquele tamanho?',
-   pain:'Hormônios desligados. Com testosterona baixa, não existe desempenho',
-   proof:'Em 13 dias você já nota. Em 26, impossível não perceber',
-   urgency:'Sem cápsulas milagrosas, sem riscos',
-   text:'Você já parou pra pensar por que seu jubileu nunca passou daquele tamanho? Mesmo crescendo, ele ficou ali, parado. Isso acontece porque seus hormônios estão desligados. Com testosterona baixa, não existe desempenho. Mas existe uma forma 100% natural de reativar esses hormônios. Resultado? Mais circulação, mais firmeza. E sim, aumento real. Em 13 dias, você já nota a diferença. Em 26, é quase impossível não perceber. Link na bio.'},
-  {id:'br08',name:'CP08 · Amigão',lang:'br',cta:'bio',metaphor:'amigão',
-   hook:'Sabe por que o seu amigão continua pequeno?',
-   pain:'Testosterona baixa — o amigo que cresceu não foi sorte',
-   proof:'Técnicas 100% naturais, sem pílulas, sem químicos',
-   urgency:'Antes que seja tarde demais',
-   text:'Sabe por que o seu amigão continua pequeno? Se você já passou dos 20 anos e ele não cresceu como deveria, isso é um sinal claro. Suas hormonas estão baixas. Lembra daquele amigo que do nada mudou a voz, cresceu mais rápido e até o volume dele aumentou? Não foi sorte. Foi testosterona alta. Enquanto alguns avançam, quem tem a testosterona baixa fica estagnado. Quer mudar isso? Clique no link do meu perfil e desbloqueie o crescimento antes que seja tarde demais.'},
-  {id:'br09',name:'CP09 · Afinado',lang:'br',cta:'bio',metaphor:'amigão',
-   hook:'Você tá afinando o seu amigão enquanto dorme e nem sabe disso',
-   pain:'Dormir apertado reduz oxigenação — perde grossura, firmeza e sensibilidade',
-   proof:'Protocolo de dois minutos aumenta circulação no dia seguinte',
-   urgency:'Seu resultado só muda quando você muda sua rotina',
-   text:'Você tá afinando o seu amigão enquanto dorme e nem sabe disso. Dormir apertado, abufado e com o calor preso da cueca reduz oxigenação e circulação. Exatamente o que faz perder grossura, firmeza e sensibilidade. Tem um protocolo de dois minutos antes de dormir que aumenta a circulação e melhora a resposta logo no dia seguinte. Clica no link da Bio pra aprender agora. Seu resultado só muda quando você muda sua rotina.'}
-],
-latam:[
-  {id:'es01',name:'CP01-ES · Lápiz',lang:'latam',cta:'bio',metaphor:'lápiz',
-   hook:'Por eso tu lápiz sigue siendo pequeño',
-   pain:'Tus hormonas están bajas — puede quedarse así para siempre',
-   proof:'Tu amigo que cambió la voz fue testosterona alta',
-   urgency:'Antes de que sea demasiado tarde',
-   text:'Por eso tu lápiz sigue siendo pequeño. Si ya pasaste los 18 y no ha crecido como debería, esa es una señal clara. Tus hormonas están bajas. Sabes ese amigo que de la nada le cambió la voz, creció más rápido. No fue suerte, fue testosterona alta. Te dejé varias técnicas que activan tu testosterona y desbloquean el crecimiento de forma natural, sin pastillas. Haz clic en mi perfil antes de que sea demasiado tarde.'},
-  {id:'es02',name:'CP02-ES · Mezcla',lang:'latam',cta:'bio',metaphor:'lápiz',
-   hook:'Tu lápiz se quedó estancado? Prueba esto',
-   pain:'Protocolo ancestral de tribus del sur de África — 5 minutos al día',
-   proof:'Un seguidor ganó +3cm en 15 días',
-   urgency:'Hazlo antes de que desaparezca',
-   text:'Tu lápiz se quedó estancado? Prueba esto. Una mezcla natural que muchos están usando y los resultados son de locos. Más energía, más fuerza, y sí, hasta 7 centímetros de crecimiento. Un seguidor me dijo, en 15 días ya noté el cambio. Es un protocolo ancestral usado por tribus del sur de África. Solo 5 minutos al día. Haz clic en el enlace de mi perfil. Hazlo antes de que desaparezca.'},
-  {id:'es03',name:'CP03-ES · Caballo',lang:'latam',cta:'bio',metaphor:'instrumento',
-   hook:'Ellas te van a llamar caballo después de usar esto',
-   pain:'Miles de hombres me escriben en privado',
-   proof:'+3cm en apenas las primeras dos semanas',
-   urgency:'Este video puede desaparecer en cualquier momento',
-   text:'Ellas te van a llamar caballo después de usar esto. Miles de hombres ya me están escribiendo en privado para agradecerme diciendo que lograron aumentar más de 3 centímetros en apenas las primeras dos semanas. Decidí revelar este truco solo hoy. Mira la bio de mi perfil y haz ahora una evaluación gratuita. Pero ve rápido porque este video puede desaparecer.'},
-  {id:'es04',name:'CP04-ES · Método Milenario',lang:'latam',cta:'bio',metaphor:'lápiz',
-   hook:'Si eres hombre entre 15 y 27 años y sientes que tu lápiz no se desarrolla',
-   pain:'Más de 20.000 hombres ya lo usaron — algunos ganaron hasta 7 centímetros',
-   proof:'Técnicas africanas 100% naturales',
-   urgency:'Descubre cuánto podrías ganar',
-   text:'Si eres hombre entre 15 y 27 años y sientes que tu lápiz no se está desarrollando como esperabas, quédate. Existe un método milenario y secreto que ya ha ayudado a más de 20.000 hombres a lograr resultados impresionantes. Algunos han ganado hasta 7 centímetros en pocos meses. Yo dejé una evaluación gratuita en el enlace de mi perfil. Descubre cuánto podrías ganar aplicando estas técnicas africanas 100% naturales.'},
-  {id:'es05',name:'CP05-ES · Hormonas',lang:'latam',cta:'bio',metaphor:'lápiz',
-   hook:'Notas que tu lápiz no está creciendo como esperabas?',
-   pain:'Testosterona y GH desequilibrados — el crecimiento se detiene',
-   proof:'Métodos 100% naturales sin pastillas ni riesgos',
-   urgency:'Empieza a transformar tu cuerpo desde hoy',
-   text:'Notas que tu lápiz no está creciendo como esperabas? Si lo ves más pequeño que el de tus amigos, es probable que tus niveles hormonales estén bajos. La testosterona y la hormona del crecimiento son esenciales. Cuando están desequilibradas, el crecimiento se detiene. Haz clic en el enlace de mi perfil y empieza a transformar tu cuerpo desde hoy.'},
-  {id:'es06',name:'CP06-ES · Reto 45d',lang:'latam',cta:'engagement',metaphor:'instrumento',
-   hook:'Voy a proponerte un reto — 45 días para crecer entre 3 y 6 centímetros',
-   pain:'Con una condición: vuelves a contar tu testimonio',
-   proof:'Protocolo personalizado paso a paso',
-   urgency:'¿Te animas?',
-   text:'Voy a proponerte un reto. En 45 días voy a ayudarte a que tu amigo de abajo crezca entre 3 y 6 centímetros. Pero con una condición. Volverás a este video para contar tu testimonio. Te pasaré un protocolo personalizado que solo tendrás que seguir para ver los resultados. ¿Te animas? Entonces haz clic en mi perfil y sigue el paso a paso.'},
-  {id:'es07',name:'CP07-ES · 14 Años',lang:'latam',cta:'bio',metaphor:'lápiz',
-   hook:'¿Ya pasaste los 14 y tu lápiz sigue del mismo tamaño? Eso no es normal',
-   pain:'Si no haces nada ahora, puede quedarse así para siempre',
-   proof:'Sin pastillas, sin hormonas artificiales, sin efectos secundarios',
-   urgency:'Puedes perder tu momento',
-   text:'¿Ya pasaste los 14 y tu lápiz sigue del mismo tamaño? Eso no es normal. Es una señal clara de que tus hormonas están por el suelo. ¿Has notado ese amigo que de repente cambió la voz? No fue suerte. Fue testosterona alta. Si no haces nada, puedes perder tu momento. Si actúas ahora, puedes ver cambios reales en semanas. Haz clic en mi perfil y accede a la evaluación gratuita.'},
-  {id:'es08',name:'CP08-ES · No Bebas',lang:'latam',cta:'bio',metaphor:'lápiz',
-   hook:'No bebas mucho de esto porque tu lápiz va a crecer demasiado rápido',
-   pain:'Hombres comunes volvieron después de pocos días sin poder creer',
-   proof:'Sientes la diferencia desde los primeros días — más grueso, más firme',
-   urgency:'Está en el enlace de la biografía',
-   text:'No bebas mucho de esto porque tu lápiz va a crecer demasiado rápido y en poco tiempo va a llegar a los 19 centímetros. Quizás pienses que estoy exagerando, pero ya he visto a hombres comunes volver después de pocos días diciéndome que no podían creer lo que estaba pasando. No es un medicamento, no es cirugía. Sientes la diferencia desde los primeros días. Está en el enlace de la biografía.'}
+// ══════════════════════════════════════════
+// SWIPE FILE
+// ══════════════════════════════════════════
+const SF={br:[
+  {id:'br01',name:'CP01 · 45 Dias',lang:'br',cta:'bio',metaphor:'pinu',hook:'Se tu usar isso por 45 dias, vai ter que parar de usar cueca',text:'Se tu usar isso por 45 dias, vai ter que parar de usar cueca, pois elas não irão mais caber em você. Tu vai ganhar 7 centímetros a mais e vai ficar difícil de esconder o pinu. Então para de enrolar e resolve isso, o vídeo te explicando tudo está na minha bio. Vê lá hoje ainda!'},
+  {id:'br02',name:'CP02 · Receita Kid',lang:'br',cta:'engagement',metaphor:'amigão',hook:'A receita secreta do Kid Bengala para aumentar a mandioca foi revelada',text:'A receita secreta do Kid Bengala para aumentar a mandioca foi revelada, e eu vou te falar ela agora. Açafrão fresco, gengibre em pó e bicarbonato, toma todo dia antes de dormir. Essa mistura libera o fluxo sanguíneo e destrava os tecidos do amigão. É tomar e ver o milau crescer. Comenta aqui se já conhecia essa mistura e clica no link da bio para conhecer mais técnicas.'},
+  {id:'br03',name:'CP03 · Fone de Ouvido',lang:'br',cta:'bio',metaphor:'peru',hook:'Teu peru tá mais fino que fio de fone de ouvido?',text:'Teu peru tá mais fino que fio de fone de ouvido? Calma, guerreiro. Tem salvação. Com dois movimentos manuais e uma mistura que detona a circulação, tua minhoca vira jiboia em três semanas. O que era motivo de piada vira lenda. E quando ela perceber que tu saiu do pálido pro porrete, vai mandar print pras amigas dizendo não é possível que cresceu. Já ajudei mais de 900 homens a virarem o jogo. Clica na foto do perfil agora, mas não deixa pra segunda-feira, porque cada dia sendo subestimado é humilhação que acumula.'},
+  {id:'br04',name:'CP04 · Receita Espada',lang:'br',cta:'engagement',metaphor:'espada',hook:'Açafrão, gengibre, limão e bicarbonato — segredo da indústria adulta',text:'Açafrão, gengibre, limão e bicarbonato. Isso pode parecer ingrediente simples, mas é o maior segredo da indústria adulta. Os atores usam isso há anos para aumentar a espada e ficar em campo por horas. Basta fazer a receita 1 hora antes de dormir e em 45 dias tu já vê a grande diferença. Se tu quiser receber dicas todos os dias como essa, segue aqui e compartilha para um amigo esse vídeo.'},
+  {id:'br05',name:'CP05 · Cueca',lang:'br',cta:'bio',metaphor:'ferramenta',hook:'Se tu dorme de cueca, provavelmente não tem mais do que 14 centímetros',text:'Se tu dorme de cueca, tu provavelmente não tem mais do que 14 centímetros de ferramenta. E tu não sabia disso, tenho certeza. O que acontece é que esquentar a região de baixo é um problema enorme. E se tu já passou dos 25 anos, só existe uma forma de reverter os danos por ter dormido de cueca todo esse tempo. Acesse minha bio e veja o vídeo onde ensina a técnica do bicarbonato que já ajudou mais de 92 mil homens.'},
+  {id:'br06',name:'CP06 · 13cm',lang:'br',cta:'bio',metaphor:'ferramenta',hook:'Quando o homem não passa de 13 centímetros na ferramenta',text:'Quando o homem não passa de 13 centímetros na ferramenta, são por esses dois motivos. A insuficiência de hormônios como testosterona e GH, junto com a falta de alimentação correta, pode encolher o seu amigão. E cada ano fica mais difícil mudar isso, então se tu tem até 35 anos, esse método ainda pode te dar até 7 centímetros. Vai na minha bio e veja o vídeo completo.'},
+  {id:'br07',name:'CP07 · Jubileu',lang:'br',cta:'bio',metaphor:'jubileu',hook:'Por que seu jubileu nunca passou daquele tamanho?',text:'Você já parou pra pensar por que seu jubileu nunca passou daquele tamanho? Mesmo crescendo, ele ficou ali, parado. Isso acontece porque seus hormônios estão desligados. Com testosterona baixa, não existe desempenho. Mas existe uma forma 100% natural de reativar esses hormônios. Resultado? Mais circulação, mais firmeza. E sim, aumento real. Em 13 dias, você já nota a diferença. Em 26, é quase impossível não perceber. Link na bio.'},
+  {id:'br08',name:'CP08 · Amigão',lang:'br',cta:'bio',metaphor:'amigão',hook:'Sabe por que o seu amigão continua pequeno?',text:'Sabe por que o seu amigão continua pequeno? Se você já passou dos 20 anos e ele não cresceu como deveria, isso é um sinal claro. Suas hormonas estão baixas. Lembra daquele amigo que do nada mudou a voz, cresceu mais rápido e até o volume dele aumentou? Não foi sorte. Foi testosterona alta. Enquanto alguns avançam, quem tem a testosterona baixa fica estagnado. Quer mudar isso? Clique no link do meu perfil e desbloqueie o crescimento antes que seja tarde demais.'},
+  {id:'br09',name:'CP09 · Afinado',lang:'br',cta:'bio',metaphor:'amigão',hook:'Você tá afinando o seu amigão enquanto dorme e nem sabe disso',text:'Você tá afinando o seu amigão enquanto dorme e nem sabe disso. Dormir apertado, abufado e com o calor preso da cueca reduz oxigenação e circulação. Exatamente o que faz perder grossura, firmeza e sensibilidade. Tem um protocolo de dois minutos antes de dormir que aumenta a circulação e melhora a resposta logo no dia seguinte. Clica no link da Bio pra aprender agora. Seu resultado só muda quando você muda sua rotina.'}
+],latam:[
+  {id:'es01',name:'CP01-ES · Lápiz',lang:'latam',cta:'bio',metaphor:'lápiz',hook:'Por eso tu lápiz sigue siendo pequeño',text:'Por eso tu lápiz sigue siendo pequeño. Si ya pasaste los 18 y no ha crecido como debería, esa es una señal clara. Tus hormonas están bajas. Sabes ese amigo que de la nada le cambió la voz, creció más rápido. No fue suerte, fue testosterona alta. Te dejé varias técnicas que activan tu testosterona y desbloquean el crecimiento de forma natural, sin pastillas. Haz clic en mi perfil antes de que sea demasiado tarde.'},
+  {id:'es02',name:'CP02-ES · Mezcla',lang:'latam',cta:'bio',metaphor:'lápiz',hook:'Tu lápiz se quedó estancado? Prueba esto',text:'Tu lápiz se quedó estancado? Prueba esto. Una mezcla natural que muchos están usando y los resultados son de locos. Más energía, más fuerza, y sí, hasta 7 centímetros de crecimiento. Un seguidor me dijo, en 15 días ya noté el cambio. Es un protocolo ancestral usado por tribus del sur de África. Solo 5 minutos al día. Haz clic en el enlace de mi perfil. Hazlo antes de que desaparezca.'},
+  {id:'es03',name:'CP03-ES · Caballo',lang:'latam',cta:'bio',metaphor:'instrumento',hook:'Ellas te van a llamar caballo después de usar esto',text:'Ellas te van a llamar caballo después de usar esto. Miles de hombres ya me están escribiendo en privado para agradecerme diciendo que lograron aumentar más de 3 centímetros en apenas las primeras dos semanas. Decidí revelar este truco solo hoy. Mira la bio de mi perfil y haz ahora una evaluación gratuita. Pero ve rápido porque este video puede desaparecer.'},
+  {id:'es04',name:'CP04-ES · Milenario',lang:'latam',cta:'bio',metaphor:'lápiz',hook:'Si eres hombre entre 15 y 27 años y sientes que tu lápiz no se desarrolla',text:'Si eres hombre entre 15 y 27 años y sientes que tu lápiz no se está desarrollando como esperabas, quédate. Existe un método milenario y secreto que ya ha ayudado a más de 20.000 hombres a lograr resultados impresionantes. Algunos han ganado hasta 7 centímetros en pocos meses. Yo dejé una evaluación gratuita en el enlace de mi perfil. Descubre cuánto podrías ganar aplicando estas técnicas africanas 100% naturales.'},
+  {id:'es05',name:'CP05-ES · Hormonas',lang:'latam',cta:'bio',metaphor:'lápiz',hook:'Notas que tu lápiz no está creciendo como esperabas?',text:'Notas que tu lápiz no está creciendo como esperabas? Si lo ves más pequeño que el de tus amigos, es probable que tus niveles hormonales estén bajos. La testosterona y la hormona del crecimiento son esenciales. Cuando están desequilibradas, el crecimiento se detiene. Haz clic en el enlace de mi perfil y empieza a transformar tu cuerpo desde hoy.'},
+  {id:'es06',name:'CP06-ES · Reto 45d',lang:'latam',cta:'engagement',metaphor:'instrumento',hook:'Voy a proponerte un reto — 45 días para crecer entre 3 y 6 centímetros',text:'Voy a proponerte un reto. En 45 días voy a ayudarte a que tu amigo de abajo crezca entre 3 y 6 centímetros. Pero con una condición. Volverás a este video para contar tu testimonio. Te pasaré un protocolo personalizado que solo tendrás que seguir para ver los resultados. ¿Te animas? Entonces haz clic en mi perfil y sigue el paso a paso.'},
+  {id:'es07',name:'CP07-ES · 14 Años',lang:'latam',cta:'bio',metaphor:'lápiz',hook:'¿Ya pasaste los 14 y tu lápiz sigue del mismo tamaño? Eso no es normal',text:'¿Ya pasaste los 14 y tu lápiz sigue del mismo tamaño? Eso no es normal. Es una señal clara de que tus hormonas están por el suelo. ¿Has notado ese amigo que de repente cambió la voz? No fue suerte. Fue testosterona alta. Si no haces nada, puedes perder tu momento. Si actúas ahora, puedes ver cambios reales en semanas. Haz clic en mi perfil y accede a la evaluación gratuita.'},
+  {id:'es08',name:'CP08-ES · No Bebas',lang:'latam',cta:'bio',metaphor:'lápiz',hook:'No bebas mucho de esto porque tu lápiz va a crecer demasiado rápido',text:'No bebas mucho de esto porque tu lápiz va a crecer demasiado rápido y en poco tiempo va a llegar a los 19 centímetros. Quizás pienses que estoy exagerando, pero ya he visto a hombres comunes volver después de pocos días diciéndome que no podían creer lo que estaba pasando. No es un medicamento, no es cirugía. Sientes la diferencia desde los primeros días. Está en el enlace de la biografía.'}
 ]};
 
-// ════════════════════════════════════════════════════════════
+// ══════════════════════════════════════════
 // STATE
-// ════════════════════════════════════════════════════════════
-let S = {
-  langs: new Set(['br','latam']),
-  types: new Set(['conversion','engagement']),
-  tone: 'visceral',
-  hook: 'auto',
-  meta: 'auto',
-  cross: 'on',
-  sbLang: 'br',
-  vLang: 'br',
-  vFilter: 'all',
-  genCount: 0,
-  uniqueCount: 0,
+// ══════════════════════════════════════════
+let S={langs:new Set(['br','latam']),cta:new Set(['bio']),tone:'visceral',meta:'auto',cross:'on',genCount:0,uniqueCount:0,vFilter:'all'};
+const MEMORY=new Set(JSON.parse(localStorage.getItem('cl_mem')||'[]'));
+let customVault=JSON.parse(localStorage.getItem('cl_vault')||'[]');
+let results=[];
+function saveMemory(fp){MEMORY.add(fp);localStorage.setItem('cl_mem',JSON.stringify([...MEMORY].slice(-200)));}
+
+// ══════════════════════════════════════════
+// PILL ENGINE — single clean implementation
+// ══════════════════════════════════════════
+const C={
+  r:{bg:'rgba(255,45,85,.18)',  bd:'#ff2d55',co:'#ff2d55',sh:'rgba(255,45,85,.15)'},
+  b:{bg:'rgba(79,172,254,.18)', bd:'#4facfe',co:'#4facfe',sh:'rgba(79,172,254,.15)'},
+  g:{bg:'rgba(0,229,160,.18)',  bd:'#00e5a0',co:'#00e5a0',sh:'rgba(0,229,160,.15)'},
+  y:{bg:'rgba(255,209,102,.18)',bd:'#ffd166',co:'#ffd166',sh:'rgba(255,209,102,.15)'},
+  p:{bg:'rgba(199,125,255,.18)',bd:'#c77dff',co:'#c77dff',sh:'rgba(199,125,255,.15)'},
 };
 
-// Anti-repetition memory — tracks fingerprints of generated copies
-const MEMORY = new Set(JSON.parse(localStorage.getItem('cl_memory')||'[]'));
-let customVault = JSON.parse(localStorage.getItem('cl_vault')||'[]');
-let results = [];
+function pon(btn){
+  const c=C[btn.dataset.c]||C.r;
+  btn.style.cssText+=`;background:${c.bg};border-color:${c.bd};color:${c.co};box-shadow:0 0 0 3px ${c.sh}`;
+  btn.classList.add('on');
+  btn.style.animation='none'; void btn.offsetWidth; btn.style.animation='';
+}
+function poff(btn){
+  btn.style.background=''; btn.style.borderColor=''; btn.style.color=''; btn.style.boxShadow='';
+  btn.classList.remove('on');
+}
 
-function saveMemory(fp){ MEMORY.add(fp); localStorage.setItem('cl_memory',JSON.stringify([...MEMORY].slice(-200))); }
+// groups: lang=multi, cta=multi, tone=single, meta=single, cross=single
+const MULTI_GROUPS=['lang','cta'];
 
-// ════════════════════════════════════════════════════════════
+function pillClick(btn){
+  const g=btn.dataset.group;
+  if(!g) return;
+  if(MULTI_GROUPS.includes(g)){
+    const sibs=[...document.querySelectorAll(`.pill[data-group="${g}"]`)];
+    const active=sibs.filter(b=>b.classList.contains('on'));
+    const isOn=btn.classList.contains('on');
+    if(isOn && active.length<=1) return; // keep at least 1
+    isOn ? poff(btn) : pon(btn);
+    const now=sibs.filter(b=>b.classList.contains('on')).map(b=>b.dataset.v);
+    if(g==='lang') S.langs=new Set(now);
+    if(g==='cta'){S.cta=new Set(now); updateHint();}
+  } else {
+    document.querySelectorAll(`.pill[data-group="${g}"]`).forEach(b=>poff(b));
+    pon(btn);
+    const v=btn.dataset.v;
+    if(g==='tone') S.tone=v;
+    if(g==='meta') S.meta=v;
+    if(g==='cross') S.cross=v;
+  }
+}
+
+// attach click to all pills
+document.querySelectorAll('.pill[data-group]').forEach(btn=>{
+  btn.addEventListener('click', ()=>pillClick(btn));
+});
+
+// vault filter pills (no data-group, handled separately)
+function filterVault(f,btn){
+  document.querySelectorAll('#panel-vault .pill').forEach(b=>poff(b));
+  pon(btn); S.vFilter=f; renderVault();
+}
+
+// ══════════════════════════════════════════
+// INIT — activate defaults
+// ══════════════════════════════════════════
+function initGroup(group, vals){
+  document.querySelectorAll(`.pill[data-group="${group}"]`).forEach(btn=>{
+    if(vals.includes(btn.dataset.v)) pon(btn);
+  });
+}
+initGroup('lang',['br','latam']);
+initGroup('cta',['bio']);
+initGroup('tone',['visceral']);
+initGroup('meta',['auto']);
+initGroup('cross',['on']);
+
+// vault filter — init "all"
+pon(document.querySelector('#panel-vault .pill[data-v="all"]')||document.querySelector('.pill[data-v="all"]'));
+
+updateHint();
+updateUI();
+
+// ══════════════════════════════════════════
+// CTA HINTS
+// ══════════════════════════════════════════
+const CTA_HINTS={
+  bio:'🎯 Bio — urgência emocional para clicar no link.',
+  comment:'💬 Comentário — pede palavra/frase/idade nos comments.',
+  share:'🔁 Compartilhar — "manda pra um amigo que precisa".',
+  follow:'➕ Seguir — "toda semana solto método novo".',
+  save:'🔖 Salvar — "vai sair do ar, guarda antes".',
+  like:'❤️ Curtir — "curte se você se reconheceu".',
+  duet:'🎬 Dueto/Stitch — resultado em 30 dias.',
+  dm:'📩 DM — "me manda mensagem que te passo o protocolo".',
+  mixed:'🔀 Misto — combina bio + engajamento num CTA fluido.',
+};
+const CTA_BANK={
+  bio:{br:['Clica no link da bio agora antes de sumir.','Link na bio. Não deixa pra amanhã.','Acessa minha bio e pega o protocolo gratuito.'],es:['Haz clic en el enlace de mi perfil ahora.','El link está en la bio. No lo dejes para mañana.','Accede a mi perfil y haz la evaluación gratuita.']},
+  comment:{br:['Comenta QUERO aqui que te mando o método.','Digita SIM nos comentários se quer receber.','Comenta sua idade que te explico o que fazer.'],es:['Comenta QUIERO aquí y te mando el protocolo.','Escribe SÍ en los comentarios.','Comenta tu edad y te digo qué hacer.']},
+  share:{br:['Compartilha com um amigo que precisa ver isso.','Marca aquele amigo aqui embaixo.'],es:['Comparte con un amigo que necesita esto.','Menciona aquí abajo a ese amigo.']},
+  follow:{br:['Segue aqui que toda semana solto método novo.','Ativa o sininho pra não perder.'],es:['Sígueme que cada semana suelto algo nuevo.','Activa la campanita.']},
+  save:{br:['Salva esse vídeo antes de sumir.','Guarda aqui porque pode tirar do ar.'],es:['Guarda este video antes de que desaparezca.','Guárdalo porque puede salir.']},
+  like:{br:['Curte se você se reconheceu nessa situação.','Dá um like pra eu continuar postando.'],es:['Dale like si te reconociste.','Dale me gusta para que yo siga publicando.']},
+  duet:{br:['Faz dueto mostrando seu resultado em 30 dias.'],es:['Haz dueto mostrando tu resultado en 30 días.']},
+  dm:{br:['Me manda mensagem que te passo o protocolo.','Me chama no privado — mando tudo de graça.'],es:['Mándame un mensaje y te paso el protocolo.','Escríbeme en privado.']},
+  mixed:{br:['Curte, salva e clica na bio — os três hoje.','Comenta QUERO, salva e vai na bio agora.'],es:['Dale like, guárdalo y haz clic en la bio.','Comenta QUIERO, guarda el video y ve a la bio.']},
+};
+
+function updateHint(){
+  const hints=[...S.cta].map(t=>CTA_HINTS[t]||'').filter(Boolean);
+  const el=document.getElementById('cta-hint');
+  if(el) el.innerHTML=hints.join('<br>')||'Selecione um ou mais modos acima.';
+}
+
+// ══════════════════════════════════════════
 // NAV
-// ════════════════════════════════════════════════════════════
-function nav(name, btn){
+// ══════════════════════════════════════════
+function nav(name,btn){
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
   document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));
   document.getElementById('panel-'+name).classList.add('on');
@@ -714,289 +543,128 @@ function nav(name, btn){
   if(name==='vault') renderVault();
 }
 
-// ════════════════════════════════════════════════════════════
-// PILL CONTROLS
-// ════════════════════════════════════════════════════════════
-function toggleLang(btn){
-  const v=btn.dataset.v;
-  const cls=v==='br'?'on-g':'on-b';
-  if(S.langs.has(v)&&S.langs.size>1){S.langs.delete(v);btn.className='pill';}
-  else{S.langs.add(v);btn.className='pill '+cls;repop(btn);}
-}
-// CTA colour map
-const CTA_COLORS={'bio':'r','comment':'y','share':'g','follow':'b','save':'p','like':'r','duet':'b','dm':'p','mixed':'p'};
-
-// CTA descriptions for hint bar
-const CTA_HINTS={
-  bio:'🎯 Bio — urgência emocional forte para clicar no link da bio.',
-  comment:'💬 Comentário — pede palavra/frase/número nos comentários.',
-  share:'🔁 Compartilhar — "manda pra um amigo que precisa ver isso".',
-  follow:'➕ Seguir — "segue aqui que toda semana solto método novo".',
-  save:'🔖 Salvar — "salva esse vídeo porque pode sair do ar".',
-  like:'❤️ Curtir — "curte se você se reconheceu nisso".',
-  duet:'🎬 Dueto/Stitch — "faz dueto mostrando resultado em 30 dias".',
-  dm:'📩 DM — "me manda mensagem aqui que te passo o protocolo".',
-  mixed:'🔀 Misto — combina bio + engajamento num único CTA fluido.',
-};
-
-// Full CTA bank
-const CTA_BANK={
-  bio:{br:['Clica no link da bio agora antes de sumir.','O vídeo completo tá na minha bio — vai lá hoje ainda.','Acessa minha bio e pega o protocolo gratuito.','Link na bio. Não deixa pra amanhã.'],es:['Haz clic en el enlace de mi perfil ahora.','El protocolo completo está en mi bio — ve antes de que desaparezca.','Accede a mi perfil y haz la evaluación gratuita.','El link está en la bio. No lo dejes para mañana.']},
-  comment:{br:['Comenta QUERO aqui que te mando o método.','Digita SIM nos comentários se quer receber.','Comenta sua idade aqui que eu te explico o que fazer.','Comenta "JÁ" se você vai tentar hoje.'],es:['Comenta QUIERO aquí y te mando el protocolo.','Escribe SÍ en los comentarios si quieres recibirlo.','Comenta tu edad y te digo exactamente qué hacer.','Escribe "YA" si lo vas a intentar hoy.']},
-  share:{br:['Compartilha com um amigo que precisa ver isso agora.','Marca aqui embaixo aquele amigo que tá precisando.','Tag aquele amigo que vai agradecer depois.'],es:['Comparte con un amigo que necesita ver esto ahora.','Menciona aquí abajo a ese amigo que lo necesita.','Taguea al amigo que te va a agradecer después.']},
-  follow:{br:['Segue aqui que toda semana solto um método novo.','Ativa o sininho pra não perder os próximos.','Segue e salva pra ter sempre por perto.'],es:['Sígueme que cada semana suelto un método nuevo.','Activa la campanita para no perderte el siguiente.','Sígueme y guarda para tenerlo siempre cerca.']},
-  save:{br:['Salva esse vídeo antes de sumir — já avisei.','Guarda aqui porque o TikTok pode tirar do ar.','Salva e volta aqui depois de 30 dias pra me contar.'],es:['Guarda este video antes de que desaparezca — ya te avisé.','Guárdalo porque TikTok puede sacarlo.','Guarda y vuelve en 30 días a contarme.']},
-  like:{br:['Curte se você se reconheceu nessa situação.','Dá um like pra eu saber que isso te ajudou.','Curte pra eu continuar postando esses métodos.'],es:['Dale like si te reconociste en esta situación.','Dale me gusta para que yo sepa que esto te ayudó.','Dale like para que yo siga publicando estos métodos.']},
-  duet:{br:['Faz dueto comigo daqui a 30 dias mostrando seu resultado.','Faz stitch antes e depois — quero ver a transformação.'],es:['Haz dueto conmigo en 30 días mostrando tu resultado.','Haz stitch de antes y después — quiero ver la transformación.']},
-  dm:{br:['Me manda mensagem aqui que te passo o protocolo completo.','Me chama no privado que te mando tudo de graça.'],es:['Mándame un mensaje aquí y te paso el protocolo completo.','Escríbeme en privado que te mando todo gratis.']},
-  mixed:{br:['Curte, salva e clica no link da bio — os três juntos hoje.','Comenta QUERO, salva o vídeo, e vai na bio — nessa ordem.'],es:['Dale like, guárdalo y haz clic en la bio — los tres hoy.','Comenta QUIERO, guarda el video y ve a la bio — en ese orden.']},
-};
-
-// ── PILL ENGINE (idêntico ao teste que funcionou) ────────────
-const COLORS = {
-  r: { bg:'rgba(255,45,85,.2)',   border:'#ff2d55', color:'#ff2d55', shadow:'rgba(255,45,85,.18)'  },
-  b: { bg:'rgba(79,172,254,.2)',  border:'#4facfe', color:'#4facfe', shadow:'rgba(79,172,254,.18)' },
-  g: { bg:'rgba(0,229,160,.2)',   border:'#00e5a0', color:'#00e5a0', shadow:'rgba(0,229,160,.18)'  },
-  y: { bg:'rgba(255,209,102,.2)', border:'#ffd166', color:'#ffd166', shadow:'rgba(255,209,102,.18)'},
-  p: { bg:'rgba(199,125,255,.2)', border:'#c77dff', color:'#c77dff', shadow:'rgba(199,125,255,.18)'},
-};
-
-function activate(btn){
-  const c = COLORS[btn.dataset.c] || COLORS.r;
-  btn.style.background = c.bg;
-  btn.style.borderColor = c.border;
-  btn.style.color = c.color;
-  btn.style.boxShadow = `0 0 0 3px ${c.shadow}`;
-  btn.classList.add('on');
-  btn.style.animation = 'none';
-  void btn.offsetWidth;
-  btn.style.animation = '';
-}
-
-function deactivate(btn){
-  btn.style.background = '';
-  btn.style.borderColor = '';
-  btn.style.color = '';
-  btn.style.boxShadow = '';
-  btn.classList.remove('on');
-}
-
-function pillToggleMulti(btn){
-  const group = btn.dataset.group;
-  const siblings = [...document.querySelectorAll(`[data-group="${group}"]`)];
-  const active = siblings.filter(b => b.classList.contains('on'));
-  const isOn = btn.classList.contains('on');
-  if(isOn && active.length <= 1) return;
-  isOn ? deactivate(btn) : activate(btn);
-  const now = siblings.filter(b => b.classList.contains('on')).map(b => b.dataset.v);
-  if(group === 'lang-multi') S.langs = new Set(now);
-  if(group === 'type-multi'){ S.types = new Set(now); updateCtaHint(); }
-}
-
-function pillToggleSingle(btn){
-  const group = btn.dataset.group;
-  document.querySelectorAll(`[data-group="${group}"]`).forEach(b => deactivate(b));
-  activate(btn);
-  const v = btn.dataset.v;
-  if(group === 'tone-single')  S.tone  = v;
-  if(group === 'meta-single')  S.meta  = v;
-  if(group === 'cross-single') S.cross = v;
-}
-
-function updateCtaHint(){
-  const hints = [...S.types].map(t => CTA_HINTS[t]||'').filter(Boolean);
-  const el = document.getElementById('cta-hint');
-  if(el) el.innerHTML = hints.length ? hints.join('<br>') : 'Selecione um ou mais modos de CTA acima.';
-}
-
-// ════════════════════════════════════════════════════════════
-// MAIN GENERATE
-// ════════════════════════════════════════════════════════════
+// ══════════════════════════════════════════
+// GENERATE
+// ══════════════════════════════════════════
 async function generate(){
   const btn=document.getElementById('gen-btn');
   btn.classList.add('loading'); btn.disabled=true;
 
   const langArr=[...S.langs];
   const lang=langArr[Math.floor(Math.random()*langArr.length)];
-  const ctaModes=[...S.types];
-  const type=ctaModes.includes('bio')?'bio':ctaModes.includes('mixed')?'mixed':ctaModes[0]||'bio';
+  const ctaModes=[...S.cta];
   const isBR=lang==='br';
-  const hookSel=document.getElementById('hook-sel').value;
   const isCross=S.cross==='on'&&lang==='latam';
 
-  // Pick metaphor
   const metasBR=['amigão','ferramenta','jubileu','espada','peru','milau','pergaminho','pinu'];
   const metasES=['lápiz','herramienta','instrumento','equipo','bastón','compañero','tesoro','trofeo','el capitán','el socio'];
-  let meta = S.meta==='auto'
-    ? (isBR ? metasBR[Math.floor(Math.random()*metasBR.length)] : metasES[Math.floor(Math.random()*metasES.length)])
-    : S.meta;
+  const meta=S.meta==='auto'?(isBR?metasBR[Math.floor(Math.random()*metasBR.length)]:metasES[Math.floor(Math.random()*metasES.length)]):S.meta;
 
-  // Sample DNA from swipe file
-  const pool = isCross
-    ? [...SF.br, ...SF.latam, ...customVault]
-    : [...SF[lang], ...customVault.filter(c=>c.lang===lang)];
+  const pool=isCross?[...SF.br,...SF.latam,...customVault]:[...SF[lang],...customVault.filter(c=>c.lang===lang)];
+  const examples=[...pool].sort(()=>Math.random()-.5).slice(0,3);
+  const dnaStr=examples.map(c=>`HOOK: "${c.hook}" | META: "${c.metaphor||'?'}" | CTA: ${c.cta}`).join('\n');
 
-  // Shuffle and pick 3 varied examples
-  const shuffled=[...pool].sort(()=>Math.random()-.5);
-  const examples=shuffled.slice(0,3);
-  const dnaStr=examples.map(c=>`HOOK: "${c.hook}" | METÁFORA: "${c.metaphor||'?'}" | PAIN: "${c.pain||''}" | CTA: ${c.cta}`).join('\n');
+  const hookInstr={auto:'Escolha o hook mais potente — visceral e inesperado',accusation:'Acusação direta: "Por isso seu [META] ainda [PROBLEMA]"',prohibition:'Proibição curiosa: "Não [AÇÃO] porque seu [META] vai [CONSEQUÊNCIA]"',comparison:'Comparação social visceral: o amigo que do nada avançou',question:'Pergunta-espelho humilhante com analogia criativa',recipe:'Revelação de receita com ingredientes concretos',challenge:'Desafio 30/45 dias com condição de retornar com testemunho',humor:'Humor absurdo com metáfora animal inesperada',status:'Gatilho de status: o que ela vai dizer/fazer depois',sleep:'Sabotador oculto: cueca/calor roubando tudo enquanto dorme'};
 
-  // Hook instructions
-  const hookInstr={
-    auto:'Escolha o hook mais potente baseado no DNA — seja visceral e inesperado',
-    accusation:'Acusação direta: "Por isso seu [META] ainda [PROBLEMA]" — ataque na insegurança',
-    prohibition:'Proibição curiosa: "Não [AÇÃO] porque seu [META] vai [CONSEQUÊNCIA ABSURDA]"',
-    comparison:'Comparação social visceral: "Aquele amigo/ese chico que do nada avançou..."',
-    question:'Pergunta-espelho humilhante com analogia criativa inesperada (como "fio de fone")',
-    recipe:'Revelação de receita com ingredientes concretos (açafrão, gengibre, bicarbonato...)',
-    challenge:'Lance desafio de 30/45 dias com condição de retornar com testemunho',
-    humor:'Humor absurdo com metáfora animal ou objeto inesperado ("minhoca vira jiboia")',
-    status:'Gatilho de status: o que ela/ellas vão dizer/fazer depois',
-    sleep:'Sabotador oculto do sono: cueca/calor roubando tudo enquanto você dorme'
-  };
-
-  // Build multi-CTA instruction from selected types
-  const ctaModes=[...S.types];
   const ctaLang=isBR?'br':'es';
-  // Pick 1-2 random CTA strings from each selected mode
-  const ctaExamples=ctaModes.map(m=>{
-    const bank=CTA_BANK[m]?.[ctaLang]||CTA_BANK[m]?.br||[];
-    const pick=bank[Math.floor(Math.random()*bank.length)]||'';
-    return `[${m.toUpperCase()}] ex: "${pick}"`;
-  }).join('\n');
-  const isMixedMode=ctaModes.includes('mixed')||(ctaModes.length>2);
-  const ctaStr=`CTA OBRIGATÓRIO — modos selecionados: ${ctaModes.join(', ')}\n`+
-    `Exemplos de phrasing por modo:\n${ctaExamples}\n`+
-    (isMixedMode
-      ? `Como são vários modos, combine 2-3 ações num único CTA fluido e natural — NÃO liste como bullet points. Flua como fala.`
-      : ctaModes.length===1&&ctaModes[0]==='bio'
-        ? `Foco total na bio — urgência emocional máxima. UMA frase curta e poderosa.`
-        : `Use o phrasing dos exemplos como inspiração — adapte ao tom da copy. Seja específico e direto.`);
+  const ctaEx=ctaModes.map(m=>{const b=CTA_BANK[m]?.[ctaLang]||CTA_BANK[m]?.br||[];return`[${m.toUpperCase()}] ex: "${b[Math.floor(Math.random()*b.length)]||''}"`}).join('\n');
+  const isMix=ctaModes.length>1||ctaModes.includes('mixed');
+  const ctaStr=`MODOS CTA: ${ctaModes.join(', ')}\nExemplos:\n${ctaEx}\n${isMix?'Combine num único CTA fluido e natural.':ctaModes[0]==='bio'?'Urgência máxima na bio.':'Seja específico e direto.'}`;
 
-  const crossNote = isCross
-    ? `\n⚡ CROSS-POLLINATION ATIVO: Use a energia visceral e humor do BR (guerreiro, minhoca vira jiboia, fio de fone, cueca, etc.) mas REESCREVA COMPLETAMENTE em espanhol LATAM natural — sintaxe latina, não tradução literal. Resultado: copy com energia BR + legibilidade LATAM.`
-    : '';
+  const crossNote=isCross?'\n⚡ CROSS-POLLINATION: energia visceral BR reescrita em espanhol LATAM nativo — não tradução literal.':'';
+  const recent=[...MEMORY].slice(-5).map(m=>m.split('|')[0]).join(' / ');
+  const antiRep=MEMORY.size>0?`\nANTI-REPETIÇÃO: PROIBIDO repetir esses hooks: [${recent}]`:'';
 
-  // Build anti-repetition context
-  const recentHooks=[...MEMORY].slice(-5).map(m=>m.split('|')[0]).join(' / ');
-  const antiRepeat = MEMORY.size>0
-    ? `\nANTI-REPETIÇÃO OBRIGATÓRIO: Esses hooks JÁ foram usados recentemente — PROIBIDO repetir ou parafrasear: [${recentHooks}]. Crie algo completamente diferente.`
-    : '';
+  const prompt=`Você é especialista em copy viral para TikTok no mercado ${isBR?'Brasileiro (PT-BR coloquial)':'Latino-Americano (Español nativo)'}. Produto: método natural de desenvolvimento masculino.
 
-  const prompt=`Você é um especialista em copy viral para TikTok no mercado ${isBR?'Brasileiro (Português BR coloquial, gírias, energia)':'Latino-Americano (Español natural, não tradução)'}. Produto: método natural de desenvolvimento masculino.
+METÁFORA OBRIGATÓRIA: "${meta}" — use SOMENTE essa. NUNCA nomeie explicitamente.
+${crossNote}${antiRep}
 
-METÁFORA OBRIGATÓRIA: "${meta}" (use somente essa para o órgão — NUNCA nomeie explicitamente)
-${crossNote}${antiRepeat}
-
-DNA DO SWIPE FILE (copies provadas):
+DNA DO SWIPE FILE:
 ${dnaStr}
 
-HOOK A USAR: ${hookInstr[hookSel]||hookInstr.auto}
+HOOK: ${hookInstr[document.getElementById('hook-sel').value]||hookInstr.auto}
 TOM: ${S.tone.toUpperCase()}
 ${ctaStr}
 
-REGRAS DE FORMATO — CRÍTICO:
-1. Divida em blocos de NO MÁXIMO 15 palavras cada (≈6 segundos de fala no Grok foto-em-vídeo)
-2. Cada bloco em uma LINHA separada, sem numeração
-3. Primeira linha começa com [HOOK]
-4. Última linha (ou duas últimas) começa com [CTA]
-5. NUNCA linguagem explícita — apenas ambiguidade criativa
-6. Inclua exatamente 1 número concreto (cm, dias, pessoas)
-7. Inclua remoção de objeção: "sem cirurgia/operação/pastillas/pílulas"
-8. Seja VISCERAL. Zero academicismo. Zero rodeios.
+REGRAS CRÍTICAS:
+1. Blocos de NO MÁXIMO 15 palavras cada (≈6s de fala)
+2. Cada bloco em UMA linha separada, sem numeração
+3. Primeira linha: [HOOK] texto
+4. Última(s) linha(s): [CTA] texto
+5. NUNCA linguagem explícita — só ambiguidade criativa
+6. Inclua 1 número concreto (cm, dias, pessoas)
+7. Inclua remoção de objeção: "sem cirurgia/pastillas/pílulas"
+8. VISCERAL. Zero academicismo.
 
-Responda APENAS com os blocos. Nada mais.`;
+Responda APENAS com os blocos.`;
 
   try{
-    const resp=await fetch('https://api.anthropic.com/v1/messages',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:900,messages:[{role:'user',content:prompt}]})
-    });
+    const resp=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:900,messages:[{role:'user',content:prompt}]})});
     const data=await resp.json();
     if(data.error) throw new Error(data.error.message);
     const raw=data.content?.map(b=>b.text||'').join('')||'';
     const lines=raw.split('\n').map(l=>l.trim()).filter(Boolean);
-
-    // Fingerprint for anti-repetition
     const hookLine=lines.find(l=>l.startsWith('[HOOK]'))||lines[0]||'';
-    const fp=hookLine.slice(0,60)+'|'+lang+'|'+type;
-    saveMemory(fp);
-
-    renderResult({lines,lang,type,meta,isCross,ctaModes});
-    S.genCount++; S.uniqueCount++;
-    updateUI();
-
+    saveMemory(hookLine.slice(0,60)+'|'+lang);
+    renderResult({lines,lang,meta,isCross,ctaModes});
+    S.genCount++; S.uniqueCount++; updateUI();
   }catch(err){
     showError(err.message);
   }
   btn.classList.remove('loading'); btn.disabled=false;
 }
 
-// ════════════════════════════════════════════════════════════
-// RENDER
-// ════════════════════════════════════════════════════════════
-function renderResult({lines,lang,type,meta,isCross,ctaModes}){
-  ctaModes=ctaModes||[type||'bio'];
+// ══════════════════════════════════════════
+// RENDER RESULT
+// ══════════════════════════════════════════
+function renderResult({lines,lang,meta,isCross,ctaModes}){
   const area=document.getElementById('out-area');
   area.querySelector('.out-empty')?.remove();
   document.getElementById('clear-btn').style.display='flex';
 
-  const blocks=lines.map(l=>({
-    text:l.replace(/\[HOOK\]|\[CTA\]/g,'').trim(),
-    isHook:l.startsWith('[HOOK]'),
-    isCta:l.startsWith('[CTA]')
-  })).filter(b=>b.text);
-
-  // Trust score
+  const blocks=lines.map(l=>({text:l.replace(/\[HOOK\]|\[CTA\]/g,'').trim(),isHook:l.startsWith('[HOOK]'),isCta:l.startsWith('[CTA]')})).filter(b=>b.text);
   const joined=blocks.map(b=>b.text).join(' ').toLowerCase();
+
   let ts=0;
   if(/\d+/.test(joined)) ts+=2;
   if(/sem |sin |natural|segur/.test(joined)) ts+=2;
-  if(/agora|hoje|antes|ahora|hoy|tarde|segunda/.test(joined)) ts++;
-  const tdots=Array.from({length:5},(_,i)=>{
-    const cl=i<ts?(ts>=4?'td-g':ts>=2?'td-y':'td-r'):'';
-    return `<div class="td ${cl}"></div>`;
-  }).join('');
+  if(/agora|hoje|antes|ahora|hoy|tarde/.test(joined)) ts++;
+  const tdots=Array.from({length:5},(_,i)=>`<div class="td ${i<ts?(ts>=4?'td-g':ts>=2?'td-y':'td-r'):''}"></div>`).join('');
   const tlbl=ts>=4?'✓ Segura':ts>=2?'⚠ Média':'✗ Risco';
   const tclr=ts>=4?'var(--g)':ts>=2?'var(--y)':'var(--r)';
 
-  // Blocks HTML
   let bHtml='',tAcc=0;
   blocks.forEach((b,i)=>{
-    const words=b.text.split(' ').length;
-    const dur=Math.round(words/2.5);
+    const dur=Math.round(b.text.split(' ').length/2.5);
     const cls=b.isHook?'blk-tx hook':b.isCta?'blk-tx cta':'blk-tx';
-    if(i>0&&(blocks[i-1].isCta!==b.isCta||blocks[i-1].isHook!==b.isHook))
-      bHtml+=`<div class="blk-sep"></div>`;
+    if(i>0&&(blocks[i-1].isCta!==b.isCta||blocks[i-1].isHook!==b.isHook)) bHtml+=`<div class="blk-sep"></div>`;
     bHtml+=`<div class="blk"><div class="blk-t">${tAcc}s</div><div class="${cls}">${b.text}</div></div>`;
     tAcc+=dur;
   });
 
-  // CTA mode badges
-  const ctaIcons={bio:'🎯',comment:'💬',share:'🔁',follow:'➕',save:'🔖',like:'❤️',duet:'🎬',dm:'📩',mixed:'🔀'};
-  const ctaBadges=ctaModes.map(m=>`<span class="bs bs-eng">${ctaIcons[m]||'·'} ${m}</span>`).join('');
-
-  const dna=detectDNA(joined);
-  const id='r'+Date.now();
-  const crossBadge=isCross?`<span class="bs bs-cross">✨ Cross BR→ES</span>`:'';
-
-  // Type label text
-  const isConv=ctaModes.includes('bio');
+  const icons={bio:'🎯',comment:'💬',share:'🔁',follow:'➕',save:'🔖',like:'❤️',duet:'🎬',dm:'📩',mixed:'🔀'};
+  const ctaBadges=ctaModes.map(m=>`<span class="bs bs-eng">${icons[m]||'·'} ${m}</span>`).join('');
   const isMix=ctaModes.length>1||ctaModes.includes('mixed');
-  const typeLblCls=isMix?'type-cross':isConv?'type-conv':'type-eng';
-  const modesText=ctaModes.map(m=>(ctaIcons[m]||'')+''+m).join(' + ');
-  const typeLblTxt=`${isMix?'🔀 MISTO':isConv?'🎯 CONVERSÃO':'💬 ENGAJAMENTO'} — ${modesText.toUpperCase()}`;
+  const typeCls=isMix?'type-mix':ctaModes.includes('bio')?'type-bio':'type-eng';
+  const typeLabel=isMix?'🔀 MISTO':ctaModes.includes('bio')?'🎯 CONVERSÃO':'💬 ENGAJAMENTO';
 
+  const dna=[];
+  if(/\d+/.test(joined)) dna.push('📊 número');
+  if(/sem |sin |natural/.test(joined)) dna.push('🛡 objeção');
+  if(/agora|hoje|ahora|hoy/.test(joined)) dna.push('⏰ urgência');
+  if(/amig|ferr|jubil|lápiz|herr|instr/.test(joined)) dna.push('🎭 metáfora');
+
+  const id='r'+Date.now();
   const card=document.createElement('div');
   card.className='res-card'; card.id=id;
   card.innerHTML=`
     <div class="res-top">
       <div class="res-meta">
-        <span class="bs ${lang==='br'?'bs-br':'bs-latam'}">${lang==='br'?'🇧🇷 BR':'🌎 LATAM'}</span>
+        <span class="bs ${lang==='br'?'bs-br':'bs-la'}">${lang==='br'?'🇧🇷 BR':'🌎 LATAM'}</span>
         ${ctaBadges}
-        ${crossBadge}
-        <span style="font-size:10px;color:var(--muted);font-family:var(--mono)">"${meta}"</span>
+        ${isCross?'<span class="bs bs-x">✨ Cross</span>':''}
+        <span style="font-size:10px;color:var(--mu);font-family:var(--mo)">"${meta}"</span>
       </div>
       <div class="trust-row">
         <div class="trust-dots">${tdots}</div>
@@ -1005,144 +673,64 @@ function renderResult({lines,lang,type,meta,isCross,ctaModes}){
       </div>
     </div>
     <div class="res-body">
-      <span class="type-lbl ${typeLblCls}">${typeLblTxt}</span>
+      <div class="type-lbl ${typeCls}">${typeLabel}</div>
       <div class="blocks">${bHtml}</div>
-    </div>
-    <div class="res-foot">${dna.map(d=>`<span class="dt dt-${d.t}">${d.l}</span>`).join('')}</div>
-  `;
-  area.insertBefore(card,area.firstChild);
-  results.unshift({id,lang,type});
+      <div class="dna-tags">${dna.map(d=>`<span class="dna-tag">${d}</span>`).join('')}</div>
+    </div>`;
+  document.getElementById('out-area').prepend(card);
 }
 
 function showError(msg){
   const area=document.getElementById('out-area');
-  const el=document.createElement('div');
-  el.style.cssText='background:rgba(255,45,85,.08);border:1px solid rgba(255,45,85,.2);border-radius:8px;padding:12px 14px;font-size:13px;color:var(--r);line-height:1.5';
-  el.innerHTML=`<strong>Erro:</strong> ${msg}`;
-  area.insertBefore(el,area.firstChild);
-}
-
-function detectDNA(t){
-  const tags=[];
-  if(/não|no hag|no beb|prohib/.test(t)) tags.push({t:'hook',l:'Hook Proibição'});
-  if(/amigo|friend|vecino/.test(t)) tags.push({t:'hook',l:'Comparação Social'});
-  if(/\d+\s*cm|centím/.test(t)) tags.push({t:'proof',l:'Prova Numérica'});
-  if(/dia|semana|mes/.test(t)) tags.push({t:'proof',l:'Prazo Concreto'});
-  if(/testost|hormôn|hormona/.test(t)) tags.push({t:'pain',l:'Hormonal'});
-  if(/cueca|calor|circulação|circulac/.test(t)) tags.push({t:'pain',l:'Sabotador Oculto'});
-  if(/açafrão|gengibre|bicarbon|azafrán/.test(t)) tags.push({t:'tribal',l:'Receita'});
-  if(/africa|tribos|ancestral|milenari/.test(t)) tags.push({t:'tribal',l:'Ancestral'});
-  if(/ela|ellas|pareja|print|amigas/.test(t)) tags.push({t:'id',l:'Status/Ela'});
-  if(/agora|hoje|antes|ahora|hoy|tarde/.test(t)) tags.push({t:'urg',l:'Urgência'});
-  if(/coment|digita|marca|escrib/.test(t)) tags.push({t:'urg',l:'CTA Engaj.'});
-  if(/sem |sin |natural|segur/.test(t)) tags.push({t:'proof',l:'Sem Risco'});
-  return tags.slice(0,6);
+  const d=document.createElement('div');
+  d.className='err-box'; d.textContent='Erro: '+msg;
+  area.prepend(d); setTimeout(()=>d.remove(),6000);
 }
 
 function copyResult(id){
   const card=document.getElementById(id);
-  const text=[...card.querySelectorAll('.blk-tx')].map(b=>b.textContent.trim()).join('\n');
-  navigator.clipboard.writeText(text).then(()=>{
+  const txt=[...card.querySelectorAll('.blk-tx')].map(b=>b.textContent).join('\n');
+  navigator.clipboard.writeText(txt).then(()=>{
     const btn=card.querySelector('.act-btn');
     btn.textContent='✓'; btn.classList.add('ok');
-    setTimeout(()=>{btn.textContent='📋';btn.classList.remove('ok');},2000);
+    setTimeout(()=>{btn.textContent='📋'; btn.classList.remove('ok');},1500);
   });
 }
 
-function clearAll(){
-  document.getElementById('out-area').innerHTML=`<div class="out-empty"><div class="ico">⚡</div><p>Configure os filtros e clique em <strong>Gerar Copy</strong>.<br>Cada geração é única — o motor garante não repetição.</p></div>`;
-  document.getElementById('clear-btn').style.display='none';
-  results=[]; S.genCount=0; S.uniqueCount=0; updateUI();
-}
+function clearAll(){results=[];document.getElementById('out-area').innerHTML='<div class="out-empty"><div class="ic">⚡</div><p>Configure e clique em Gerar Copy.</p></div>';document.getElementById('clear-btn').style.display='none';}
 
-// ════════════════════════════════════════════════════════════
-// THERMO + UI UPDATE
-// ════════════════════════════════════════════════════════════
-function updateUI(){
-  const brTotal=SF.br.length+customVault.filter(c=>c.lang==='br').length;
-  const esTotal=SF.latam.length+customVault.filter(c=>c.lang==='latam').length;
-  const brUsed=results.filter(r=>r.lang==='br').length;
-  const esUsed=results.filter(r=>r.lang==='latam').length;
-
-  const brFresh=Math.max(0,100-Math.round((brUsed/brTotal)*100));
-  const esFresh=Math.max(0,100-Math.round((esUsed/esTotal)*100));
-
-  document.getElementById('tfill-br').style.width=brFresh+'%';
-  document.getElementById('tfill-latam').style.width=esFresh+'%';
-  document.getElementById('tstat-br').textContent=`${brUsed}/${brTotal} usadas`;
-  document.getElementById('tstat-latam').textContent=`${esUsed}/${esTotal} usadas`;
-
-  const setAlert=(id,pct)=>{
-    const el=document.getElementById(id);
-    el.className='th-alert show';
-    if(pct<20){el.classList.add('alert-crit');el.textContent='⛔ Renove! Adicione copies';}
-    else if(pct<50){el.classList.add('alert-warn');el.textContent='⚠ Adicione mais copies';}
-    else{el.classList.add('alert-ok');el.textContent='✓ Base saudável';}
-  };
-  setAlert('talert-br',brFresh);
-  setAlert('talert-latam',esFresh);
-
-  document.getElementById('ttot-gen').textContent=S.genCount;
-  document.getElementById('ttot-unique').textContent=S.uniqueCount;
-  document.getElementById('ttot-custom').textContent=customVault.length;
-  document.getElementById('gen-ctr').textContent=`${S.genCount} geradas · ${S.uniqueCount} únicas`;
-  document.getElementById('topbar-info').textContent=`${brTotal+esTotal} copies no swipe file`;
-}
-
-// ════════════════════════════════════════════════════════════
+// ══════════════════════════════════════════
 // VAULT
-// ════════════════════════════════════════════════════════════
-function setSbLang(l){
-  S.sbLang=l;
-  document.getElementById('sbl-br').className='pill'+(l==='br'?' on-g':'');
-  document.getElementById('sbl-latam').className='pill'+(l==='latam'?' on-b':'');
-}
-function setVLang(l){
-  S.vLang=l;
-  document.getElementById('vl-br').className='pill'+(l==='br'?' on-g':'');
-  document.getElementById('vl-latam').className='pill'+(l==='latam'?' on-b':'');
-}
-
+// ══════════════════════════════════════════
 function addCopy(){
   const name=document.getElementById('sb-name').value.trim();
   const text=document.getElementById('sb-text').value.trim();
-  if(!name||!text){alert('Preencha nome e texto.');return;}
-  _pushCopy(name,text,S.sbLang);
-  document.getElementById('sb-name').value='';
-  document.getElementById('sb-text').value='';
-  const ok=document.getElementById('add-ok');
-  ok.style.display='block';setTimeout(()=>ok.style.display='none',2500);
+  const lang=document.getElementById('sb-lang').value;
+  if(!text) return;
+  _pushCopy(name||'Copy '+Date.now(),text,lang);
+  document.getElementById('sb-name').value=''; document.getElementById('sb-text').value='';
+  const ok=document.getElementById('add-ok'); ok.style.display='block'; setTimeout(()=>ok.style.display='none',1500);
+  updateUI();
 }
 function addCopyVault(){
   const name=document.getElementById('v-name').value.trim();
   const text=document.getElementById('v-text').value.trim();
-  if(!name||!text){alert('Preencha nome e texto.');return;}
-  _pushCopy(name,text,S.vLang);
-  document.getElementById('v-name').value='';
-  document.getElementById('v-text').value='';
-  const ok=document.getElementById('vault-ok');
-  ok.style.display='block';setTimeout(()=>ok.style.display='none',2500);
-  renderVault();
+  const lang=document.getElementById('v-lang').value;
+  if(!text) return;
+  _pushCopy(name||'Copy '+Date.now(),text,lang);
+  document.getElementById('v-name').value=''; document.getElementById('v-text').value='';
+  const ok=document.getElementById('vault-ok'); ok.style.display='block'; setTimeout(()=>ok.style.display='none',1500);
+  renderVault(); updateUI();
 }
 function _pushCopy(name,text,lang){
-  const c={id:'cv-'+Date.now(),name,lang,cta:(/coment|digita|marca/i.test(text)?'engagement':'bio'),metaphor:'auto',hook:text.split('\n')[0].slice(0,80),text,isCustom:true};
-  customVault.push(c);
+  customVault.push({id:'c'+Date.now(),name,text,lang,isCustom:true,cta:'bio',metaphor:'auto'});
   localStorage.setItem('cl_vault',JSON.stringify(customVault));
-  updateUI();
 }
 function deleteCustom(id){
   customVault=customVault.filter(c=>c.id!==id);
   localStorage.setItem('cl_vault',JSON.stringify(customVault));
-  updateUI(); renderVault();
+  renderVault(); updateUI();
 }
-
-function filterVault(f,btn){
-  S.vFilter=f;
-  document.querySelectorAll('#panel-vault .pill').forEach(b=>b.className='pill');
-  btn.className='pill on-g';
-  renderVault();
-}
-
 function renderVault(){
   const f=S.vFilter;
   let items=[];
@@ -1152,39 +740,40 @@ function renderVault(){
   if(f==='br') items=items.filter(c=>c.lang==='br');
   if(f==='latam') items=items.filter(c=>c.lang==='latam');
   if(f==='custom') items=[...customVault];
-
-  document.getElementById('v-list').innerHTML=items.map(item=>`
+  document.getElementById('v-list').innerHTML=items.map(it=>`
     <div class="vi">
       <div class="vi-top">
         <div>
-          <div class="vi-name">${item.name}</div>
+          <div class="vi-name">${it.name}</div>
           <div style="display:flex;gap:5px;margin-top:4px">
-            <span class="bs ${item.lang==='br'?'bs-br':'bs-latam'}">${item.lang==='br'?'🇧🇷':'🌎'}</span>
-            <span class="bs ${item.cta==='bio'?'bs-conv':'bs-eng'}">${item.cta==='bio'?'Bio':'Comentário'}</span>
-            ${item.isCustom?`<span class="bs bs-cross">➕ Nova</span>`:''}
+            <span class="bs ${it.lang==='br'?'bs-br':'bs-la'}">${it.lang==='br'?'🇧🇷':'🌎'}</span>
+            ${it.isCustom?'<span class="bs bs-x">➕</span>':''}
           </div>
         </div>
-        ${item.isCustom?`<button class="vi-del" onclick="deleteCustom('${item.id}')">✕</button>`:''}
+        ${it.isCustom?`<button class="vi-del" onclick="deleteCustom('${it.id}')">✕</button>`:''}
       </div>
-      <div class="vi-prev">${item.text||item.hook}</div>
-    </div>
-  `).join('')||'<div style="color:var(--muted);font-size:13px;padding:20px;text-align:center">Nenhuma copy nessa categoria.</div>';
+      <div class="vi-prev">${it.text||it.hook}</div>
+    </div>`).join('')||'<div style="color:var(--mu);font-size:13px;padding:20px;text-align:center">Nenhuma copy aqui.</div>';
 }
 
-// ════════════════════════════════════════════════════════════
-// INIT
-// ════════════════════════════════════════════════════════════
-document.querySelectorAll('.pill[class*="sel-"]').forEach(btn => {
-  activate(btn);
-  const g = btn.dataset.group, v = btn.dataset.v;
-  if(g==='lang-multi')   S.langs.add(v);
-  if(g==='type-multi')   S.types.add(v);
-  if(g==='tone-single')  S.tone  = v;
-  if(g==='meta-single')  S.meta  = v;
-  if(g==='cross-single') S.cross = v;
-});
-updateCtaHint();
-updateUI();
+// ══════════════════════════════════════════
+// UPDATE UI
+// ══════════════════════════════════════════
+function updateUI(){
+  const total=SF.br.length+SF.latam.length;
+  const brUsed=Math.min(S.genCount,SF.br.length);
+  const laUsed=Math.min(S.genCount,SF.latam.length);
+  const brPct=Math.max(0,100-Math.round(brUsed/SF.br.length*100));
+  const laPct=Math.max(0,100-Math.round(laUsed/SF.latam.length*100));
+  document.getElementById('tfill-br').style.width=brPct+'%';
+  document.getElementById('tfill-la').style.width=laPct+'%';
+  document.getElementById('tstat-br').textContent=brPct+'%';
+  document.getElementById('tstat-la').textContent=laPct+'%';
+  document.getElementById('ttot-gen').textContent=S.genCount;
+  document.getElementById('ttot-uniq').textContent=S.uniqueCount;
+  document.getElementById('ttot-vault').textContent=customVault.length;
+  document.getElementById('gen-ctr').textContent=S.genCount+' geradas · '+S.uniqueCount+' únicas';
+}
 </script>
 </body>
 </html>
