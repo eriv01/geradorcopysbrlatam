@@ -88,29 +88,27 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:1
 
 .pills{display:flex;gap:6px;flex-wrap:wrap}
 .pill{
-  padding:6px 12px;border-radius:6px;
-  background:var(--s2);border:1px solid var(--border);
-  color:var(--muted);font-family:var(--font);font-size:12px;font-weight:600;
-  cursor:pointer;transition:transform .18s,box-shadow .18s,background .18s,border-color .18s,color .18s,opacity .18s;
-  white-space:nowrap;opacity:.42;transform:scale(1);position:relative;user-select:none;
+  padding:7px 14px;border-radius:20px;
+  background:var(--s2);border:1px solid rgba(255,255,255,.08);
+  color:rgba(255,255,255,.32);font-family:var(--font);font-size:12px;font-weight:600;
+  cursor:pointer;white-space:nowrap;
+  transition:background .15s,border-color .15s,color .15s,box-shadow .15s,opacity .15s;
 }
-.pill:hover{border-color:var(--border2);color:var(--muted2);opacity:.68;transform:scale(1.03)}
-.pill.on-r,.pill.on-b,.pill.on-g,.pill.on-y,.pill.on-p{
-  opacity:1;transform:scale(1.08);font-weight:700;
-  animation:pillPop .22s cubic-bezier(.34,1.56,.64,1) forwards;
-}
-@keyframes pillPop{
-  0%{transform:scale(1)}
-  55%{transform:scale(1.14)}
-  100%{transform:scale(1.08)}
-}
-.pill.on-r{background:rgba(255,45,85,.2);border-color:rgba(255,45,85,.75);color:var(--r);box-shadow:0 0 12px rgba(255,45,85,.28),inset 0 1px 0 rgba(255,255,255,.06)}
-.pill.on-b{background:rgba(79,172,254,.2);border-color:rgba(79,172,254,.75);color:var(--b);box-shadow:0 0 12px rgba(79,172,254,.28),inset 0 1px 0 rgba(255,255,255,.06)}
-.pill.on-g{background:rgba(0,229,160,.2);border-color:rgba(0,229,160,.75);color:var(--g);box-shadow:0 0 12px rgba(0,229,160,.28),inset 0 1px 0 rgba(255,255,255,.06)}
-.pill.on-y{background:rgba(255,209,102,.2);border-color:rgba(255,209,102,.75);color:var(--y);box-shadow:0 0 12px rgba(255,209,102,.28),inset 0 1px 0 rgba(255,255,255,.06)}
-.pill.on-p{background:rgba(199,125,255,.2);border-color:rgba(199,125,255,.75);color:var(--p);box-shadow:0 0 12px rgba(199,125,255,.28),inset 0 1px 0 rgba(255,255,255,.06)}
-.pill-ck{display:inline-block;width:0;overflow:hidden;transition:width .15s;font-size:11px;vertical-align:middle}
-.pill.on-r .pill-ck,.pill.on-b .pill-ck,.pill.on-g .pill-ck,.pill.on-y .pill-ck,.pill.on-p .pill-ck{width:16px}
+.pill:hover:not(.pill-on){border-color:rgba(255,255,255,.2);color:rgba(255,255,255,.55)}
+
+/* Active state — controlled by .pill-on + .sel-* */
+.pill.pill-on{ font-weight:700; }
+.pill.pill-on.sel-r{background:rgba(255,45,85,.18);border-color:rgba(255,45,85,.8);color:var(--r);box-shadow:0 0 0 3px rgba(255,45,85,.12)}
+.pill.pill-on.sel-b{background:rgba(79,172,254,.18);border-color:rgba(79,172,254,.8);color:var(--b);box-shadow:0 0 0 3px rgba(79,172,254,.12)}
+.pill.pill-on.sel-g{background:rgba(0,229,160,.18);border-color:rgba(0,229,160,.8);color:var(--g);box-shadow:0 0 0 3px rgba(0,229,160,.12)}
+.pill.pill-on.sel-y{background:rgba(255,209,102,.18);border-color:rgba(255,209,102,.8);color:var(--y);box-shadow:0 0 0 3px rgba(255,209,102,.12)}
+.pill.pill-on.sel-p{background:rgba(199,125,255,.18);border-color:rgba(199,125,255,.8);color:var(--p);box-shadow:0 0 0 3px rgba(199,125,255,.12)}
+
+/* Pop animation on activate */
+.pill.pill-popping{animation:ppop .2s cubic-bezier(.34,1.56,.64,1)}
+@keyframes ppop{0%{transform:scale(.92)}70%{transform:scale(1.1)}100%{transform:scale(1)}}
+
+.cta-hint-box{margin-top:8px;padding:8px 11px;background:var(--s3);border-radius:7px;font-size:11px;color:var(--muted2);line-height:1.6;min-height:32px}
 
 .gen-btn{width:100%;padding:13px;background:linear-gradient(135deg,var(--r),var(--r2));border:none;border-radius:9px;color:#fff;font-family:var(--display);font-size:19px;letter-spacing:2px;cursor:pointer;transition:all .2s;position:relative}
 .gen-btn:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 8px 24px rgba(255,45,85,.3)}
@@ -305,27 +303,25 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:1
             <div class="fg">
               <label class="lbl">Idioma de saída</label>
               <div class="pills" id="pl-lang">
-                <button class="pill on-g" data-v="br" onclick="toggleLang(this)">🇧🇷 Português BR</button>
-                <button class="pill on-b" data-v="latam" onclick="toggleLang(this)">🌎 Español LATAM</button>
+                <button class="pill sel-g" data-v="br" data-c="g" data-group="lang-multi" onclick="pillToggleMulti(this)">🇧🇷 Português BR</button>
+                <button class="pill sel-b" data-v="latam" data-c="b" data-group="lang-multi" onclick="pillToggleMulti(this)">🌎 Español LATAM</button>
               </div>
             </div>
 
             <div class="fg">
-              <label class="lbl">Modo de CTA <span style="color:var(--muted);font-weight:400;font-size:10px;letter-spacing:0">— escolha um ou vários para misturar</span></label>
-              <div class="pills" id="pl-type" style="gap:5px">
-                <button class="pill on-r"  data-v="bio"       onclick="toggleType(this)" title="Manda direto pra bio com urgência">🎯 Bio</button>
-                <button class="pill on-y"  data-v="comment"   onclick="toggleType(this)" title="Pede palavra/frase nos comentários">💬 Comentário</button>
-                <button class="pill on-g"  data-v="share"     onclick="toggleType(this)" title="Pede pra compartilhar com amigo">🔁 Compartilhar</button>
-                <button class="pill on-b"  data-v="follow"    onclick="toggleType(this)" title="Pede seguir para receber mais">➕ Seguir</button>
-                <button class="pill on-p"  data-v="save"      onclick="toggleType(this)" title="Pede salvar o vídeo antes de sumir">🔖 Salvar</button>
-                <button class="pill"       data-v="like"      onclick="toggleType(this)" title="Pede curtir como gesto de confirmação">❤️ Curtir</button>
-                <button class="pill"       data-v="duet"      onclick="toggleType(this)" title="Pede dueto / stitch com resultado">🎬 Dueto/Stitch</button>
-                <button class="pill"       data-v="dm"        onclick="toggleType(this)" title="Manda mensagem privada pra receber">📩 Direct/DM</button>
-                <button class="pill"       data-v="mixed"     onclick="toggleType(this)" title="Mescla bio + engajamento no mesmo vídeo">🔀 Misto Bio+Eng</button>
+              <label class="lbl">Modo de CTA <span style="color:var(--muted);font-weight:400;font-size:10px;letter-spacing:0">— escolha um ou vários</span></label>
+              <div class="pills" id="pl-type">
+                <button class="pill sel-r" data-v="bio"     data-c="r" data-group="type-multi" onclick="pillToggleMulti(this)" title="Urgência para bio">🎯 Bio</button>
+                <button class="pill sel-y" data-v="comment" data-c="y" data-group="type-multi" onclick="pillToggleMulti(this)" title="Palavra nos comentários">💬 Comentário</button>
+                <button class="pill sel-g" data-v="share"   data-c="g" data-group="type-multi" onclick="pillToggleMulti(this)" title="Compartilha com amigo">🔁 Compartilhar</button>
+                <button class="pill sel-b" data-v="follow"  data-c="b" data-group="type-multi" onclick="pillToggleMulti(this)" title="Pede seguir">➕ Seguir</button>
+                <button class="pill sel-p" data-v="save"    data-c="p" data-group="type-multi" onclick="pillToggleMulti(this)" title="Salva o vídeo">🔖 Salvar</button>
+                <button class="pill"       data-v="like"    data-c="r" data-group="type-multi" onclick="pillToggleMulti(this)" title="Pede curtir">❤️ Curtir</button>
+                <button class="pill"       data-v="duet"    data-c="b" data-group="type-multi" onclick="pillToggleMulti(this)" title="Dueto/Stitch">🎬 Dueto</button>
+                <button class="pill"       data-v="dm"      data-c="p" data-group="type-multi" onclick="pillToggleMulti(this)" title="Mensagem privada">📩 DM</button>
+                <button class="pill"       data-v="mixed"   data-c="p" data-group="type-multi" onclick="pillToggleMulti(this)" title="Combina vários">🔀 Misto</button>
               </div>
-              <div style="margin-top:8px;padding:8px 10px;background:var(--s3);border-radius:6px;font-size:11px;color:var(--muted2);line-height:1.5" id="cta-hint">
-                Selecione um ou mais modos — o gerador mesclará os CTAs automaticamente.
-              </div>
+              <div class="cta-hint-box" id="cta-hint">Selecione um ou mais modos de CTA acima.</div>
             </div>
 
             <div class="fg">
@@ -347,40 +343,40 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:1
             <div class="fg">
               <label class="lbl">Tom</label>
               <div class="pills" id="pl-tone">
-                <button class="pill on-r" data-v="visceral" onclick="singlePill('pl-tone',this)">🔥 Visceral</button>
-                <button class="pill" data-v="cientifico" onclick="singlePill('pl-tone',this)">🧬 Científico</button>
-                <button class="pill" data-v="provocativo" onclick="singlePill('pl-tone',this)">😏 Provocativo</button>
-                <button class="pill" data-v="ancestral" onclick="singlePill('pl-tone',this)">🌿 Ancestral</button>
+                <button class="pill sel-r" data-v="visceral"   data-c="r" data-group="tone-single" onclick="pillToggleSingle(this)">🔥 Visceral</button>
+                <button class="pill"       data-v="cientifico" data-c="r" data-group="tone-single" onclick="pillToggleSingle(this)">🧬 Científico</button>
+                <button class="pill"       data-v="provocativo"data-c="r" data-group="tone-single" onclick="pillToggleSingle(this)">😏 Provocativo</button>
+                <button class="pill"       data-v="ancestral"  data-c="g" data-group="tone-single" onclick="pillToggleSingle(this)">🌿 Ancestral</button>
               </div>
             </div>
 
             <div class="fg">
-              <label class="lbl">Palavra-chave Ambígua</label>
+              <label class="lbl">Palavra Ambígua</label>
               <div class="pills" id="pl-meta">
-                <button class="pill on-r" data-v="auto" onclick="singlePill('pl-meta',this)">🎲 Auto</button>
-                <button class="pill" data-v="amigão" onclick="singlePill('pl-meta',this)">amigão 🇧🇷</button>
-                <button class="pill" data-v="ferramenta" onclick="singlePill('pl-meta',this)">ferramenta 🇧🇷</button>
-                <button class="pill" data-v="jubileu" onclick="singlePill('pl-meta',this)">jubileu 🇧🇷</button>
-                <button class="pill" data-v="espada" onclick="singlePill('pl-meta',this)">espada 🇧🇷</button>
-                <button class="pill" data-v="pergaminho" onclick="singlePill('pl-meta',this)">pergaminho 🇧🇷</button>
-                <button class="pill" data-v="lápiz" onclick="singlePill('pl-meta',this)">lápiz 🌎</button>
-                <button class="pill" data-v="herramienta" onclick="singlePill('pl-meta',this)">herramienta 🌎</button>
-                <button class="pill" data-v="instrumento" onclick="singlePill('pl-meta',this)">instrumento 🌎</button>
-                <button class="pill" data-v="equipo" onclick="singlePill('pl-meta',this)">equipo 🌎</button>
-                <button class="pill" data-v="bastón" onclick="singlePill('pl-meta',this)">bastón 🌎</button>
-                <button class="pill" data-v="compañero" onclick="singlePill('pl-meta',this)">compañero 🌎</button>
-                <button class="pill" data-v="tesoro" onclick="singlePill('pl-meta',this)">tesoro 🌎</button>
-                <button class="pill" data-v="trofeo" onclick="singlePill('pl-meta',this)">trofeo 🌎</button>
-                <button class="pill" data-v="el capitán" onclick="singlePill('pl-meta',this)">el capitán 🌎</button>
-                <button class="pill" data-v="el socio" onclick="singlePill('pl-meta',this)">el socio 🌎</button>
+                <button class="pill sel-r" data-v="auto"        data-c="r" data-group="meta-single" onclick="pillToggleSingle(this)">🎲 Auto</button>
+                <button class="pill"       data-v="amigão"      data-c="g" data-group="meta-single" onclick="pillToggleSingle(this)">amigão 🇧🇷</button>
+                <button class="pill"       data-v="ferramenta"  data-c="g" data-group="meta-single" onclick="pillToggleSingle(this)">ferramenta 🇧🇷</button>
+                <button class="pill"       data-v="jubileu"     data-c="g" data-group="meta-single" onclick="pillToggleSingle(this)">jubileu 🇧🇷</button>
+                <button class="pill"       data-v="espada"      data-c="g" data-group="meta-single" onclick="pillToggleSingle(this)">espada 🇧🇷</button>
+                <button class="pill"       data-v="pergaminho"  data-c="g" data-group="meta-single" onclick="pillToggleSingle(this)">pergaminho 🇧🇷</button>
+                <button class="pill"       data-v="lápiz"       data-c="b" data-group="meta-single" onclick="pillToggleSingle(this)">lápiz 🌎</button>
+                <button class="pill"       data-v="herramienta" data-c="b" data-group="meta-single" onclick="pillToggleSingle(this)">herramienta 🌎</button>
+                <button class="pill"       data-v="instrumento" data-c="b" data-group="meta-single" onclick="pillToggleSingle(this)">instrumento 🌎</button>
+                <button class="pill"       data-v="equipo"      data-c="b" data-group="meta-single" onclick="pillToggleSingle(this)">equipo 🌎</button>
+                <button class="pill"       data-v="bastón"      data-c="b" data-group="meta-single" onclick="pillToggleSingle(this)">bastón 🌎</button>
+                <button class="pill"       data-v="compañero"   data-c="b" data-group="meta-single" onclick="pillToggleSingle(this)">compañero 🌎</button>
+                <button class="pill"       data-v="tesoro"      data-c="b" data-group="meta-single" onclick="pillToggleSingle(this)">tesoro 🌎</button>
+                <button class="pill"       data-v="trofeo"      data-c="b" data-group="meta-single" onclick="pillToggleSingle(this)">trofeo 🌎</button>
+                <button class="pill"       data-v="el capitán"  data-c="b" data-group="meta-single" onclick="pillToggleSingle(this)">el capitán 🌎</button>
+                <button class="pill"       data-v="el socio"    data-c="b" data-group="meta-single" onclick="pillToggleSingle(this)">el socio 🌎</button>
               </div>
             </div>
 
             <div class="fg" style="margin-bottom:16px">
-              <label class="lbl">Cross-pollination BR↔LATAM</label>
+              <label class="lbl">Cross BR↔LATAM</label>
               <div class="pills" id="pl-cross">
-                <button class="pill" data-v="off" onclick="singlePill('pl-cross',this)">Desligado</button>
-                <button class="pill on-p" data-v="on" onclick="singlePill('pl-cross',this)">✨ Ativado — usa DNA BR no sintaxe LATAM</button>
+                <button class="pill"       data-v="off" data-c="r" data-group="cross-single" onclick="pillToggleSingle(this)">Desligado</button>
+                <button class="pill sel-p" data-v="on"  data-c="p" data-group="cross-single" onclick="pillToggleSingle(this)">✨ Ativado</button>
               </div>
             </div>
 
@@ -733,31 +729,95 @@ function toggleLang(btn){
   else{S.langs.add(v);btn.className='pill '+cls;repop(btn);}
 }
 // CTA colour map
-const CTA_COLORS={'bio':'on-r','comment':'on-y','share':'on-g','follow':'on-b','save':'on-p','like':'on-r','duet':'on-b','dm':'on-p','mixed':'on-p'};
+const CTA_COLORS={'bio':'r','comment':'y','share':'g','follow':'b','save':'p','like':'r','duet':'b','dm':'p','mixed':'p'};
 
 // CTA descriptions for hint bar
 const CTA_HINTS={
   bio:'🎯 Bio — urgência emocional forte para clicar no link da bio.',
-  comment:'💬 Comentário — pede palavra/frase/número nos comentários (máximo engajamento algorítmico).',
-  share:'🔁 Compartilhar — "manda pra um amigo que precisa ver isso" / "marca alguém aqui embaixo".',
-  follow:'➕ Seguir — "segue aqui que toda semana solto um método novo" / "ativa o sininho".',
-  save:'🔖 Salvar — "salva esse vídeo porque pode sair do ar" / "guarda antes de sumir".',
-  like:'❤️ Curtir — "curte se você reconheceu isso no seu corpo" / "curte pra eu continuar postando".',
-  duet:'🎬 Dueto/Stitch — "faz dueto mostrando seu resultado em 30 dias" / "stitch com antes/depois".',
-  dm:'📩 Direct/DM — "me manda mensagem aqui que te passo o protocolo completo".',
-  mixed:'🔀 Misto — combina bio + 1 ação de engajamento no mesmo CTA (ex: "curte, salva e clica na bio").',
+  comment:'💬 Comentário — pede palavra/frase/número nos comentários.',
+  share:'🔁 Compartilhar — "manda pra um amigo que precisa ver isso".',
+  follow:'➕ Seguir — "segue aqui que toda semana solto método novo".',
+  save:'🔖 Salvar — "salva esse vídeo porque pode sair do ar".',
+  like:'❤️ Curtir — "curte se você se reconheceu nisso".',
+  duet:'🎬 Dueto/Stitch — "faz dueto mostrando resultado em 30 dias".',
+  dm:'📩 DM — "me manda mensagem aqui que te passo o protocolo".',
+  mixed:'🔀 Misto — combina bio + engajamento num único CTA fluido.',
 };
 
-function toggleType(btn){
-  const v=btn.dataset.v;
-  const cls=CTA_COLORS[v]||'on-r';
-  if(S.types.has(v)&&S.types.size>1){S.types.delete(v);btn.className='pill';}
-  else{S.types.add(v);btn.className='pill '+cls;repop(btn);}
-  // Update hint
-  const selected=[...S.types];
-  const hints=selected.map(t=>CTA_HINTS[t]||'').filter(Boolean);
-  document.getElementById('cta-hint').innerHTML=hints.join('<br>')||'Selecione um ou mais modos.';
+// Full CTA bank
+const CTA_BANK={
+  bio:{br:['Clica no link da bio agora antes de sumir.','O vídeo completo tá na minha bio — vai lá hoje ainda.','Acessa minha bio e pega o protocolo gratuito.','Link na bio. Não deixa pra amanhã.'],es:['Haz clic en el enlace de mi perfil ahora.','El protocolo completo está en mi bio — ve antes de que desaparezca.','Accede a mi perfil y haz la evaluación gratuita.','El link está en la bio. No lo dejes para mañana.']},
+  comment:{br:['Comenta QUERO aqui que te mando o método.','Digita SIM nos comentários se quer receber.','Comenta sua idade aqui que eu te explico o que fazer.','Comenta "JÁ" se você vai tentar hoje.'],es:['Comenta QUIERO aquí y te mando el protocolo.','Escribe SÍ en los comentarios si quieres recibirlo.','Comenta tu edad y te digo exactamente qué hacer.','Escribe "YA" si lo vas a intentar hoy.']},
+  share:{br:['Compartilha com um amigo que precisa ver isso agora.','Marca aqui embaixo aquele amigo que tá precisando.','Tag aquele amigo que vai agradecer depois.'],es:['Comparte con un amigo que necesita ver esto ahora.','Menciona aquí abajo a ese amigo que lo necesita.','Taguea al amigo que te va a agradecer después.']},
+  follow:{br:['Segue aqui que toda semana solto um método novo.','Ativa o sininho pra não perder os próximos.','Segue e salva pra ter sempre por perto.'],es:['Sígueme que cada semana suelto un método nuevo.','Activa la campanita para no perderte el siguiente.','Sígueme y guarda para tenerlo siempre cerca.']},
+  save:{br:['Salva esse vídeo antes de sumir — já avisei.','Guarda aqui porque o TikTok pode tirar do ar.','Salva e volta aqui depois de 30 dias pra me contar.'],es:['Guarda este video antes de que desaparezca — ya te avisé.','Guárdalo porque TikTok puede sacarlo.','Guarda y vuelve en 30 días a contarme.']},
+  like:{br:['Curte se você se reconheceu nessa situação.','Dá um like pra eu saber que isso te ajudou.','Curte pra eu continuar postando esses métodos.'],es:['Dale like si te reconociste en esta situación.','Dale me gusta para que yo sepa que esto te ayudó.','Dale like para que yo siga publicando estos métodos.']},
+  duet:{br:['Faz dueto comigo daqui a 30 dias mostrando seu resultado.','Faz stitch antes e depois — quero ver a transformação.'],es:['Haz dueto conmigo en 30 días mostrando tu resultado.','Haz stitch de antes y después — quiero ver la transformación.']},
+  dm:{br:['Me manda mensagem aqui que te passo o protocolo completo.','Me chama no privado que te mando tudo de graça.'],es:['Mándame un mensaje aquí y te paso el protocolo completo.','Escríbeme en privado que te mando todo gratis.']},
+  mixed:{br:['Curte, salva e clica no link da bio — os três juntos hoje.','Comenta QUERO, salva o vídeo, e vai na bio — nessa ordem.'],es:['Dale like, guárdalo y haz clic en la bio — los tres hoy.','Comenta QUIERO, guarda el video y ve a la bio — en ese orden.']},
+};
+
+// ── UNIFIED PILL ENGINE ──────────────────────────────────────
+// Multi-select (lang, cta type)
+function pillToggleMulti(btn){
+  const v = btn.dataset.v;
+  const c = btn.dataset.c || 'r';
+  const group = btn.dataset.group;
+  // figure out sibling pills in same group
+  const siblings = [...document.querySelectorAll(`[data-group="${group}"]`)];
+  const activeSiblings = siblings.filter(b => b.classList.contains('pill-on'));
+  const isOn = btn.classList.contains('pill-on');
+  // don't deselect last one
+  if(isOn && activeSiblings.length <= 1) return;
+  if(isOn){
+    btn.classList.remove('pill-on','sel-r','sel-b','sel-g','sel-y','sel-p');
+  } else {
+    btn.classList.add('pill-on','sel-'+c);
+    triggerPop(btn);
+  }
+  // sync state
+  if(group === 'lang-multi'){
+    S.langs = new Set(siblings.filter(b=>b.classList.contains('pill-on')).map(b=>b.dataset.v));
+  }
+  if(group === 'type-multi'){
+    S.types = new Set(siblings.filter(b=>b.classList.contains('pill-on')).map(b=>b.dataset.v));
+    updateCtaHint();
+  }
 }
+
+// Single-select (tone, meta, cross)
+function pillToggleSingle(btn){
+  const c = btn.dataset.c || 'r';
+  const group = btn.dataset.group;
+  document.querySelectorAll(`[data-group="${group}"]`).forEach(b=>{
+    b.classList.remove('pill-on','sel-r','sel-b','sel-g','sel-y','sel-p');
+  });
+  btn.classList.add('pill-on','sel-'+c);
+  triggerPop(btn);
+  const v = btn.dataset.v;
+  if(group==='tone-single') S.tone = v;
+  if(group==='meta-single') S.meta = v;
+  if(group==='cross-single') S.cross = v;
+}
+
+function triggerPop(btn){
+  btn.classList.remove('pill-popping');
+  void btn.offsetWidth;
+  btn.classList.add('pill-popping');
+  btn.addEventListener('animationend', ()=> btn.classList.remove('pill-popping'), {once:true});
+}
+
+function updateCtaHint(){
+  const selected = [...S.types];
+  const hints = selected.map(t=>CTA_HINTS[t]||'').filter(Boolean);
+  const el = document.getElementById('cta-hint');
+  if(el) el.innerHTML = hints.length ? hints.join('<br>') : 'Selecione um ou mais modos de CTA acima.';
+}
+
+// Legacy stubs (keep generate() working)
+function toggleLang(){}
+function toggleType(){}
+function singlePill(){}
 
 // Full CTA bank — used by prompt builder
 const CTA_BANK={
@@ -1175,18 +1235,20 @@ function renderVault(){
 // ════════════════════════════════════════════════════════════
 // INIT
 // ════════════════════════════════════════════════════════════
-// Inject checkmark span into every pill
-document.querySelectorAll('.pill').forEach(p=>{
-  p.innerHTML=`<span class="pill-ck">✓ </span>`+p.innerHTML;
+// Mark initially-active pills (those that have sel-* class already set in HTML)
+document.querySelectorAll('.pill[class*="sel-"]').forEach(btn => {
+  btn.classList.add('pill-on');
+  // sync initial state into S
+  const g = btn.dataset.group;
+  const v = btn.dataset.v;
+  if(g==='lang-multi')  S.langs.add(v);
+  if(g==='type-multi')  S.types.add(v);
+  if(g==='tone-single') S.tone = v;
+  if(g==='meta-single') S.meta = v;
+  if(g==='cross-single') S.cross = v;
 });
 
-// Re-trigger pop animation helper
-function repop(btn){
-  btn.style.animation='none';
-  btn.offsetHeight; // reflow
-  btn.style.animation='';
-}
-
+updateCtaHint();
 updateUI();
 </script>
 </body>
