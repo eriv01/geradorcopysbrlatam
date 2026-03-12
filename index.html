@@ -752,56 +752,51 @@ const CTA_BANK={
   mixed:{br:['Curte, salva e clica no link da bio — os três juntos hoje.','Comenta QUERO, salva o vídeo, e vai na bio — nessa ordem.'],es:['Dale like, guárdalo y haz clic en la bio — los tres hoy.','Comenta QUIERO, guarda el video y ve a la bio — en ese orden.']},
 };
 
-// ── PILL COLOR MAP (rgba bg, border, text, shadow)
-const PCOL = {
-  r: ['rgba(255,45,85,.18)','rgba(255,45,85,.8)','#ff2d55','rgba(255,45,85,.15)'],
-  b: ['rgba(79,172,254,.18)','rgba(79,172,254,.8)','#4facfe','rgba(79,172,254,.15)'],
-  g: ['rgba(0,229,160,.18)','rgba(0,229,160,.8)','#00e5a0','rgba(0,229,160,.15)'],
-  y: ['rgba(255,209,102,.18)','rgba(255,209,102,.8)','#ffd166','rgba(255,209,102,.15)'],
-  p: ['rgba(199,125,255,.18)','rgba(199,125,255,.8)','#c77dff','rgba(199,125,255,.15)'],
+// ── PILL ENGINE (idêntico ao teste que funcionou) ────────────
+const COLORS = {
+  r: { bg:'rgba(255,45,85,.2)',   border:'#ff2d55', color:'#ff2d55', shadow:'rgba(255,45,85,.18)'  },
+  b: { bg:'rgba(79,172,254,.2)',  border:'#4facfe', color:'#4facfe', shadow:'rgba(79,172,254,.18)' },
+  g: { bg:'rgba(0,229,160,.2)',   border:'#00e5a0', color:'#00e5a0', shadow:'rgba(0,229,160,.18)'  },
+  y: { bg:'rgba(255,209,102,.2)', border:'#ffd166', color:'#ffd166', shadow:'rgba(255,209,102,.18)'},
+  p: { bg:'rgba(199,125,255,.2)', border:'#c77dff', color:'#c77dff', shadow:'rgba(199,125,255,.18)'},
 };
 
-function pillOn(btn){
-  const c = PCOL[btn.dataset.c] || PCOL.r;
-  btn.style.background    = c[0];
-  btn.style.borderColor   = c[1];
-  btn.style.color         = c[2];
-  btn.style.boxShadow     = `0 0 0 3px ${c[3]}`;
+function activate(btn){
+  const c = COLORS[btn.dataset.c] || COLORS.r;
+  btn.style.background = c.bg;
+  btn.style.borderColor = c.border;
+  btn.style.color = c.color;
+  btn.style.boxShadow = `0 0 0 3px ${c.shadow}`;
   btn.classList.add('on');
-  // re-trigger animation
   btn.style.animation = 'none';
   void btn.offsetWidth;
   btn.style.animation = '';
 }
 
-function pillOff(btn){
-  btn.style.background  = '';
+function deactivate(btn){
+  btn.style.background = '';
   btn.style.borderColor = '';
-  btn.style.color       = '';
-  btn.style.boxShadow   = '';
+  btn.style.color = '';
+  btn.style.boxShadow = '';
   btn.classList.remove('on');
 }
 
-// Multi-select toggle (lang, cta type)
 function pillToggleMulti(btn){
   const group = btn.dataset.group;
   const siblings = [...document.querySelectorAll(`[data-group="${group}"]`)];
+  const active = siblings.filter(b => b.classList.contains('on'));
   const isOn = btn.classList.contains('on');
-  const activeCount = siblings.filter(b => b.classList.contains('on')).length;
-  // don't let the last one deselect
-  if(isOn && activeCount <= 1) return;
-  isOn ? pillOff(btn) : pillOn(btn);
-  // sync state
-  const active = siblings.filter(b => b.classList.contains('on')).map(b => b.dataset.v);
-  if(group === 'lang-multi') S.langs = new Set(active);
-  if(group === 'type-multi'){ S.types = new Set(active); updateCtaHint(); }
+  if(isOn && active.length <= 1) return;
+  isOn ? deactivate(btn) : activate(btn);
+  const now = siblings.filter(b => b.classList.contains('on')).map(b => b.dataset.v);
+  if(group === 'lang-multi') S.langs = new Set(now);
+  if(group === 'type-multi'){ S.types = new Set(now); updateCtaHint(); }
 }
 
-// Single-select toggle (tone, meta, cross)
 function pillToggleSingle(btn){
   const group = btn.dataset.group;
-  document.querySelectorAll(`[data-group="${group}"]`).forEach(b => pillOff(b));
-  pillOn(btn);
+  document.querySelectorAll(`[data-group="${group}"]`).forEach(b => deactivate(b));
+  activate(btn);
   const v = btn.dataset.v;
   if(group === 'tone-single')  S.tone  = v;
   if(group === 'meta-single')  S.meta  = v;
@@ -813,13 +808,6 @@ function updateCtaHint(){
   const el = document.getElementById('cta-hint');
   if(el) el.innerHTML = hints.length ? hints.join('<br>') : 'Selecione um ou mais modos de CTA acima.';
 }
-
-// Legacy stubs
-function toggleLang(){}
-function toggleType(){}
-function singlePill(){}
-
-function singlePill(){}  // legacy stub only
 
 // ════════════════════════════════════════════════════════════
 // MAIN GENERATE
@@ -1186,9 +1174,8 @@ function renderVault(){
 // ════════════════════════════════════════════════════════════
 // INIT
 // ════════════════════════════════════════════════════════════
-// Activate pills that have sel-* class in HTML
 document.querySelectorAll('.pill[class*="sel-"]').forEach(btn => {
-  pillOn(btn);
+  activate(btn);
   const g = btn.dataset.group, v = btn.dataset.v;
   if(g==='lang-multi')   S.langs.add(v);
   if(g==='type-multi')   S.types.add(v);
