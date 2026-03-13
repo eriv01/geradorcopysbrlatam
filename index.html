@@ -181,6 +181,12 @@ body{background:var(--bg);color:var(--tx);font-family:var(--fn);min-height:100vh
     <button class="nb" onclick="nav('vault',this)"><span class="nb-ic">🗄️</span>Vault de Copies</button>
   </nav>
   <div class="sb-div"></div>
+  <div class="sb-sec">API KEY</div>
+  <div style="padding:0 14px 10px">
+    <input class="inp" id="api-key" type="password" placeholder="sk-ant-..." style="margin-bottom:4px">
+    <div style="font-size:10px;color:var(--mu);line-height:1.4">Sua chave fica só no browser, nunca sai daqui.</div>
+  </div>
+  <div class="sb-div"></div>
   <div class="sb-sec">ADICIONAR AO VAULT</div>
   <div class="vault-add">
     <input class="inp" id="sb-name" placeholder="Nome (ex: CP10-NOVA-BR)">
@@ -600,7 +606,9 @@ REGRAS CRÍTICAS:
 Responda APENAS com os blocos.`;
 
   try{
-    const resp=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:900,messages:[{role:'user',content:prompt}]})});
+    const apiKey=(document.getElementById('api-key').value||'').trim();
+    if(!apiKey){showError('Cole sua API key da Anthropic no campo da sidebar (sk-ant-...).'); btn.classList.remove('loading'); btn.disabled=false; return;}
+    const resp=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:900,messages:[{role:'user',content:prompt}]})});
     const data=await resp.json();
     if(data.error) throw new Error(data.error.message);
     const raw=data.content?.map(b=>b.text||'').join('')||'';
