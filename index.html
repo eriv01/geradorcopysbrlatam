@@ -146,7 +146,11 @@ body{background:var(--bg);color:var(--tx);font-family:var(--fn);min-height:100vh
 .blk-t{font-family:var(--mo);font-size:10px;color:var(--mu);padding-top:3px;min-width:26px;flex-shrink:0}
 .blk-tx{font-size:14px;line-height:1.65;color:var(--tx)}
 .blk-tx.hook{color:var(--r);font-weight:700}
-.blk-tx.cta{color:var(--g);font-style:italic}
+.blk-tx.dor{color:var(--y)}
+.blk-tx.sol{color:var(--g)}
+.blk-tx.cta{color:var(--b);font-style:italic;font-weight:700}
+.blk-tx.dor{color:var(--y)}
+.blk-tx.sol{color:var(--b)}
 .blk-sep{height:1px;background:var(--bd);margin:3px 0}
 .dna-tags{display:flex;gap:4px;flex-wrap:wrap;margin-top:10px}
 .dna-tag{font-size:9px;padding:1px 6px;border-radius:3px;background:var(--s3);color:var(--mu2);border:1px solid var(--bd)}
@@ -599,67 +603,77 @@ async function generate(){
   const metasES=['lápiz','herramienta','instrumento','equipo','bastón','compañero','tesoro','trofeo','el capitán','el socio','el jefe','la bestia','el guerrero','el campeón','el toro'];
   const meta=S.meta==='auto'?(isBR?metasBR[Math.floor(Math.random()*metasBR.length)]:metasES[Math.floor(Math.random()*metasES.length)]):S.meta;
 
-  const pool=isCross?[...SF.br,...SF.latam,...customVault]:[...SF[lang],...customVault.filter(c=>c.lang===lang)];
-  const examples=[...pool].sort(()=>Math.random()-.5).slice(0,3);
-  const dnaStr=examples.map(c=>`HOOK: "${c.hook}" | META: "${c.metaphor||'?'}" | CTA: ${c.cta}`).join('\n');
-
   const hookInstr={
-    auto:'Escolha o hook mais potente — visceral e inesperado, baseado no DNA',
-    accusation:'Acusação direta: "Por isso seu [META] ainda é [PROBLEMA]" — ataca a insegurança',
-    prohibition:'Proibição curiosa: "Não [AÇÃO] porque seu [META] vai [CONSEQUÊNCIA ABSURDA]"',
-    comparison:'Comparação social visceral: "Aquele amigo que do nada cresceu mais rápido..."',
-    question:'Pergunta-espelho humilhante com analogia criativa inesperada (como "fio de fone")',
-    recipe:'Revelação de receita: ingredientes concretos (açafrão, gengibre, bicarbonato...)',
-    challenge:'Desafio: "Vou te propor um reto de 45 dias — com uma condição"',
-    humor:'Humor absurdo com metáfora animal ou objeto inesperado ("minhoca vira jiboia")',
+    auto:'Escolha o hook mais potente — visceral, inesperado, baseado no DNA do swipe file',
+    accusation:'Acusação direta: "Por isso teu [META] ainda é [PROBLEMA]" — ataca a insegurança sem filtro',
+    prohibition:'Proibição curiosa: "Não [AÇÃO] se não quer que teu [META] [CONSEQUÊNCIA ABSURDA]"',
+    comparison:'Comparação social visceral: "Aquele amigo que do nada ficou diferente... não foi sorte"',
+    question:'Pergunta-espelho humilhante com analogia criativa e inesperada (ex: "mais fino que fio de fone")',
+    recipe:'Revelação de receita com ingredientes reais e concretos (açafrão, gengibre, bicarbonato, limão)',
+    challenge:'Desafio: propõe 45 dias com uma condição — o cara volta pra contar o resultado',
+    humor:'Humor absurdo com metáfora animal ou objeto inesperado ("minhoca vira jiboia em 3 semanas")',
     status:'Gatilho de status: "ela vai mandar print pras amigas / te llamarán caballo"',
-    sleep:'Sabotador oculto do sono: cueca/calor/posição roubando tudo enquanto você dorme',
-    secret:'Segredo que a indústria esconde: "Isso existe há décadas mas nunca te contaram"',
-    mistake:'Erro fatal que todo homem comete sem saber e que sabota o crescimento',
-    age:'Janela de idade urgente: "Se você tem entre X e Y anos ainda dá tempo — depois não"',
-    doctor:'O que o médico não te conta: informação suprimida pelo sistema de saúde',
-    before_after:'Antes e depois chocante: transformação em dias específicos com números reais',
-    tribe:'Técnica ancestral de tribo africana/indígena usada por séculos',
-    industry:'Segredo da indústria adulta: "Os atores usam isso há anos e nunca revelaram"',
-    discovery:'Descoberta científica recente que muda tudo sobre desenvolvimento masculino',
-    warning:'Aviso urgente: "Para qualquer homem que ainda não sabe disso"',
-    size_hack:'Hack de resultado rápido: protocolo de X minutos que funciona no mesmo dia',
-    food:'Alimento comum que você come todo dia que sabota/potencializa tudo',
-    morning:'Ritual matinal de 2 minutos que reativa hormônios antes do café',
+    sleep:'Sabotador oculto do sono: cueca/calor roubando tudo enquanto você dorme sem saber',
+    secret:'Segredo suprimido: "Isso existe há décadas mas a indústria não quer que você saiba"',
+    mistake:'Erro fatal que 9 em 10 homens cometem sem saber que sabota o crescimento natural',
+    age:'Janela urgente: "Se você tem entre X e Y anos ainda tem tempo — depois fecha"',
+    doctor:'O que o médico não te conta: informação que o sistema de saúde suprimiu',
+    before_after:'Antes e depois chocante com números reais: X cm em Y dias sem cirurgia',
+    tribe:'Protocolo ancestral de tribo africana usado por séculos, só chegou aqui agora',
+    industry:'Segredo da indústria adulta: "Os atores usam isso há anos e nunca contaram"',
+    discovery:'Descoberta recente que derrubou tudo que a ciência dizia sobre desenvolvimento',
+    warning:'Aviso urgente para homens: "Se você ainda não sabe disso para tudo e assiste"',
+    size_hack:'Hack imediato: protocolo de 2 minutos que você sente no mesmo dia',
+    food:'Alimento que você come toda semana que está sabotando/potencializando o [META]',
+    morning:'Ritual matinal de 2 minutos que reactiva testosterona antes do primeiro café',
   };
 
+  const pool=isCross?[...SF.br,...SF.latam,...customVault]:[...SF[lang],...customVault.filter(c=>c.lang===lang)];
+  const ref=[...pool].sort(()=>Math.random()-.5)[0];
+
   const ctaLang=isBR?'br':'es';
-  const ctaEx=ctaModes.map(m=>{const b=CTA_BANK[m]?.[ctaLang]||CTA_BANK[m]?.br||[];return`[${m.toUpperCase()}] ex: "${b[Math.floor(Math.random()*b.length)]||''}"`}).join('\n');
-  const isMix=ctaModes.length>1||ctaModes.includes('mixed');
-  const ctaStr=`MODOS CTA: ${ctaModes.join(', ')}\nExemplos:\n${ctaEx}\n${isMix?'Combine num único CTA fluido e natural.':ctaModes[0]==='bio'?'Urgência máxima na bio.':'Seja específico e direto.'}`;
+  const ctaFrase=ctaModes.map(m=>{const b=CTA_BANK[m]?.[ctaLang]||CTA_BANK[m]?.br||[];return b[Math.floor(Math.random()*b.length)]||'';}).filter(Boolean).join(' + ');
 
-  const crossNote=isCross?'\n⚡ CROSS-POLLINATION: energia visceral BR reescrita em espanhol LATAM nativo — não tradução literal.':'';
-  const recent=[...MEMORY].slice(-5).map(m=>m.split('|')[0]).join(' / ');
-  const antiRep=MEMORY.size>0?`\nANTI-REPETIÇÃO: PROIBIDO repetir esses hooks: [${recent}]`:'';
+  const recent=[...MEMORY].slice(-5).map(m=>m.split('|')[0]).filter(Boolean);
+  const antiRep=recent.length?`PROIBIDO iniciar o hook igual a qualquer uma dessas frases já usadas: ${recent.join(' | ')}`:''
 
-  const prompt=`Você é especialista em copy viral para TikTok no mercado ${isBR?'Brasileiro (PT-BR coloquial)':'Latino-Americano (Español nativo)'}. Produto: método natural de desenvolvimento masculino.
+  const hookSelecionado=hookInstr[document.getElementById('hook-sel').value]||hookInstr.auto;
 
-METÁFORA OBRIGATÓRIA: "${meta}" — use SOMENTE essa. NUNCA nomeie explicitamente.
-${crossNote}${antiRep}
+  const prompt=`Você é o melhor copywriter de TikTok do mercado masculino natural. Suas copies já geraram R$40.000+.
 
-DNA DO SWIPE FILE:
-${dnaStr}
+══ IDIOMA ══
+${isBR
+  ? 'PORTUGUÊS BRASILEIRO. Coloquial. Gírias. "Tá", "teu", "pra", "tu". Energia de nordestino ou gaúcho. NUNCA espanhol.'
+  : 'ESPAÑOL LATINO-AMERICANO. Nativo. Natural. Nunca tradução do português. NUNCA português.'}
 
-HOOK: ${hookInstr[document.getElementById('hook-sel').value]||hookInstr.auto}
-TOM: ${tone.toUpperCase()}
-${ctaStr}
+══ METÁFORA ══
+A única palavra permitida para o órgão masculino é: "${meta}"
+Nunca use nenhuma outra. Nunca use palavras explícitas.
 
-REGRAS CRÍTICAS:
-1. Blocos de NO MÁXIMO 15 palavras cada (≈6s de fala)
-2. Cada bloco em UMA linha separada, sem numeração
-3. Primeira linha: [HOOK] texto
-4. Última(s) linha(s): [CTA] texto
-5. NUNCA linguagem explícita — só ambiguidade criativa
-6. Inclua 1 número concreto (cm, dias, pessoas)
-7. Inclua remoção de objeção: "sem cirurgia/pastillas/pílulas"
-8. VISCERAL. Zero academicismo.
+══ REFERÊNCIA (copy que já converteu — estude a estrutura, o ritmo e a energia) ══
+${ref?.text||''}
 
-Responda APENAS com os blocos.`;
+══ HOOK A CRIAR ══
+${hookSelecionado}
+${antiRep}
+
+══ CTA OBRIGATÓRIO (use exatamente essa frase na linha [CTA]) ══
+"${ctaFrase}"
+
+══ ESTRUTURA — escreva EXATAMENTE 6 linhas ══
+[HOOK] Para o scroll. Chocante ou curiosa. Máx 12 palavras.
+[DOR] Culpado concreto: hormônios/cueca/calor/alimentação/idade. Máx 15 palavras.
+[AMPLIFICA] Consequência emocional ou social da dor. Máx 15 palavras.
+[SOLUÇÃO] Método natural. Número concreto (cm ou dias). Sem cirurgia nem pílulas. Máx 15 palavras.
+[PROVA] Quantidade de pessoas + resultado específico. Máx 12 palavras.
+[CTA] Exatamente a frase do CTA acima. Não modifique.
+
+══ REGRAS ══
+- Cada linha começa com a tag entre colchetes
+- ZERO palavras explícitas
+- ZERO academicismo
+- ZERO mistura de idiomas
+- Responda APENAS as 6 linhas. Nenhuma palavra extra.`;
 
   try{
     const resp=await fetch('https://api.groq.com/openai/v1/chat/completions',{
@@ -693,7 +707,16 @@ function renderResult({lines,lang,meta,isCross,ctaModes}){
   area.querySelector('.out-empty')?.remove();
   document.getElementById('clear-btn').style.display='flex';
 
-  const blocks=lines.map(l=>({text:l.replace(/\[HOOK\]|\[CTA\]/g,'').trim(),isHook:l.startsWith('[HOOK]'),isCta:l.startsWith('[CTA]')})).filter(b=>b.text);
+  const blocks=lines.map(l=>{
+    const isHook=l.startsWith('[HOOK]');
+    const isCta=l.startsWith('[CTA]');
+    const isDor=l.startsWith('[DOR]');
+    const isAmp=l.startsWith('[AMPLIFICA]');
+    const isSol=l.startsWith('[SOLUÇÃO]')||l.startsWith('[SOLUCION]')||l.startsWith('[SOLUCIÓN]');
+    const isProv=l.startsWith('[PROVA]')||l.startsWith('[PRUEBA]');
+    const text=l.replace(/^\[(HOOK|CTA|DOR|AMPLIFICA|SOLU[ÇC][ÃA]O|SOLUCIÓN|PROVA|PRUEBA)\]/i,'').trim();
+    return {text,isHook,isCta,isDor,isAmp,isSol,isProv};
+  }).filter(b=>b.text);
   const joined=blocks.map(b=>b.text).join(' ').toLowerCase();
 
   let ts=0;
@@ -707,9 +730,14 @@ function renderResult({lines,lang,meta,isCross,ctaModes}){
   let bHtml='',tAcc=0;
   blocks.forEach((b,i)=>{
     const dur=Math.round(b.text.split(' ').length/2.5);
-    const cls=b.isHook?'blk-tx hook':b.isCta?'blk-tx cta':'blk-tx';
-    if(i>0&&(blocks[i-1].isCta!==b.isCta||blocks[i-1].isHook!==b.isHook)) bHtml+=`<div class="blk-sep"></div>`;
-    bHtml+=`<div class="blk"><div class="blk-t">${tAcc}s</div><div class="${cls}">${b.text}</div></div>`;
+    let cls='blk-tx';
+    if(b.isHook) cls='blk-tx hook';
+    else if(b.isCta) cls='blk-tx cta';
+    else if(b.isDor) cls='blk-tx dor';
+    else if(b.isSol||b.isProv) cls='blk-tx sol';
+    if(i>0) bHtml+=`<div class="blk-sep"></div>`;
+    const tag=b.isHook?'HOOK':b.isCta?'CTA':b.isDor?'DOR':b.isAmp?'AMP':b.isSol?'SOL':b.isProv?'PROVA':'';
+    bHtml+=`<div class="blk"><div class="blk-t">${tAcc}s${tag?`<br><span style="font-size:8px;opacity:.5">${tag}</span>`:''}</div><div class="${cls}">${b.text}</div></div>`;
     tAcc+=dur;
   });
 
