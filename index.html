@@ -143,15 +143,13 @@ body{background:var(--bg);color:var(--tx);font-family:var(--fn);min-height:100vh
 .type-mix{background:rgba(199,125,255,.08);color:var(--p)}
 .blocks{display:flex;flex-direction:column;gap:5px}
 .blk{display:flex;gap:10px;align-items:flex-start}
-.blk-t{font-family:var(--mo);font-size:10px;color:var(--mu);padding-top:3px;min-width:26px;flex-shrink:0}
-.blk-tx{font-size:14px;line-height:1.65;color:var(--tx)}
-.blk-tx.hook{color:var(--r);font-weight:700}
-.blk-tx.dor{color:var(--y)}
-.blk-tx.sol{color:var(--g)}
-.blk-tx.cta{color:var(--b);font-style:italic;font-weight:700}
+.blk-t{font-family:var(--mo);font-size:10px;color:var(--mu);padding-top:3px;min-width:40px;flex-shrink:0;line-height:1.4}
+.blk-tx{font-size:14px;line-height:1.7;color:var(--tx)}
+.blk-tx.hook{color:var(--r);font-weight:700;font-size:15px}
 .blk-tx.dor{color:var(--y)}
 .blk-tx.sol{color:var(--b)}
-.blk-sep{height:1px;background:var(--bd);margin:3px 0}
+.blk-tx.cta{color:var(--g);font-style:italic;font-weight:700}
+.blk-sep{height:1px;background:var(--bd);margin:4px 0}
 .dna-tags{display:flex;gap:4px;flex-wrap:wrap;margin-top:10px}
 .dna-tag{font-size:9px;padding:1px 6px;border-radius:3px;background:var(--s3);color:var(--mu2);border:1px solid var(--bd)}
 
@@ -643,37 +641,48 @@ async function generate(){
 
 ══ IDIOMA ══
 ${isBR
-  ? 'PORTUGUÊS BRASILEIRO. Coloquial. Gírias. "Tá", "teu", "pra", "tu". Energia de nordestino ou gaúcho. NUNCA espanhol.'
-  : 'ESPAÑOL LATINO-AMERICANO. Nativo. Natural. Nunca tradução do português. NUNCA português.'}
+  ? 'PORTUGUÊS BRASILEIRO. Coloquial. Gírias. "Tá", "teu", "pra", "tu". Energia nordestina ou gaúcha. NUNCA espanhol.'
+  : 'ESPAÑOL LATINO-AMERICANO 100% nativo. Natural. Nunca tradução. NUNCA português.'}
 
-══ METÁFORA ══
+══ METÁFORA ÚNICA ══
 A única palavra permitida para o órgão masculino é: "${meta}"
-Nunca use nenhuma outra. Nunca use palavras explícitas.
+Nenhuma outra. Zero palavras explícitas.
 
-══ REFERÊNCIA (copy que já converteu — estude a estrutura, o ritmo e a energia) ══
-${ref?.text||''}
+══ REFERÊNCIA (copy que já converteu milhares — estude o ritmo, a energia, a estrutura) ══
+"${ref?.text||''}"
 
 ══ HOOK A CRIAR ══
 ${hookSelecionado}
-${antiRep}
+${antiRep?'\n'+antiRep:''}
 
-══ CTA OBRIGATÓRIO (use exatamente essa frase na linha [CTA]) ══
-"${ctaFrase}"
+══ TOM ══
+${tone.toUpperCase()} — ${
+  tone==='visceral'?'cru, direto, sem filtro, palavras curtas e fortes':
+  tone==='cientifico'?'usa termos de hormônios, circulação, tecidos — mas linguagem popular':
+  tone==='provocativo'?'ironico, desafiador, quase humilha com bom humor':
+  'ancestral, místico, como segredo de tribo passado de geração em geração'
+}
 
-══ ESTRUTURA — escreva EXATAMENTE 6 linhas ══
-[HOOK] Para o scroll. Chocante ou curiosa. Máx 12 palavras.
-[DOR] Culpado concreto: hormônios/cueca/calor/alimentação/idade. Máx 15 palavras.
-[AMPLIFICA] Consequência emocional ou social da dor. Máx 15 palavras.
-[SOLUÇÃO] Método natural. Número concreto (cm ou dias). Sem cirurgia nem pílulas. Máx 15 palavras.
-[PROVA] Quantidade de pessoas + resultado específico. Máx 12 palavras.
-[CTA] Exatamente a frase do CTA acima. Não modifique.
+══ ESTRUTURA NARRATIVA OBRIGATÓRIA ══
+A copy precisa ter arco completo: problema → culpado → solução → prova → urgência → ação.
+Cada linha flui naturalmente para a próxima. Lida em voz alta tem que soar como um monólogo.
 
-══ REGRAS ══
-- Cada linha começa com a tag entre colchetes
-- ZERO palavras explícitas
-- ZERO academicismo
-- ZERO mistura de idiomas
-- Responda APENAS as 6 linhas. Nenhuma palavra extra.`;
+Escreva EXATAMENTE neste formato — 7 linhas, cada uma começando com a tag:
+
+[HOOK] Para o scroll. Frase chocante, curiosa ou provocadora. Máx 12 palavras.
+[DOR] Culpado específico e concreto (hormônios baixos / cueca / calor / idade / alimento). Máx 14 palavras.
+[AMPLIFICA] Consequência emocional real dessa dor — o que ela rouba da vida dele. Máx 14 palavras.
+[SOLUCAO] O método natural. Inclua 1 número real (Xcm ou X dias). Sem cirurgia, sem pílulas. Máx 14 palavras.
+[PROVA] Quantas pessoas + resultado específico. Ex: "900 homens já viraram o jogo". Máx 12 palavras.
+[URGENCIA] Por que agir HOJE — janela fechando, cada dia custa. Máx 12 palavras.
+[CTA] Exatamente esta frase, sem modificar: "${ctaFrase}"
+
+══ REGRAS ABSOLUTAS ══
+1. ZERO palavras explícitas — só ambiguidade criativa com "${meta}"
+2. ZERO academicismo — fala de rua, não de médico
+3. ZERO mistura de idiomas
+4. As 7 linhas formam um texto único com começo, meio e fim lógico
+5. Responda APENAS as 7 linhas com as tags. Nada mais. Sem introdução, sem explicação.`;
 
   try{
     const resp=await fetch('https://api.groq.com/openai/v1/chat/completions',{
@@ -681,7 +690,6 @@ ${antiRep}
       headers:{'Content-Type':'application/json','Authorization':'Bearer '+apiKey},
       body:JSON.stringify({
         model:'llama-3.3-70b-versatile',
-        max_tokens:900,
         messages:[{role:'user',content:prompt}]
       })
     });
@@ -787,7 +795,7 @@ function showError(msg){
 
 function copyResult(id){
   const card=document.getElementById(id);
-  const txt=[...card.querySelectorAll('.blk-tx')].map(b=>b.textContent).join('\n');
+  const txt=[...card.querySelectorAll('.blk-tx')].map(b=>b.textContent.trim()).filter(Boolean).join('\n');
   navigator.clipboard.writeText(txt).then(()=>{
     const btn=card.querySelector('.act-btn');
     btn.textContent='✓'; btn.classList.add('ok');
