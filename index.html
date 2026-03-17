@@ -88,11 +88,18 @@ body{background:var(--bg);color:var(--tx);font-family:var(--fn);min-height:100vh
   color:rgba(255,255,255,.3);
   font-family:var(--fn);font-size:12px;font-weight:600;
   cursor:pointer;white-space:nowrap;
-  transition:background .12s,border-color .12s,color .12s,box-shadow .12s;
+  transition:all .12s;
   user-select:none;
 }
-.pill:hover{color:rgba(255,255,255,.6);border-color:rgba(255,255,255,.2)}
-.pill.on{font-weight:700;animation:ppop .18s cubic-bezier(.34,1.56,.64,1)}
+.pill:hover{color:rgba(255,255,255,.55);border-color:rgba(255,255,255,.2)}
+.pill.on{
+  background:rgba(255,45,85,.2);
+  border-color:#ff2d55;
+  color:#ff2d55;
+  font-weight:700;
+  box-shadow:0 0 0 3px rgba(255,45,85,.12);
+  animation:ppop .18s cubic-bezier(.34,1.56,.64,1);
+}
 @keyframes ppop{0%{transform:scale(.88)}65%{transform:scale(1.09)}100%{transform:scale(1)}}
 .hint-box{margin-top:7px;padding:8px 10px;background:var(--s3);border-radius:7px;font-size:11px;color:var(--mu2);line-height:1.6;min-height:28px}
 
@@ -181,10 +188,10 @@ body{background:var(--bg);color:var(--tx);font-family:var(--fn);min-height:100vh
     <button class="nb" onclick="nav('vault',this)"><span class="nb-ic">🗄️</span>Vault de Copies</button>
   </nav>
   <div class="sb-div"></div>
-  <div class="sb-sec">API KEY</div>
+  <div class="sb-sec">GROQ API KEY (gratuito)</div>
   <div style="padding:0 14px 10px">
-    <input class="inp" id="api-key" type="password" placeholder="sk-ant-..." style="margin-bottom:4px">
-    <div style="font-size:10px;color:var(--mu);line-height:1.4">Sua chave fica só no browser, nunca sai daqui.</div>
+    <input class="inp" id="api-key" type="password" placeholder="gsk_...">
+    <div style="font-size:10px;color:var(--mu);line-height:1.5">Grátis em <strong style="color:var(--mu2)">console.groq.com</strong> → API Keys</div>
   </div>
   <div class="sb-div"></div>
   <div class="sb-sec">ADICIONAR AO VAULT</div>
@@ -223,7 +230,8 @@ body{background:var(--bg);color:var(--tx);font-family:var(--fn);min-height:100vh
   <div class="topbar">
     <span class="page-title" id="ptitle">GERADOR</span>
     <div style="flex:1"></div>
-    <span style="font-size:11px;color:var(--mu);font-family:var(--mo)">17 copies · swipe file</span>
+    <input id="api-key" type="password" placeholder="🔑 Cole sua Groq key aqui (gsk_...)" style="background:var(--s2);border:1px solid var(--bd2);border-radius:8px;color:var(--tx);font-family:var(--fn);font-size:12px;padding:7px 12px;outline:none;width:260px;max-width:50vw" oninput="localStorage.setItem('cl_gkey',this.value)">
+    <span style="font-size:11px;color:var(--mu);font-family:var(--mo);white-space:nowrap">17 copies · swipe file</span>
   </div>
 
   <!-- GENERATOR -->
@@ -262,16 +270,32 @@ body{background:var(--bg);color:var(--tx);font-family:var(--fn);min-height:100vh
             <div class="fg">
               <label class="lbl">Hook</label>
               <select class="sel" id="hook-sel">
-                <option value="auto">🎲 Automático</option>
+                <option value="auto">🎲 Automático (melhor DNA)</option>
+                <optgroup label="── CLÁSSICOS BR ──">
                 <option value="accusation">🔴 Acusação direta</option>
-                <option value="prohibition">🚫 Proibição curiosa</option>
-                <option value="comparison">👥 Comparação social</option>
-                <option value="question">❓ Pergunta-espelho</option>
-                <option value="recipe">🧪 Receita</option>
+                <option value="prohibition">🚫 Proibição curiosa ("Não faça...")</option>
+                <option value="comparison">👥 Comparação social (o amigo)</option>
+                <option value="question">❓ Pergunta-espelho humilhante</option>
+                <option value="recipe">🧪 Receita com ingredientes</option>
                 <option value="challenge">🏆 Desafio 30/45 dias</option>
-                <option value="humor">😂 Humor + analogia</option>
-                <option value="status">👑 Status</option>
-                <option value="sleep">😴 Sabotador do sono</option>
+                <option value="humor">😂 Humor + analogia absurda</option>
+                <option value="status">👑 Status ("ela vai notar")</option>
+                <option value="sleep">😴 Sabotador do sono (cueca/calor)</option>
+                </optgroup>
+                <optgroup label="── NOVOS ──">
+                <option value="secret">🤫 Segredo que escondem de você</option>
+                <option value="mistake">❌ Erro que todo homem comete</option>
+                <option value="age">⏳ Janela de idade fechando</option>
+                <option value="doctor">🩺 O que o médico não te conta</option>
+                <option value="before_after">🔄 Antes e depois chocante</option>
+                <option value="tribe">🌍 Técnica ancestral/tribal</option>
+                <option value="industry">🎬 Segredo da indústria adulta</option>
+                <option value="discovery">🔬 Descoberta que mudou tudo</option>
+                <option value="warning">⚠️ Aviso urgente para homens</option>
+                <option value="size_hack">📏 Hack de tamanho sem esforço</option>
+                <option value="food">🍽️ Alimento que sabota ou potencializa</option>
+                <option value="morning">🌅 Ritual da manhã que transforma</option>
+                </optgroup>
               </select>
             </div>
 
@@ -287,17 +311,30 @@ body{background:var(--bg);color:var(--tx);font-family:var(--fn);min-height:100vh
 
             <div class="fg">
               <label class="lbl">Metáfora</label>
-              <div class="pills" id="pl-meta">
-                <button class="pill" data-v="auto"        data-c="r" data-group="meta">🎲 Auto</button>
-                <button class="pill" data-v="amigão"      data-c="g" data-group="meta">amigão 🇧🇷</button>
-                <button class="pill" data-v="ferramenta"  data-c="g" data-group="meta">ferramenta 🇧🇷</button>
-                <button class="pill" data-v="jubileu"     data-c="g" data-group="meta">jubileu 🇧🇷</button>
-                <button class="pill" data-v="espada"      data-c="g" data-group="meta">espada 🇧🇷</button>
-                <button class="pill" data-v="lápiz"       data-c="b" data-group="meta">lápiz 🌎</button>
-                <button class="pill" data-v="herramienta" data-c="b" data-group="meta">herramienta 🌎</button>
-                <button class="pill" data-v="instrumento" data-c="b" data-group="meta">instrumento 🌎</button>
-                <button class="pill" data-v="equipo"      data-c="b" data-group="meta">equipo 🌎</button>
-                <button class="pill" data-v="el capitán"  data-c="b" data-group="meta">el capitán 🌎</button>
+              <div class="pills" id="pl-meta" style="gap:5px">
+                <button class="pill" data-v="auto"        data-group="meta">🎲 Auto</button>
+                <button class="pill" data-v="amigão"      data-group="meta">amigão 🇧🇷</button>
+                <button class="pill" data-v="ferramenta"  data-group="meta">ferramenta 🇧🇷</button>
+                <button class="pill" data-v="jubileu"     data-group="meta">jubileu 🇧🇷</button>
+                <button class="pill" data-v="espada"      data-group="meta">espada 🇧🇷</button>
+                <button class="pill" data-v="pergaminho"  data-group="meta">pergaminho 🇧🇷</button>
+                <button class="pill" data-v="milau"       data-group="meta">milau 🇧🇷</button>
+                <button class="pill" data-v="pinu"        data-group="meta">pinu 🇧🇷</button>
+                <button class="pill" data-v="porrete"     data-group="meta">porrete 🇧🇷</button>
+                <button class="pill" data-v="jiboia"      data-group="meta">jiboia 🇧🇷</button>
+                <button class="pill" data-v="cetro"       data-group="meta">cetro 🇧🇷</button>
+                <button class="pill" data-v="lápiz"       data-group="meta">lápiz 🌎</button>
+                <button class="pill" data-v="herramienta" data-group="meta">herramienta 🌎</button>
+                <button class="pill" data-v="instrumento" data-group="meta">instrumento 🌎</button>
+                <button class="pill" data-v="equipo"      data-group="meta">equipo 🌎</button>
+                <button class="pill" data-v="el capitán"  data-group="meta">el capitán 🌎</button>
+                <button class="pill" data-v="bastón"      data-group="meta">bastón 🌎</button>
+                <button class="pill" data-v="trofeo"      data-group="meta">trofeo 🌎</button>
+                <button class="pill" data-v="el socio"    data-group="meta">el socio 🌎</button>
+                <button class="pill" data-v="compañero"   data-group="meta">compañero 🌎</button>
+                <button class="pill" data-v="el jefe"     data-group="meta">el jefe 🌎</button>
+                <button class="pill" data-v="la bestia"   data-group="meta">la bestia 🌎</button>
+                <button class="pill" data-v="el guerrero" data-group="meta">el guerrero 🌎</button>
               </div>
             </div>
 
@@ -427,38 +464,33 @@ let results=[];
 function saveMemory(fp){MEMORY.add(fp);localStorage.setItem('cl_mem',JSON.stringify([...MEMORY].slice(-200)));}
 
 // ══════════════════════════════════════════
-// PILL ENGINE — single clean implementation
+// PILL ENGINE — vermelho quando selecionado, nada pré-selecionado
 // ══════════════════════════════════════════
-const C={
-  r:{bg:'rgba(255,45,85,.18)',  bd:'#ff2d55',co:'#ff2d55',sh:'rgba(255,45,85,.15)'},
-  b:{bg:'rgba(79,172,254,.18)', bd:'#4facfe',co:'#4facfe',sh:'rgba(79,172,254,.15)'},
-  g:{bg:'rgba(0,229,160,.18)',  bd:'#00e5a0',co:'#00e5a0',sh:'rgba(0,229,160,.15)'},
-  y:{bg:'rgba(255,209,102,.18)',bd:'#ffd166',co:'#ffd166',sh:'rgba(255,209,102,.15)'},
-  p:{bg:'rgba(199,125,255,.18)',bd:'#c77dff',co:'#c77dff',sh:'rgba(199,125,255,.15)'},
-};
-
 function pon(btn){
-  const c=C[btn.dataset.c]||C.r;
-  btn.style.cssText+=`;background:${c.bg};border-color:${c.bd};color:${c.co};box-shadow:0 0 0 3px ${c.sh}`;
+  btn.style.background='rgba(255,45,85,.2)';
+  btn.style.borderColor='#ff2d55';
+  btn.style.color='#ff2d55';
+  btn.style.boxShadow='0 0 0 3px rgba(255,45,85,.12)';
   btn.classList.add('on');
   btn.style.animation='none'; void btn.offsetWidth; btn.style.animation='';
 }
 function poff(btn){
-  btn.style.background=''; btn.style.borderColor=''; btn.style.color=''; btn.style.boxShadow='';
+  btn.style.background='';
+  btn.style.borderColor='';
+  btn.style.color='';
+  btn.style.boxShadow='';
   btn.classList.remove('on');
 }
 
-// groups: lang=multi, cta=multi, tone=single, meta=single, cross=single
-const MULTI_GROUPS=['lang','cta'];
+const MULTI=['lang','cta'];
 
 function pillClick(btn){
   const g=btn.dataset.group;
   if(!g) return;
-  if(MULTI_GROUPS.includes(g)){
-    const sibs=[...document.querySelectorAll(`.pill[data-group="${g}"]`)];
-    const active=sibs.filter(b=>b.classList.contains('on'));
+  if(MULTI.includes(g)){
     const isOn=btn.classList.contains('on');
-    if(isOn && active.length<=1) return; // keep at least 1
+    const sibs=[...document.querySelectorAll(`.pill[data-group="${g}"]`)];
+    // allow deselect even if last — user controls everything
     isOn ? poff(btn) : pon(btn);
     const now=sibs.filter(b=>b.classList.contains('on')).map(b=>b.dataset.v);
     if(g==='lang') S.langs=new Set(now);
@@ -473,33 +505,26 @@ function pillClick(btn){
   }
 }
 
-// attach click to all pills
 document.querySelectorAll('.pill[data-group]').forEach(btn=>{
-  btn.addEventListener('click', ()=>pillClick(btn));
+  btn.addEventListener('click',()=>pillClick(btn));
 });
 
-// vault filter pills (no data-group, handled separately)
 function filterVault(f,btn){
   document.querySelectorAll('#panel-vault .pill').forEach(b=>poff(b));
   pon(btn); S.vFilter=f; renderVault();
 }
 
-// ══════════════════════════════════════════
-// INIT — activate defaults
-// ══════════════════════════════════════════
-function initGroup(group, vals){
-  document.querySelectorAll(`.pill[data-group="${group}"]`).forEach(btn=>{
-    if(vals.includes(btn.dataset.v)) pon(btn);
-  });
-}
-initGroup('lang',['br','latam']);
-initGroup('cta',['bio']);
-initGroup('tone',['visceral']);
-initGroup('meta',['auto']);
-initGroup('cross',['on']);
+// NADA pré-selecionado — usuário escolhe tudo
+// (defaults internos para quando generate() precisar de fallback)
+S.langs=new Set();
+S.cta=new Set();
+S.tone='visceral';
+S.meta='auto';
+S.cross='off';
 
-// vault filter — init "all"
-pon(document.querySelector('#panel-vault .pill[data-v="all"]')||document.querySelector('.pill[data-v="all"]'));
+// load saved key
+const _k=localStorage.getItem('cl_gkey');
+if(_k) document.getElementById('api-key').value=_k;
 
 updateHint();
 updateUI();
@@ -554,6 +579,13 @@ function nav(name,btn){
 // ══════════════════════════════════════════
 async function generate(){
   const btn=document.getElementById('gen-btn');
+
+  // validações
+  const apiKey=(document.getElementById('api-key').value||'').trim();
+  if(!apiKey){showError('Cole sua Groq API key (gsk_...) no campo da sidebar. Grátis em console.groq.com'); return;}
+  if(S.langs.size===0){showError('Selecione pelo menos um idioma.'); return;}
+  if(S.cta.size===0){showError('Selecione pelo menos um modo de CTA.'); return;}
+
   btn.classList.add('loading'); btn.disabled=true;
 
   const langArr=[...S.langs];
@@ -561,16 +593,40 @@ async function generate(){
   const ctaModes=[...S.cta];
   const isBR=lang==='br';
   const isCross=S.cross==='on'&&lang==='latam';
+  const tone=S.tone||'visceral';
 
-  const metasBR=['amigão','ferramenta','jubileu','espada','peru','milau','pergaminho','pinu'];
-  const metasES=['lápiz','herramienta','instrumento','equipo','bastón','compañero','tesoro','trofeo','el capitán','el socio'];
+  const metasBR=['amigão','ferramenta','jubileu','espada','peru','milau','pergaminho','pinu','porrete','jiboia','cetro','facão','torpedo','mastro','canhão'];
+  const metasES=['lápiz','herramienta','instrumento','equipo','bastón','compañero','tesoro','trofeo','el capitán','el socio','el jefe','la bestia','el guerrero','el campeón','el toro'];
   const meta=S.meta==='auto'?(isBR?metasBR[Math.floor(Math.random()*metasBR.length)]:metasES[Math.floor(Math.random()*metasES.length)]):S.meta;
 
   const pool=isCross?[...SF.br,...SF.latam,...customVault]:[...SF[lang],...customVault.filter(c=>c.lang===lang)];
   const examples=[...pool].sort(()=>Math.random()-.5).slice(0,3);
   const dnaStr=examples.map(c=>`HOOK: "${c.hook}" | META: "${c.metaphor||'?'}" | CTA: ${c.cta}`).join('\n');
 
-  const hookInstr={auto:'Escolha o hook mais potente — visceral e inesperado',accusation:'Acusação direta: "Por isso seu [META] ainda [PROBLEMA]"',prohibition:'Proibição curiosa: "Não [AÇÃO] porque seu [META] vai [CONSEQUÊNCIA]"',comparison:'Comparação social visceral: o amigo que do nada avançou',question:'Pergunta-espelho humilhante com analogia criativa',recipe:'Revelação de receita com ingredientes concretos',challenge:'Desafio 30/45 dias com condição de retornar com testemunho',humor:'Humor absurdo com metáfora animal inesperada',status:'Gatilho de status: o que ela vai dizer/fazer depois',sleep:'Sabotador oculto: cueca/calor roubando tudo enquanto dorme'};
+  const hookInstr={
+    auto:'Escolha o hook mais potente — visceral e inesperado, baseado no DNA',
+    accusation:'Acusação direta: "Por isso seu [META] ainda é [PROBLEMA]" — ataca a insegurança',
+    prohibition:'Proibição curiosa: "Não [AÇÃO] porque seu [META] vai [CONSEQUÊNCIA ABSURDA]"',
+    comparison:'Comparação social visceral: "Aquele amigo que do nada cresceu mais rápido..."',
+    question:'Pergunta-espelho humilhante com analogia criativa inesperada (como "fio de fone")',
+    recipe:'Revelação de receita: ingredientes concretos (açafrão, gengibre, bicarbonato...)',
+    challenge:'Desafio: "Vou te propor um reto de 45 dias — com uma condição"',
+    humor:'Humor absurdo com metáfora animal ou objeto inesperado ("minhoca vira jiboia")',
+    status:'Gatilho de status: "ela vai mandar print pras amigas / te llamarán caballo"',
+    sleep:'Sabotador oculto do sono: cueca/calor/posição roubando tudo enquanto você dorme',
+    secret:'Segredo que a indústria esconde: "Isso existe há décadas mas nunca te contaram"',
+    mistake:'Erro fatal que todo homem comete sem saber e que sabota o crescimento',
+    age:'Janela de idade urgente: "Se você tem entre X e Y anos ainda dá tempo — depois não"',
+    doctor:'O que o médico não te conta: informação suprimida pelo sistema de saúde',
+    before_after:'Antes e depois chocante: transformação em dias específicos com números reais',
+    tribe:'Técnica ancestral de tribo africana/indígena usada por séculos',
+    industry:'Segredo da indústria adulta: "Os atores usam isso há anos e nunca revelaram"',
+    discovery:'Descoberta científica recente que muda tudo sobre desenvolvimento masculino',
+    warning:'Aviso urgente: "Para qualquer homem que ainda não sabe disso"',
+    size_hack:'Hack de resultado rápido: protocolo de X minutos que funciona no mesmo dia',
+    food:'Alimento comum que você come todo dia que sabota/potencializa tudo',
+    morning:'Ritual matinal de 2 minutos que reativa hormônios antes do café',
+  };
 
   const ctaLang=isBR?'br':'es';
   const ctaEx=ctaModes.map(m=>{const b=CTA_BANK[m]?.[ctaLang]||CTA_BANK[m]?.br||[];return`[${m.toUpperCase()}] ex: "${b[Math.floor(Math.random()*b.length)]||''}"`}).join('\n');
@@ -590,7 +646,7 @@ DNA DO SWIPE FILE:
 ${dnaStr}
 
 HOOK: ${hookInstr[document.getElementById('hook-sel').value]||hookInstr.auto}
-TOM: ${S.tone.toUpperCase()}
+TOM: ${tone.toUpperCase()}
 ${ctaStr}
 
 REGRAS CRÍTICAS:
@@ -606,12 +662,18 @@ REGRAS CRÍTICAS:
 Responda APENAS com os blocos.`;
 
   try{
-    const apiKey=(document.getElementById('api-key').value||'').trim();
-    if(!apiKey){showError('Cole sua API key da Anthropic no campo da sidebar (sk-ant-...).'); btn.classList.remove('loading'); btn.disabled=false; return;}
-    const resp=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:900,messages:[{role:'user',content:prompt}]})});
+    const resp=await fetch('https://api.groq.com/openai/v1/chat/completions',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':'Bearer '+apiKey},
+      body:JSON.stringify({
+        model:'llama-3.3-70b-versatile',
+        max_tokens:900,
+        messages:[{role:'user',content:prompt}]
+      })
+    });
     const data=await resp.json();
     if(data.error) throw new Error(data.error.message);
-    const raw=data.content?.map(b=>b.text||'').join('')||'';
+    const raw=data.choices?.[0]?.message?.content||'';
     const lines=raw.split('\n').map(l=>l.trim()).filter(Boolean);
     const hookLine=lines.find(l=>l.startsWith('[HOOK]'))||lines[0]||'';
     saveMemory(hookLine.slice(0,60)+'|'+lang);
